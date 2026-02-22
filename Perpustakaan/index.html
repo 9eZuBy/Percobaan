@@ -139,6 +139,48 @@
             font-size: 16px;
             }
         }
+/* ===== PENYESUAIAN KHUSUS TAMPILAN HP (MOBILE) ===== */
+@media screen and (max-width: 768px) {
+    /* 1. Mengecilkan ukuran lebar kartu */
+    .book-card {
+        flex: 0 0 140px; /* Mengecil dari 240px menjadi 140px */
+        border-radius: 12px;
+    }
+
+    /* 2. Menyesuaikan tinggi gambar cover buku agar rasionya pas */
+    .book-cover {
+        height: 200px; /* Mengecil dari 320px menjadi 200px */
+    }
+
+    /* 3. Menyesuaikan ukuran teks di dalam kartu agar tidak kebesaran */
+    .book-info {
+        padding: 0.75rem;
+    }
+    
+    .book-info h3 {
+        font-size: 0.9rem; /* Judul buku lebih kecil */
+        line-height: 1.3;
+        margin-bottom: 4px;
+    }
+    
+    .book-author {
+        font-size: 0.75rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .price-wrapper strong {
+        font-size: 0.85rem; /* Ukuran harga disesuaikan */
+    }
+    
+    .price-wrapper s {
+        font-size: 0.75rem; /* Harga coret disesuaikan */
+    }
+    
+    .discount-badge {
+        font-size: 0.65rem;
+        padding: 2px 6px;
+    }
+}
     </style>
 </head>
 <body>
@@ -453,4 +495,3 @@
     </script>
 </body>
 </html>
-
