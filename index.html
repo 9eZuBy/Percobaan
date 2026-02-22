@@ -725,26 +725,36 @@ body.sidebar-open, body.modal-open {
     flex-shrink: 0;
     min-width: 280px;
     max-width: 320px;
-    background-color: #2e2e2e;
-    border-radius: 12px;
+    background: linear-gradient(145deg, #222222, #2a2a2a); /* Gradasi gelap yang elegan */
+    border: 1px solid rgba(255, 255, 255, 0.05); /* Garis batas tipis bercahaya */
+    border-radius: 16px; /* Sudut sedikit lebih melengkung */
     overflow: hidden;
     text-align: left;
-    box-shadow: 0 6px 15px var(--shadow-light);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efek bouncy/membal saat dihover */
     text-decoration: none;
     color: inherit;
+    display: flex;
+    flex-direction: column;
 }
 
 .highlight-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px var(--shadow-heavy);
+    transform: translateY(-12px);
+    box-shadow: 0 15px 35px rgba(106, 13, 173, 0.25), 0 0 15px rgba(106, 13, 173, 0.1); /* Glow ungu UMT */
+    border-color: rgba(106, 13, 173, 0.4); /* Border berubah ungu tipis */
 }
 
 .highlight-card img {
     width: 100%;
     height: 180px;
     object-fit: cover;
-    border-bottom: 1px solid #3e3e3e;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: transform 0.5s ease; /* Transisi untuk gambar */
+}
+
+/* Tambahkan baris baru ini di bawah .highlight-card img */
+.highlight-card:hover img {
+    transform: scale(1.08); /* Gambar membesar sedikit (efek sinematik) */
 }
 
 .highlight-card-content {
@@ -766,14 +776,22 @@ body.sidebar-open, body.modal-open {
 }
 
 .highlight-card-content .read-more {
-    color: var(--text-primary);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #b088f9; /* Ungu terang agar kontras di background gelap */
     font-weight: 600;
     text-decoration: none;
     font-size: 14px;
+    margin-top: auto; /* Mendorong tombol selalu ke bawah */
+    padding-top: 10px;
+    transition: gap 0.3s ease, color 0.3s ease;
 }
 
-.highlight-card-content .read-more:hover {
-    text-decoration: underline;
+/* Tambahkan baris baru ini di bawah .highlight-card-content .read-more */
+.highlight-card:hover .read-more {
+    gap: 12px; /* Panah seolah-olah bergerak ke kanan */
+    color: #d8b4fe; /* Warna teks jadi lebih terang menyala */
 }
 
 /* Scrollbar untuk highlight grid */
@@ -3284,9 +3302,3 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
-
-
-
-
-
-
