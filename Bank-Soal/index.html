@@ -657,6 +657,148 @@
   margin-top: 0;
   text-align: left;
 }
+/* ----- FOOTER STYLES ----- */
+footer {
+    background-color: #141414;
+    color: white;
+    padding: 40px 20px;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    margin-top: 50px;
+    border-top: 1px solid #222;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: linear-gradient(to bottom, rgba(28, 28, 28, 1) 0%, rgba(28, 28, 28, 0) 100%);
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 220px;
+}
+
+.footer-section h3 {
+    color: white;
+    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    text-decoration: none;
+    color: #bbb;
+    transition: color 0.3s;
+    font-size: 15px;
+}
+
+.footer-section ul li a:hover {
+    color: white;
+}
+
+.contact-list img {
+    width: 18px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #444;
+    margin-top: 30px;
+    padding-top: 20px;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icons a img {
+    width: 28px;
+    transition: opacity 0.3s;
+}
+
+.social-icons a img:hover {
+    opacity: 0.7;
+}
+
+/* ----- SIDEBAR & MOBILE NAV STYLES ----- */
+.sidebar-nav {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 260px; /* Ukuran default mobile */
+    height: 100%;
+    background-color: #1a1a1a; 
+    box-shadow: 2px 0 15px rgba(0,0,0,0.5);
+    padding-top: 60px; 
+    transform: translateX(-100%);
+    transition: transform 0.4s ease-in-out; 
+    z-index: 1100; 
+    overflow-y: auto;
+}
+
+.sidebar-nav.active { 
+    transform: translateX(0); 
+}
+
+.sidebar-overlay {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); 
+    z-index: 1050;
+    opacity: 0; 
+    visibility: hidden; 
+    transition: opacity 0.4s, visibility 0.4s;
+}
+
+.sidebar-overlay.active { 
+    opacity: 1; 
+    visibility: visible; 
+}
+
+@media screen and (max-width: 768px) {
+    .footer-container, .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+}
     </style>
 </head>
 <body>
@@ -754,7 +896,71 @@
 
         <div class="pagination-container" id="paginationContainer"></div>
     </div>
+<nav class="sidebar-nav">
+    <button class="sidebar-close-btn">×</button>
+    <div class="sidebar-auth">
+        <div class="auth-buttons">
+            <a href="Login/" class="auth-btn login">Masuk</a>
+            <a href="Buat Akun/" class="auth-btn register">Daftar</a>
+        </div>
+    </div>
+    <ul class="nav-links">
+        <li class="nav-group-title">Konten Inti</li>
+        <li><a href="../Materi-Belajar/"><span class="emoji-icon">📘</span>Materi Belajar</a></li>
+        <li><a href="../Video-Pembelajaran/"><span class="emoji-icon">🎥</span>Video Pembelajaran</a></li>
+        <li><a href="../UMT-Lab/"><span class="emoji-icon">🔬</span>UMT Lab</a></li>
+        <li><a href="../Perpustakaan/"><span class="emoji-icon">📚</span>Perpustakaan</a></li>
 
+        <li class="nav-group-title">Alat Belajar</li>
+        <li><a href="../Bank-Soal/"><span class="emoji-icon">📝</span>Bank Soal</a></li>
+        <li><a href="../tryout/"><span class="emoji-icon">✏️</span>Tryout</a></li>
+        <li><a href="../Tanya-UMT/"><span class="emoji-icon">❓</span>TanyaUMT</a></li>
+
+        <li class="nav-group-title">Komunitas & Info</li>
+        <li><a href="#"><span class="emoji-icon">💬</span>Forum Belajar</a></li>
+        <li><a href="../Arsip-Live-Class/"><span class="emoji-icon">🎭</span>Arsip Live Class</a></li>
+    </ul>
+</nav>
+
+<div class="sidebar-overlay"></div>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <h3>Tentang Kami</h3>
+            <ul>
+                <li><a href="https://www.umt6174.site/tentang-umt" target="_blank">Tentang UMT</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Produk UMT</h3>
+            <ul>
+                <li><a href="../UMT-Lab/">UMT Lab</a></li>
+                <li><a href="../Materi-Belajar/">Materi Pembelajaran</a></li>
+                <li><a href="../Video-Pembelajaran/">Video Pembelajaran</a></li>
+                <li><a href="../tryout/">Tryout</a></li>
+                <li><a href="../Tanya-UMT/">TanyaUMT</a></li>
+                <li><a href="../Bank-Soal/">Bank Soal</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Punya Pertanyaan?</h3>
+            <ul class="contact-list">
+                <li><a href="https://ig.me/m/umt.6174" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">@umt.6174</a></li>
+                <li><a href="mailto:umt.math.6174@gmail.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email"> umt.math.6174@gmail.com</a></li>
+                <li><a href="https://wa.me/6282189524610" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp"> +6282189524610</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2025 UMT Academy. All rights reserved.</p>
+        <div class="social-icons">
+            <a href="https://youtube.com/@umt6174?si=Cdivet0_By8EWJ8v" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"></a>
+            <a href="https://www.instagram.com/umt.6174/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"></a>
+            <a href="https://www.tiktok.com/@umt6174?is_from_webapp=1&sender_device=pc" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046126.png" alt="TikTok"></a>
+        </div>
+    </div>
+</footer>
     <script>
         const hamburgerMenu = document.querySelector('.hamburger-menu');
         const sidebarNav = document.querySelector('.sidebar-nav');
@@ -981,5 +1187,4 @@
     </script>
 </body>
 </html>
-
 
