@@ -181,6 +181,60 @@
         padding: 2px 6px;
     }
 }
+/* ===== PENYESUAIAN MODAL (POPUP BUKU) UNTUK HP ===== */
+@media screen and (max-width: 768px) {
+    .modal-content {
+        padding: 1.5rem 1rem; /* Kurangi padding agar layar tidak terlalu sesak */
+        margin-top: 10px;
+        border-radius: 16px;
+    }
+
+    .modal-grid {
+        gap: 1rem; /* Jarak antar elemen lebih rapat */
+    }
+
+    .modal-cover img {
+        max-width: 140px; /* Gambar cover tidak terlalu raksasa di HP */
+        margin: 0 auto;
+    }
+
+    .modal-details h2 {
+        font-size: 1.4rem; /* Judul buku disesuaikan */
+        text-align: center;
+        margin-bottom: 5px;
+    }
+
+    .modal-details .book-author {
+        text-align: center;
+        font-size: 0.85rem;
+    }
+
+    .modal-details p {
+        font-size: 0.9rem; /* Teks deskripsi lebih enak dibaca */
+        text-align: center;
+        line-height: 1.5;
+    }
+
+    .price-wrapper {
+        justify-content: center; /* Harga ke tengah */
+        margin: 10px 0;
+    }
+
+    .price-wrapper strong {
+        font-size: 1.2rem !important; /* Harga sedikit lebih menonjol */
+    }
+
+    .action-buttons {
+        flex-direction: column; /* Tombol atas-bawah, lebih mudah dipencet jempol */
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .btn {
+        padding: 12px; /* Area klik tombol lebih luas */
+        font-size: 1rem;
+    }
+}
     </style>
 </head>
 <body>
