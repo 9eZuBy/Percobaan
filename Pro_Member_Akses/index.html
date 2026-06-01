@@ -1091,7 +1091,7 @@ const kamusData = {
   'nol': {
     term: "Nol (0)",
     category: "bilangan",
-    intuition: "Bilangan netral untuk penjumlahan: $a + 0 = a$.",
+    intuition: "Bilangan netral untuk penjumlahan: a + 0 = a.",
     penjelasan: "Nol mewakili 'tidak ada'. Penting sebagai identitas penjumlahan, pembatas positif-negatif, dan dalam sistem posisi desimal.",
     formal: "$\\forall a \\in \\mathbb{R}: a + 0 = a$. $a \\cdot 0 = 0$. Pembagian dengan nol tidak terdefinisi.",
     prerequisites: ['bilangan_bulat'],
@@ -2781,7 +2781,16 @@ function initializeKamusPageLogic() {
     modalPenjelasan.textContent = data.penjelasan;
     modalFormal.innerHTML = `<p>${data.formal}</p>`;
     
-    if (window.MathJax) MathJax.typesetPromise([modalPenjelasan, modalFormal]).catch(console.log);
+    if (window.MathJax) {
+  MathJax.typesetPromise([
+    modalTitle,
+    modalIntuition,
+    modalPenjelasan,
+    modalFormal,
+    modalPrasyarat,
+    modalTerkait
+  ]).catch(err => console.log(err));
+}
     
     modalPrasyarat.innerHTML = data.prerequisites.length ? '' : `<span style="color:var(--text-secondary)">Tidak ada prasyarat dasar.</span>`;
     data.prerequisites.forEach(key => {
