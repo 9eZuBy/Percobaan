@@ -803,56 +803,48 @@ if (typeof allContentData !== 'undefined') {
 }
 
 const kamusData = {
-    'logaritma': {
-        term: "Logaritma",
-        category: "aljabar",
-        intuition: "Logaritma adalah sebuah PERTANYAAN. Ia bertanya: 'Pangkat berapa?'",
-        penjelasan: "$^2\\log 8$ secara harfiah bertanya, '2 harus dipangkatkan berapa agar hasilnya 8?'. Jawabannya adalah 3. Ini adalah alat untuk 'membuka' atau mencari pangkat dalam operasi eksponensial.",
-        formal: "Secara formal, jika $a^c = b$, maka $^a\\log b = c$. Dimana $a$ adalah basis, $b$ adalah numerus, dan $c$ adalah hasilnya (pangkat).",
-        prerequisites: ['eksponen'],
-        related: ['persamaan_log', 'skala_ph']
-    },
-    'eksponen': {
-        term: "Eksponen (Pangkat)",
-        category: "aljabar",
-        intuition: "Eksponen adalah cara singkat menulis perkalian berulang.",
-        penjelasan: "$3^4$ berarti $3 \\times 3 \\times 3 \\times 3$. Ini adalah 'gembok' yang 'dikunci' oleh logaritma.",
-        formal: "Bentuk $a^n$ (dibaca 'a pangkat n') adalah operasi di mana $a$ (basis) dikalikan dengan dirinya sendiri sebanyak $n$ kali (eksponen).",
-        prerequisites: [],
-        related: ['logaritma', 'persamaan_eksponen']
-    },
-    'limit': {
-        term: "Limit",
-        category: "kalkulus",
-        intuition: "Limit adalah tentang NILAI TUJUAN. Ia tidak bertanya 'ada di mana?', tapi 'menuju ke mana?'",
-        penjelasan: "Bayangkan Anda berjalan mendekati sebuah titik di grafik. Limit adalah nilai Y yang Anda dekati, tidak peduli apakah titik itu sendiri berlubang atau tidak. Kuncinya adalah pendekatan dari kiri dan kanan harus bertemu.",
-        formal: "Notasi $\\lim_{x \\to c} f(x) = L$ berarti nilai $f(x)$ dapat dibuat sedekat mungkin ke $L$ dengan membuat $x$ cukup dekat (tetapi tidak sama dengan) $c$.",
-        prerequisites: ['fungsi'],
-        related: ['turunan', 'kontinuitas']
-    },
-    'turunan': {
-        term: "Turunan (Derivative)",
-        category: "kalkulus",
-        intuition: "Alat untuk mengukur KEMIRINGAN SESAAT atau laju perubahan instan.",
-        penjelasan: "Jika Anda melihat grafik, turunan memberi tahu Anda seberapa curam grafik itu di TITIK MANAPUN. Ini dihitung dengan mengambil limit dari gradien antara dua titik yang dibuat sangat dekat.",
-        formal: "Turunan dari $f(x)$ adalah $f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}$.",
-        prerequisites: ['limit', 'fungsi', 'gradien'],
-        related: ['integral', 'laju_perubahan', 'optimasi']
-    },
-    'pythagoras': {
-        term: "Teorema Pythagoras",
-        category: "geometri",
-        intuition: "Aturan khusus untuk menemukan panjang sisi miring dari segitiga siku-siku.",
-        penjelasan: "Pada segitiga siku-siku, kuadrat dari sisi miring (sisi terpanjang) sama dengan jumlah dari kuadrat dua sisi lainnya. Ini adalah fondasi dari hampir semua perhitungan jarak dalam geometri.",
-        formal: "Jika $a$ dan $b$ adalah sisi siku-siku dan $c$ adalah sisi miring, maka $a^2 + b^2 = c^2$.",
-        prerequisites: [],
-        related: ['jarak_titik', 'lingkaran_satuan', 'trigonometri']
-    },
-    'kalkulus': { term: "Kalkulus", category: "kalkulus", intuition: "Studi tentang perubahan.", penjelasan: "Kalkulus adalah cabang matematika yang berfokus pada limit, turunan, integral, dan deret tak hingga. Ini adalah bahasa untuk mendeskripsikan gerakan dan perubahan.", formal: "-", prerequisites: ['aljabar', 'fungsi'], related: ['limit', 'turunan', 'integral'] },
-    'integral': { term: "Integral", category: "kalkulus", intuition: "Alat untuk menghitung LUAS di bawah kurva.", penjelasan: "Jika turunan adalah tentang memecah sesuatu (kemiringan), integral adalah tentang menggabungkannya kembali (luas).", formal: "-", prerequisites: ['turunan'], related: ['luas_area', 'volume_benda_putar'] },
-    'fungsi': { term: "Fungsi", category: "aljabar", intuition: "Sebuah 'mesin' matematika.", penjelasan: "Anda memasukkan 'input' (x), dan mesin 'fungsi' (f) memberi Anda satu 'output' (y) yang unik.", formal: "-", prerequisites: [], related: ['limit', 'turunan'] },
-    'gradien': { term: "Gradien (Kemiringan)", category: "geometri", intuition: "Ukuran kecuraman sebuah garis.", penjelasan: "Dihitung sebagai 'perubahan vertikal (rise) dibagi perubahan horizontal (run)'.", formal: "$m = \\frac{y_2 - y_1}{x_2 - x_1}$", prerequisites: [], related: ['turunan'] },
-    'kontinuitas': { term: "Kontinuitas", category: "kalkulus", intuition: "Artinya grafik 'tersambung' dan tidak putus.", penjelasan: "Sebuah fungsi kontinu di suatu titik jika Anda bisa menggambar grafiknya melewati titik itu tanpa mengangkat pensil Anda. Secara teknis, nilai limitnya harus sama dengan nilai fungsinya.", formal: "Fungsi $f$ kontinu di $c$ jika $\\lim_{x \\to c} f(x) = f(c)$", prerequisites: ['limit'], related: ['limit'] }
+  // ── FUNDAMENTAL & AKSIOMA ──
+  'aksioma_peano': { term: "Aksioma Peano", category: "fundamental", intuition: "Aturan dasar yang mendefinisikan bilangan asli dari nol.", penjelasan: "Lima pernyataan sederhana yang menjadi fondasi aritmetika. Dimulai dari '0 adalah bilangan asli', lalu setiap bilangan memiliki penerus yang unik, dan seterusnya.", formal: "1. $0 \\in \\mathbb{N}$<br>2. $\\forall n \\in \\mathbb{N}, S(n) \\in \\mathbb{N}$<br>3. $\\forall n,m, S(n)=S(m) \\Rightarrow n=m$<br>4. $\\forall n \\neq 0, \\nexists m, S(m)=n$<br>5. Prinsip Induksi Matematika", prerequisites: [], related: ['induksi_matematika', 'bilangan_asli'] },
+  'teorema_fundamental_kalkulus': { term: "Teorema Fundamental Kalkulus", category: "kalkulus", intuition: "Jembatan ajaib yang menghubungkan turunan dan integral.", penjelasan: "Menunjukkan bahwa diferensiasi dan integrasi adalah operasi yang saling membalik. Jika Anda menghitung luas di bawah kurva dengan integral, lalu menurunkannya, Anda kembali ke fungsi asalnya.", formal: "Jika $F(x) = \\int_a^x f(t) dt$, maka $F'(x) = f(x)$. Sebaliknya, $\\int_a^b f(x) dx = F(b) - F(a)$", prerequisites: ['turunan', 'integral'], related: ['kalkulus', 'limit'] },
+  'identitas_euler': { term: "Identitas Euler", category: "fundamental", intuition: "Persamaan paling indah di dunia matematika.", penjelasan: "Menghubungkan lima konstanta terpenting: $e, i, \\pi, 1, 0$ dalam satu kesetaraan sederhana. Muncul dari deret Taylor dan bilangan kompleks.", formal: "$e^{i\\pi} + 1 = 0$", prerequisites: ['bilangan_kompleks', 'trigonometri'], related: ['eksponen', 'trigonometri'] },
+  'induksi_matematika': { term: "Induksi Matematika", category: "logika", intuition: "Teknik pembuktian seperti domino yang jatuh berantai.", penjelasan: "Buktikan langkah pertama benar (basis), lalu tunjukkan jika langkah ke-$k$ benar, maka langkah ke-$k+1$ juga benar. Otomatis, semua langkah setelahnya benar.", formal: "1. Basis: $P(1)$ benar<br>2. Hipotesis: Anggap $P(k)$ benar<br>3. Induksi: Buktikan $P(k) \\Rightarrow P(k+1)$", prerequisites: ['logika_matematika', 'aksioma_peano'], related: ['barisan_deret', 'aksioma_peano'] },
+
+  // ── ALJABAR & TRIGONOMETRI ──
+  'logaritma': { term: "Logaritma", category: "aljabar", intuition: "Logaritma adalah sebuah PERTANYAAN. Ia bertanya: 'Pangkat berapa?'", penjelasan: "$^2\\log 8$ secara harfiah bertanya, '2 harus dipangkatkan berapa agar hasilnya 8?'. Jawabannya adalah 3. Ini adalah alat untuk 'membuka' atau mencari pangkat dalam operasi eksponensial.", formal: "Jika $a^c = b$, maka $^a\\log b = c$. Dimana $a$ adalah basis, $b$ adalah numerus, dan $c$ adalah hasilnya (pangkat).", prerequisites: ['eksponen'], related: ['persamaan_log', 'skala_ph'] },
+  'eksponen': { term: "Eksponen (Pangkat)", category: "aljabar", intuition: "Eksponen adalah cara singkat menulis perkalian berulang.", penjelasan: "$3^4$ berarti $3 \\times 3 \\times 3 \\times 3$. Ini adalah 'gembok' yang 'dikunci' oleh logaritma.", formal: "Bentuk $a^n$ (dibaca 'a pangkat n') adalah operasi di mana $a$ (basis) dikalikan dengan dirinya sendiri sebanyak $n$ kali (eksponen).", prerequisites: [], related: ['logaritma', 'persamaan_eksponen'] },
+  'persamaan_kuadrat': { term: "Persamaan Kuadrat", category: "aljabar", intuition: "Persamaan yang grafiknya membentuk kurva parabola.", penjelasan: "Memiliki bentuk umum $ax^2 + bx + c = 0$. Nilai diskriminan ($D = b^2 - 4ac$) menentukan apakah akar-akarnya real, kembar, atau imajiner.", formal: "Rumus ABC: $x_{1,2} = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$", prerequisites: ['aljabar'], related: ['fungsi', 'diskriminan'] },
+  'matriks_determinan': { term: "Matriks & Determinan", category: "aljabar", intuition: "Tabel bilangan yang merepresentasikan transformasi linear.", penjelasan: "Matriks menyusun data dalam baris & kolom. Determinan adalah angka skalar yang memberi tahu 'faktor skala luas/volume' setelah transformasi, dan apakah matriks bisa dibalik (invertible).", formal: "Untuk matriks $2 \\times 2$: $\\det\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix} = ad - bc$", prerequisites: ['aljabar', 'vektor'], related: ['transformasi_geometri', 'sistem_persamaan'] },
+  'trigonometri': { term: "Trigonometri", category: "geometri", intuition: "Ilmu tentang hubungan sudut dan sisi segitiga.", penjelasan: "Sinus, Cosinus, Tangen, dll. Awalnya untuk segitiga siku-siku, lalu diperluas ke lingkaran satuan untuk memodelkan gelombang & gerak periodik.", formal: "$\\sin \\theta = \\frac{\\text{depan}}{\\text{miring}}$, $\\cos \\theta = \\frac{\\text{samping}}{\\text{miring}}$, $\\tan \\theta = \\frac{\\sin \\theta}{\\cos \\theta}$", prerequisites: ['pythagoras'], related: ['lingkaran_satuan', 'fungsi_periodik'] },
+  'permutasi_kombinasi': { term: "Permutasi & Kombinasi", category: "statistika", intuition: "Seni menghitung cara menyusun & memilih objek.", penjelasan: "Permutasi: urutan PENTING (misal: sandi PIN). Kombinasi: urutan TIDAK PENTING (misal: memilih tim).", formal: "$P(n,r) = \\frac{n!}{(n-r)!}$ | $C(n,r) = \\binom{n}{r} = \\frac{n!}{r!(n-r)!}$", prerequisites: ['faktorial'], related: ['peluang', 'kaidah_pencacahan'] },
+  'bilangan_kompleks': { term: "Bilangan Kompleks", category: "aljabar", intuition: "Angka yang punya bagian 'nyata' dan bagian 'khayal'.", penjelasan: "Memecahkan persamaan yang tidak punya solusi real (misal $x^2 + 1 = 0$). Diperkenalkan satuan imajiner $i = \\sqrt{-1}$.", formal: "$z = a + bi$, dengan $a,b \\in \\mathbb{R}$ dan $i^2 = -1$", prerequisites: ['persamaan_kuadrat'], related: ['identitas_euler', 'trigonometri'] },
+  'fungsi_invers': { term: "Fungsi Invers", category: "aljabar", intuition: "Mesin balikan yang mengembalikan output menjadi input semula.", penjelasan: "Jika $f(x)$ memetakan $x \\to y$, maka $f^{-1}(y)$ memetakan $y \\to x$. Syarat: fungsi harus satu-satu (injektif).", formal: "$f(f^{-1}(x)) = x$ dan $f^{-1}(f(x)) = x$. Grafik $f^{-1}$ adalah refleksi $f$ terhadap garis $y=x$.", prerequisites: ['fungsi'], related: ['logaritma', 'eksponen'] },
+
+  // ── KALKULUS ──
+  'limit': { term: "Limit", category: "kalkulus", intuition: "Limit adalah tentang NILAI TUJUAN. Ia tidak bertanya 'ada di mana?', tapi 'menuju ke mana?'", penjelasan: "Bayangkan Anda berjalan mendekati sebuah titik di grafik. Limit adalah nilai Y yang Anda dekati, tidak peduli apakah titik itu sendiri berlubang atau tidak. Kuncinya adalah pendekatan dari kiri dan kanan harus bertemu.", formal: "Notasi $\\lim_{x \\to c} f(x) = L$ berarti nilai $f(x)$ dapat dibuat sedekat mungkin ke $L$ dengan membuat $x$ cukup dekat (tetapi tidak sama dengan) $c$.", prerequisites: ['fungsi'], related: ['turunan', 'kontinuitas'] },
+  'turunan': { term: "Turunan (Derivative)", category: "kalkulus", intuition: "Alat untuk mengukur KEMIRINGAN SESAAT atau laju perubahan instan.", penjelasan: "Jika Anda melihat grafik, turunan memberi tahu Anda seberapa curam grafik itu di TITIK MANAPUN. Ini dihitung dengan mengambil limit dari gradien antara dua titik yang dibuat sangat dekat.", formal: "Turunan dari $f(x)$ adalah $f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}$.", prerequisites: ['limit', 'fungsi', 'gradien'], related: ['integral', 'laju_perubahan', 'optimasi'] },
+  'integral': { term: "Integral", category: "kalkulus", intuition: "Alat untuk menghitung LUAS di bawah kurva.", penjelasan: "Jika turunan adalah tentang memecah sesuatu (kemiringan), integral adalah tentang menggabungkannya kembali (luas).", formal: "$\\int f(x) dx = F(x) + C$, dimana $F'(x) = f(x)$", prerequisites: ['turunan'], related: ['luas_area', 'volume_benda_putar', 'teorema_fundamental_kalkulus'] },
+  'aturan_rantai': { term: "Aturan Rantai (Chain Rule)", category: "kalkulus", intuition: "Cara menurunkan fungsi yang 'bersarang' di dalam fungsi lain.", penjelasan: "Seperti mengupas bawang lapis per lapis. Turunkan luarannya, kali dengan turunan dalamnya.", formal: "$\\frac{d}{dx} f(g(x)) = f'(g(x)) \\cdot g'(x)$", prerequisites: ['turunan', 'fungsi'], related: ['turunan', 'integral_substitusi'] },
+  'integral_parsial': { term: "Integral Parsial", category: "kalkulus", intuition: "Kebalikan dari aturan perkalian turunan. Memecah integral sulit jadi dua bagian.", penjelasan: "Gunakan saat integran adalah perkalian dua fungsi berbeda tipe (misal: polinomial × eksponensial). Pilih $u$ yang mudah diturunkan, $dv$ yang mudah diintegralkan.", formal: "$\\int u \\, dv = uv - \\int v \\, du$", prerequisites: ['integral', 'turunan'], related: ['integral', 'aturan_rantai'] },
+  'deret_taylor': { term: "Deret Taylor", category: "kalkulus", intuition: "Menyatakan fungsi rumit sebagai jumlah tak hingga suku polinomial.", penjelasan: "Memungkinkan kita mengaproksimasi fungsi transenden (seperti $\\sin x$, $e^x$) hanya dengan penjumlahan, perkalian, dan pangkat. Semakin banyak suku, semakin akurat.", formal: "$f(x) = \\sum_{n=0}^{\\infty} \\frac{f^{(n)}(a)}{n!} (x-a)^n$", prerequisites: ['turunan', 'deret'], related: ['kalkulus', 'aprokimasi'] },
+  'kontinuitas': { term: "Kontinuitas", category: "kalkulus", intuition: "Artinya grafik 'tersambung' dan tidak putus.", penjelasan: "Sebuah fungsi kontinu di suatu titik jika Anda bisa menggambar grafiknya melewati titik itu tanpa mengangkat pensil Anda. Secara teknis, nilai limitnya harus sama dengan nilai fungsinya.", formal: "Fungsi $f$ kontinu di $c$ jika $\\lim_{x \\to c} f(x) = f(c)$", prerequisites: ['limit'], related: ['limit', 'teorema_fundamental_kalkulus'] },
+
+  // ── GEOMETRI & VEKTOR ──
+  'pythagoras': { term: "Teorema Pythagoras", category: "geometri", intuition: "Aturan khusus untuk menemukan panjang sisi miring dari segitiga siku-siku.", penjelasan: "Pada segitiga siku-siku, kuadrat dari sisi miring (sisi terpanjang) sama dengan jumlah dari kuadrat dua sisi lainnya. Ini adalah fondasi dari hampir semua perhitungan jarak dalam geometri.", formal: "Jika $a$ dan $b$ adalah sisi siku-siku dan $c$ adalah sisi miring, maka $a^2 + b^2 = c^2$.", prerequisites: [], related: ['jarak_titik', 'lingkaran_satuan', 'trigonometri'] },
+  'vektor': { term: "Vektor", category: "geometri", intuition: "Panah yang punya BESAR dan ARAH.", penjelasan: "Berbeda dengan skalar (hanya angka), vektor merepresentasikan perpindahan, gaya, atau kecepatan. Bisa dijumlahkan, dikurangi, dan dikalikan (dot/cross product).", formal: "$\\vec{v} = \\begin{pmatrix} v_x \\\\ v_y \\end{pmatrix}$. $|\\vec{v}| = \\sqrt{v_x^2 + v_y^2}$", prerequisites: ['pythagoras', 'aljabar'], related: ['matriks_determinan', 'transformasi_geometri'] },
+  'transformasi_geometri': { term: "Transformasi Geometri", category: "geometri", intuition: "Memindahkan, memutar, atau mengubah ukuran bentuk tanpa merusaknya.", penjelasan: "Meliputi translasi (geser), refleksi (cermin), rotasi (putar), dan dilatasi (perbesar/perkecil). Matriks sering digunakan untuk menghitungnya secara aljabar.", formal: "Rotasi $\\theta$: $\\begin{pmatrix} \\cos\\theta & -\\sin\\theta \\\\ \\sin\\theta & \\cos\\theta \\end{pmatrix} \\begin{pmatrix} x \\\\ y \\end{pmatrix}$", prerequisites: ['matriks_determinan', 'trigonometri'], related: ['fungsi', 'vektor'] },
+  'lingkaran_satuan': { term: "Lingkaran Satuan", category: "geometri", intuition: "Lingkaran berjari-jari 1 yang menjadi 'peta' trigonometri.", penjelasan: "Setiap titik $(x,y)$ pada lingkaran ini berkorespondensi dengan $(\\cos \\theta, \\sin \\theta)$. Memvisualisasikan mengapa trigonometri periodik dan bernilai negatif/positif di kuadran berbeda.", formal: "$x^2 + y^2 = 1$ | $\\cos^2 \\theta + \\sin^2 \\theta = 1$", prerequisites: ['pythagoras', 'trigonometri'], related: ['fungsi_periodik', 'bilangan_kompleks'] },
+  'gradien': { term: "Gradien (Kemiringan)", category: "geometri", intuition: "Ukuran kecuraman sebuah garis.", penjelasan: "Dihitung sebagai 'perubahan vertikal (rise) dibagi perubahan horizontal (run)'.", formal: "$m = \\frac{y_2 - y_1}{x_2 - x_1}$", prerequisites: [], related: ['turunan'] },
+
+  // ── STATISTIKA & PELUANG ──
+  'mean_median_modus': { term: "Mean, Median, Modus", category: "statistika", intuition: "Tiga cara berbeda menjawab pertanyaan: 'Berapa nilai tipikal data ini?'", penjelasan: "Mean = rata-rata (sensitif pencilan). Median = nilai tengah (tahan pencilan). Modus = nilai paling sering muncul (cocok untuk data kategorikal).", formal: "Mean: $\\bar{x} = \\frac{\\sum x_i}{n}$ | Median: $x_{(n+1)/2}$ (data terurut) | Modus: argmax $P(x)$", prerequisites: ['data_tunggal'], related: ['variansi_standar_deviasi', 'distribusi_normal'] },
+  'variansi_standar_deviasi': { term: "Variansi & Standar Deviasi", category: "statistika", intuition: "Mengukur seberapa 'tersebar' atau 'konsisten' data Anda.", penjelasan: "Variansi menghitung rata-rata kuadrat selisih dari mean. Standar deviasi adalah akarnya, mengembalikan satuan ke bentuk asli data.", formal: "$\\sigma^2 = \\frac{\\sum (x_i - \\mu)^2}{N}$ | $\\sigma = \\sqrt{\\sigma^2}$", prerequisites: ['mean_median_modus'], related: ['distribusi_normal', 'peluang'] },
+  'distribusi_normal': { term: "Distribusi Normal", category: "statistika", intuition: "Kurva lonceng yang muncul di hampir semua fenomena alam.", penjelasan: "Banyak data (tinggi badan, nilai ujian, kesalahan pengukuran) mengelompok di tengah dan simetris ke kedua sisi. Didefinisikan oleh Mean ($\\mu$) dan SD ($\\sigma$).", formal: "$f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}$ | Aturan 68-95-99.7", prerequisites: ['variansi_standar_deviasi'], related: ['statistika_inferensial', 'teorema_limit_pusat'] },
+  'peluang_kondisional': { term: "Peluang Kondisional", category: "statistika", intuition: "Probabilitas suatu kejadian, DENGAN SYARAT kejadian lain sudah terjadi.", penjelasan: "Informasi baru mengubah ruang sampel. Misal: peluang hujan berubah drastis jika kita tahu langit sudah mendung hitam.", formal: "$P(A|B) = \\frac{P(A \\cap B)}{P(B)}$, dengan $P(B) > 0$", prerequisites: ['peluang'], related: ['teorema_bayes', 'kaidah_pencacahan'] },
+
+  // ── LOGIKA & HIMPUNAN ──
+  'logika_matematika': { term: "Logika Matematika", category: "logika", intuition: "Tata bahasa berpikir yang ketat. Benar atau Salah, tidak ada abu-abu.", penjelasan: "Mempelajari proposisi, operator (AND, OR, NOT, IMPLIES), dan tabel kebenaran. Dasar dari pemrograman & pembuktian formal.", formal: "Implikasi: $p \\Rightarrow q$ ekuivalen dengan $\\neg q \\Rightarrow \\neg p$ (kontraposisi)", prerequisites: [], related: ['himpunan', 'induksi_matematika'] },
+  'himpunan': { term: "Himpunan", category: "logika", intuition: "Kumpulan objek yang didefinisikan dengan jelas.", penjelasan: "Bahasa dasar matematika. Operasi irisan ($\\cap$), gabungan ($\\cup$), dan komplemen memungkinkan kita memodelkan hubungan antar kelompok.", formal: "De Morgan: $(A \\cup B)^c = A^c \\cap B^c$ dan $(A \\cap B)^c = A^c \\cup B^c$", prerequisites: ['logika_matematika'], related: ['logika_proposisi', 'peluang'] },
+  'teorema_cantor': { term: "Teorema Cantor", category: "fundamental", intuition: "Tidak semua 'tak hingga' itu sama besar.", penjelasan: "Himpunan bilangan real lebih 'besar' (uncountable) daripada himpunan bilangan asli (countable). Ada tingkatan ketakterhinggaan.", formal: "$|\\mathbb{N}| < |\\mathbb{R}|$ | Bukus diagonal Cantor", prerequisites: ['himpunan'], related: ['logika_matematika', 'bilangan_real'] }
 };
 
 const CONFIG = {
@@ -2139,201 +2131,145 @@ function renderPerpustakaanPage() {
 }
 
 function renderKamusPage() {
-    // 1. Buat HTML untuk Kamus
-    // Kita gunakan kelas 'panel' dari SPA, bukan 'container' dari kamus
-    // Kita juga memberi ID unik (namespaced) untuk modal
-    appContent.innerHTML = `
-        <div class="panel">
-            <h1 class="text-2xl font-bold text-cyan-400 mb-6 text-center">
-                <i class="fa-solid fa-spell-check"></i> Kamus Matematika UMT
-            </h1>
-            
-            <input type="search" id="kamus-search" placeholder="🔍 Cari istilah... (misal: limit, pangkat, gradien)">
-            
-            <div class="filter-group">
-                <label for="kamus-filter">Pilih Topik:</label>
-                <select id="kamus-filter">
-                    <option value="all" selected>Semua Topik</option>
-                    <option value="aljabar">Aljabar</option>
-                    <option value="kalkulus">Kalkulus</option>
-                    <option value="geometri">Geometri</option>
-                </select>
-            </div>
-
-            <h2 class="text-xl font-semibold mb-4 text-cyan-300">
-                <i class="fas fa-list-ul"></i> Daftar Istilah
-            </h2>
-            <div id="kamus-results-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                </div>
-        </div>
-
-        <div id="kamus-term-modal" class="kamus-modal-overlay">
-            <div class="kamus-modal-content">
-                <button id="kamus-modal-close-btn" class="kamus-modal-close-btn" aria-label="Tutup">&times;</button>
-                
-                <h2 id="kamus-modal-title"></h2>
-                <p id="kamus-modal-intuition"></p>
-                
-                <h3><i class="fas fa-brain"></i> Penjelasan Lanjut (UMT)</h3>
-                <p id="kamus-modal-penjelasan"></p>
-                
-                <h3><i class="fas fa-book-open"></i> Definisi Formal</h3>
-                <div id="kamus-modal-formal"></div>
-
-                <div class="kamus-knowledge-network">
-                    <h4>Prasyarat (Pahami Ini Dulu):</h4>
-                    <div id="kamus-modal-prasyarat"></div>
-                    
-                    <h4 style="margin-top: 1rem;">Konsep Terkait (Jelajahi Selanjutnya):</h4>
-                    <div id="kamus-modal-terkait"></div>
-                </div>
-            </div>
-        </div>
-    `;
-
-    // 2. Jalankan JavaScript khusus untuk halaman kamus
-    initializeKamusPageLogic();
+  appContent.innerHTML = `
+  <div class="panel">
+    <h1 class="text-2xl font-bold text-cyan-400 mb-6 text-center">
+      <i class="fa-solid fa-spell-check"></i> Kamus Matematika UMT
+    </h1>
+    <div class="flex flex-col md:flex-row gap-4 mb-6">
+      <input type="search" id="kamus-search" placeholder="🔍 Cari istilah... (misal: limit, pangkat, gradien, induksi)"
+        class="flex-1 rounded-xl py-3 px-4 text-sm transition-all border"
+        style="background:var(--bg-main);border:1px solid var(--border-color);color:var(--text-primary);font-family:'Plus Jakarta Sans',sans-serif">
+      <select id="kamus-filter"
+        class="rounded-xl py-3 px-4 text-sm border cursor-pointer"
+        style="background:var(--bg-main);border:1px solid var(--border-color);color:var(--text-primary);max-width:200px;font-family:'Plus Jakarta Sans',sans-serif">
+        <option value="all" selected>Semua Topik</option>
+        <option value="aljabar">Aljabar & Fungsi</option>
+        <option value="kalkulus">Kalkulus</option>
+        <option value="geometri">Geometri & Vektor</option>
+        <option value="statistika">Statistika & Peluang</option>
+        <option value="logika">Logika & Himpunan</option>
+        <option value="fundamental">Aksioma & Fundamental</option>
+      </select>
+    </div>
+    <div class="flex justify-between items-center mb-4 px-1">
+      <h2 class="text-lg font-semibold text-cyan-300"><i class="fas fa-list-ul"></i> Daftar Istilah</h2>
+      <span id="kamus-count" class="text-xs font-mono px-3 py-1 rounded-full" style="background:var(--accent-cyan-dim);color:var(--accent-cyan)">0 entri</span>
+    </div>
+    <div id="kamus-results-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    </div>
+  </div>
+  
+  <!-- MODAL (Tetap sama, hanya dipindah ke dalam panel jika perlu, tapi lebih aman di luar) -->
+  <div id="kamus-term-modal" class="kamus-modal-overlay">
+    <div class="kamus-modal-content">
+      <button id="kamus-modal-close-btn" class="kamus-modal-close-btn" aria-label="Tutup">&times;</button>
+      <h2 id="kamus-modal-title"></h2>
+      <p id="kamus-modal-intuition"></p>
+      <h3><i class="fas fa-brain"></i> Penjelasan Lanjut (UMT)</h3>
+      <p id="kamus-modal-penjelasan"></p>
+      <h3><i class="fas fa-book-open"></i> Definisi Formal</h3>
+      <div id="kamus-modal-formal"></div>
+      <div class="kamus-knowledge-network">
+        <h4>Prasyarat (Pahami Ini Dulu):</h4>
+        <div id="kamus-modal-prasyarat"></div>
+        <h4 style="margin-top: 1rem;">Konsep Terkait (Jelajahi Selanjutnya):</h4>
+        <div id="kamus-modal-terkait"></div>
+      </div>
+    </div>
+  </div>
+  `;
+  initializeKamusPageLogic();
 }
 
 function initializeKamusPageLogic() {
-    // --- Variabel dan Elemen DOM (Namespaced) ---
-    // Semua selector BUKAN lagi variabel global, tapi lokal di dalam fungsi ini
-    const searchInput = document.getElementById('kamus-search');
-    const filterSelect = document.getElementById('kamus-filter');
-    const resultsList = document.getElementById('kamus-results-list');
-    const modal = document.getElementById('kamus-term-modal'); // ID unik
-    const modalTitle = document.getElementById('kamus-modal-title');
-    const modalIntuition = document.getElementById('kamus-modal-intuition');
-    const modalPenjelasan = document.getElementById('kamus-modal-penjelasan');
-    const modalFormal = document.getElementById('kamus-modal-formal');
-    const modalPrasyarat = document.getElementById('kamus-modal-prasyarat');
-    const modalTerkait = document.getElementById('kamus-modal-terkait');
-    const modalCloseBtn = document.getElementById('kamus-modal-close-btn'); // ID unik
+  const searchInput = document.getElementById('kamus-search');
+  const filterSelect = document.getElementById('kamus-filter');
+  const resultsList = document.getElementById('kamus-results-list');
+  const countBadge = document.getElementById('kamus-count'); // Baru
+  const modal = document.getElementById('kamus-term-modal');
+  const modalTitle = document.getElementById('kamus-modal-title');
+  const modalIntuition = document.getElementById('kamus-modal-intuition');
+  const modalPenjelasan = document.getElementById('kamus-modal-penjelasan');
+  const modalFormal = document.getElementById('kamus-modal-formal');
+  const modalPrasyarat = document.getElementById('kamus-modal-prasyarat');
+  const modalTerkait = document.getElementById('kamus-modal-terkait');
+  const modalCloseBtn = document.getElementById('kamus-modal-close-btn');
 
-    // Pastikan elemen ada sebelum menambah listener
-    if (!searchInput) {
-        console.error("Kamus JS: Elemen tidak ditemukan. Berhenti.");
-        return;
+  if (!searchInput) return;
+
+  let currentFilter = 'all';
+  let currentSearch = '';
+
+  function renderTerms() {
+    resultsList.innerHTML = '';
+    const searchTerm = currentSearch.toLowerCase();
+    let matchCount = 0;
+    
+    for (const key in kamusData) {
+      const termData = kamusData[key];
+      const categoryMatch = currentFilter === 'all' || termData.category === currentFilter;
+      const searchMatch = termData.term.toLowerCase().includes(searchTerm) || 
+                          termData.intuition.toLowerCase().includes(searchTerm) ||
+                          termData.penjelasan.toLowerCase().includes(searchTerm);
+      
+      if (categoryMatch && searchMatch) {
+        matchCount++;
+        const item = document.createElement('div');
+        item.className = 'result-item';
+        item.setAttribute('data-id', key);
+        item.innerHTML = `<h3>${termData.term}</h3><p>${termData.intuition}</p>`;
+        item.addEventListener('click', () => showKamusTermDetail(key));
+        resultsList.appendChild(item);
+      }
     }
+    // Update badge hitung
+    if (countBadge) countBadge.textContent = `${matchCount} entri ditemukan`;
+  }
 
-    let currentFilter = 'all';
-    let currentSearch = '';
+  function openKamusModal() {
+    document.body.style.paddingRight = `${window.innerWidth - document.documentElement.clientWidth}px`;
+    document.body.classList.add('kamus-modal-open');
+    modal.classList.add('active');
+    document.querySelector('aside').style.zIndex = '1';
+  }
+  function closeKamusModal() {
+    document.body.classList.remove('kamus-modal-open');
+    document.body.style.paddingRight = '';
+    modal.classList.remove('active');
+    document.querySelector('aside').style.zIndex = '';
+  }
 
-    // --- Fungsi Internal Kamus ---
-
-    function renderTerms() {
-        resultsList.innerHTML = '';
-        const searchTerm = currentSearch.toLowerCase();
-        
-        for (const key in kamusData) {
-            const termData = kamusData[key];
-            const categoryMatch = currentFilter === 'all' || termData.category === currentFilter;
-            const searchMatch = termData.term.toLowerCase().includes(searchTerm) || termData.intuition.toLowerCase().includes(searchTerm);
-            
-            if (categoryMatch && searchMatch) {
-                const item = document.createElement('div');
-                item.className = 'result-item'; // Class ini dari CSS yg kita tambahkan
-                item.setAttribute('data-id', key);
-                item.innerHTML = `
-                    <h3>${termData.term}</h3>
-                    <p>${termData.intuition}</p>
-                `;
-                // 'showKamusTermDetail' BUKAN fungsi global, tapi didefinisikan di bawah
-                item.addEventListener('click', () => showKamusTermDetail(key));
-                resultsList.appendChild(item);
-            }
-        }
-    }
-
-    function openKamusModal() { // Nama fungsi di-namespaced
-        const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-        document.body.style.paddingRight = `${scrollbarWidth}px`;
-        document.body.classList.add('kamus-modal-open'); // Class CSS unik
-        modal.classList.add('active'); // Class CSS unik
-
-        document.querySelector('aside').style.zIndex = '1';
-    }
-
-    function closeKamusModal() { // Nama fungsi di-namespaced
-        document.body.classList.remove('kamus-modal-open');
-        document.body.style.paddingRight = '';
-        modal.classList.remove('active');
-
-        document.querySelector('aside').style.zIndex = '';
-    }
-
-    function showKamusTermDetail(termId) {
-        const data = kamusData[termId];
-        if (!data) return;
-
-        const isModalAlreadyOpen = modal.classList.contains('active');
-
-        modalTitle.textContent = data.term;
-        modalIntuition.textContent = `"${data.intuition}"`;
-        modalPenjelasan.textContent = data.penjelasan;
-        modalFormal.innerHTML = `<p>${data.formal}</p>`;
-        
-        if (window.MathJax) {
-            MathJax.typesetPromise([modalPenjelasan, modalFormal]).catch(err => console.log(err));
-        }
-
-        modalPrasyarat.innerHTML = '';
-        if (data.prerequisites.length > 0) {
-            data.prerequisites.forEach(key => {
-                const term = kamusData[key];
-                if (term) {
-                    // Gunakan class .kamus-nav-link
-                    const link = document.createElement('span');
-                    link.className = 'kamus-nav-link';
-                    link.textContent = term.term;
-                    link.onclick = () => showKamusTermDetail(key); // Panggil fungsi ini lagi
-                    modalPrasyarat.appendChild(link);
-                }
-            });
-        } else {
-            modalPrasyarat.innerHTML = `<span style="color: var(--text-secondary); font-size: 0.9rem;">Tidak ada prasyarat dasar.</span>`;
-        }
-
-        modalTerkait.innerHTML = '';
-        data.related.forEach(key => {
-            const term = kamusData[key];
-            if (term) {
-                const link = document.createElement('span');
-                link.className = 'kamus-nav-link';
-                link.textContent = term.term;
-                link.onclick = () => showKamusTermDetail(key); // Panggil fungsi ini lagi
-                modalTerkait.appendChild(link);
-            }
-        });
-
-        if (!isModalAlreadyOpen) {
-            openKamusModal();
-        }
-    }
-
-    // --- Event Listeners ---
-    searchInput.addEventListener('input', (e) => {
-        currentSearch = e.target.value;
-        renderTerms();
-    });
-
-    filterSelect.addEventListener('change', (e) => {
-        currentFilter = e.target.value;
-        renderTerms();
-    });
-
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            closeKamusModal();
-        }
+  function showKamusTermDetail(termId) {
+    const data = kamusData[termId];
+    if (!data) return;
+    modalTitle.textContent = data.term;
+    modalIntuition.textContent = `"${data.intuition}"`;
+    modalPenjelasan.textContent = data.penjelasan;
+    modalFormal.innerHTML = `<p>${data.formal}</p>`;
+    
+    if (window.MathJax) MathJax.typesetPromise([modalPenjelasan, modalFormal]).catch(console.log);
+    
+    modalPrasyarat.innerHTML = data.prerequisites.length ? '' : `<span style="color:var(--text-secondary)">Tidak ada prasyarat dasar.</span>`;
+    data.prerequisites.forEach(key => {
+      const t = kamusData[key];
+      if (t) { const l = document.createElement('span'); l.className = 'kamus-nav-link'; l.textContent = t.term; l.onclick = () => showKamusTermDetail(key); modalPrasyarat.appendChild(l); }
     });
     
-    modalCloseBtn.addEventListener('click', () => {
-        closeKamusModal();
+    modalTerkait.innerHTML = '';
+    data.related.forEach(key => {
+      const t = kamusData[key];
+      if (t) { const l = document.createElement('span'); l.className = 'kamus-nav-link'; l.textContent = t.term; l.onclick = () => showKamusTermDetail(key); modalTerkait.appendChild(l); }
     });
+    openKamusModal();
+  }
 
-    // --- Render Awal ---
-    renderTerms();
+  searchInput.addEventListener('input', e => { currentSearch = e.target.value; renderTerms(); });
+  filterSelect.addEventListener('change', e => { currentFilter = e.target.value; renderTerms(); });
+  modal.addEventListener('click', e => { if (e.target === modal) closeKamusModal(); });
+  modalCloseBtn.addEventListener('click', closeKamusModal);
+  
+  renderTerms();
 }
 
 function getTotalItemCount() {
