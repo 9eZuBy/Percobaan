@@ -803,49 +803,571 @@ if (typeof allContentData !== 'undefined') {
 }
 
 const kamusData = {
-  // ── FUNDAMENTAL & AKSIOMA ──
-  'aksioma_peano': { term: "Aksioma Peano", category: "fundamental", intuition: "Aturan dasar yang mendefinisikan bilangan asli dari nol.", penjelasan: "Lima pernyataan sederhana yang menjadi fondasi aritmetika. Dimulai dari '0 adalah bilangan asli', lalu setiap bilangan memiliki penerus yang unik, dan seterusnya.", formal: "1. $0 \\in \\mathbb{N}$<br>2. $\\forall n \\in \\mathbb{N}, S(n) \\in \\mathbb{N}$<br>3. $\\forall n,m, S(n)=S(m) \\Rightarrow n=m$<br>4. $\\forall n \\neq 0, \\nexists m, S(m)=n$<br>5. Prinsip Induksi Matematika", prerequisites: [], related: ['induksi_matematika', 'bilangan_asli'] },
-  'teorema_fundamental_kalkulus': { term: "Teorema Fundamental Kalkulus", category: "kalkulus", intuition: "Jembatan ajaib yang menghubungkan turunan dan integral.", penjelasan: "Menunjukkan bahwa diferensiasi dan integrasi adalah operasi yang saling membalik. Jika Anda menghitung luas di bawah kurva dengan integral, lalu menurunkannya, Anda kembali ke fungsi asalnya.", formal: "Jika $F(x) = \\int_a^x f(t) dt$, maka $F'(x) = f(x)$. Sebaliknya, $\\int_a^b f(x) dx = F(b) - F(a)$", prerequisites: ['turunan', 'integral'], related: ['kalkulus', 'limit'] },
-  'identitas_euler': { term: "Identitas Euler", category: "fundamental", intuition: "Persamaan paling indah di dunia matematika.", penjelasan: "Menghubungkan lima konstanta terpenting: $e, i, \\pi, 1, 0$ dalam satu kesetaraan sederhana. Muncul dari deret Taylor dan bilangan kompleks.", formal: "$e^{i\\pi} + 1 = 0$", prerequisites: ['bilangan_kompleks', 'trigonometri'], related: ['eksponen', 'trigonometri'] },
-  'induksi_matematika': { term: "Induksi Matematika", category: "logika", intuition: "Teknik pembuktian seperti domino yang jatuh berantai.", penjelasan: "Buktikan langkah pertama benar (basis), lalu tunjukkan jika langkah ke-$k$ benar, maka langkah ke-$k+1$ juga benar. Otomatis, semua langkah setelahnya benar.", formal: "1. Basis: $P(1)$ benar<br>2. Hipotesis: Anggap $P(k)$ benar<br>3. Induksi: Buktikan $P(k) \\Rightarrow P(k+1)$", prerequisites: ['logika_matematika', 'aksioma_peano'], related: ['barisan_deret', 'aksioma_peano'] },
+  /* ─────────────────────────────────────────────────────────────
+   *  FUNDAMENTAL: Konsep Dasar Matematika
+   * ─────────────────────────────────────────────────────────── */
+  'aksioma': {
+    term: "Aksioma",
+    category: "fundamental",
+    intuition: "Pernyataan dasar yang diterima benar tanpa perlu dibuktikan.",
+    penjelasan: "Aksioma adalah fondasi sistem matematika. Semua teorema dan sifat lain diturunkan secara logis dari aksioma. Contoh: Aksioma Peano untuk bilangan asli, atau aksioma Euclides untuk geometri.",
+    formal: "Dalam sistem formal, aksioma adalah pernyataan $P$ yang diasumsikan benar: $\\vdash P$. Tidak ada pembuktian yang diperlukan untuk $P$ itu sendiri.",
+    prerequisites: [],
+    related: ['postulat', 'teorema', 'definisi', 'logika_matematika']
+  },
+  'postulat': {
+    term: "Postulat",
+    category: "fundamental",
+    intuition: "Asumsi dasar dalam suatu cabang matematika, mirip aksioma tetapi lebih spesifik konteksnya.",
+    penjelasan: "Postulat sering digunakan dalam geometri. Contoh: Postulat kesejajaran Euclides menyatakan bahwa melalui satu titik di luar garis, hanya ada satu garis yang sejajar dengan garis tersebut.",
+    formal: "Postulat kesejajaran Euclides: $\\forall \\ell, \\forall P \\notin \\ell, \\exists! m: P \\in m \\land m \\parallel \\ell$",
+    prerequisites: ['aksioma'],
+    related: ['aksioma', 'geometri_euclides', 'teorema']
+  },
+  'definisi': {
+    term: "Definisi",
+    category: "fundamental",
+    intuition: "Kesepakatan tentang makna suatu istilah atau simbol.",
+    penjelasan: "Definisi tidak perlu dibuktikan; ia menetapkan arti. Contoh: 'Segitiga adalah bangun datar dengan tiga sisi.' Definisi harus jelas, tidak ambigu, dan konsisten dengan aksioma.",
+    formal: "Definisi $D$: $X \\stackrel{\\text{def}}{=} Y$ berarti $X$ dan $Y$ memiliki makna yang sama dalam sistem ini.",
+    prerequisites: [],
+    related: ['aksioma', 'teorema', 'notasi']
+  },
+  'teorema': {
+    term: "Teorema",
+    category: "fundamental",
+    intuition: "Pernyataan yang telah dibuktikan benar berdasarkan aksioma dan definisi.",
+    penjelasan: "Teorema adalah hasil utama dalam matematika. Pembuktiannya menggunakan logika deduktif. Contoh: Teorema Pythagoras, Teorema Fundamental Kalkulus.",
+    formal: "Jika $H_1, H_2, \\dots, H_n$ adalah hipotesis, maka teorema berbentuk: $(H_1 \\land H_2 \\land \\dots \\land H_n) \\Rightarrow C$, dengan $C$ kesimpulan yang terbukti.",
+    prerequisites: ['aksioma', 'definisi', 'logika_matematika'],
+    related: ['lemma', 'korolari', 'bukti_matematika']
+  },
+  'lemma': {
+    term: "Lemma",
+    category: "fundamental",
+    intuition: "Teorema kecil yang digunakan sebagai batu loncatan untuk membuktikan teorema yang lebih besar.",
+    penjelasan: "Lemma sering disebut 'teorema pembantu'. Contoh: Lemma Zorn dalam teori himpunan, atau Lemma Euclides dalam teori bilangan.",
+    formal: "Lemma $L$: $P \\Rightarrow Q$, digunakan dalam pembuktian teorema $T$: $(Q \\land R) \\Rightarrow S$.",
+    prerequisites: ['teorema'],
+    related: ['teorema', 'korolari', 'bukti_matematika']
+  },
+  'korolari': {
+    term: "Korolari (Akibat)",
+    category: "fundamental",
+    intuition: "Hasil yang langsung mengikuti dari teorema yang telah dibuktikan, tanpa perlu pembuktian panjang.",
+    penjelasan: "Korolari adalah 'bonus' dari teorema. Contoh: Dari Teorema Jumlah Sudut Segitiga = 180°, korolarinya: 'Segitiga tidak mungkin memiliki dua sudut tumpul.'",
+    formal: "Jika $\\vdash T$ dan $T \\Rightarrow K$, maka $\\vdash K$ (korolari).",
+    prerequisites: ['teorema'],
+    related: ['teorema', 'lemma', 'bukti_matematika']
+  },
+  'bukti_matematika': {
+    term: "Bukti Matematika",
+    category: "fundamental",
+    intuition: "Rangkaian argumen logis yang menunjukkan kebenaran suatu pernyataan.",
+    penjelasan: "Bukti menggunakan aksioma, definisi, dan teorema sebelumnya. Metode umum: langsung, kontradiksi, induksi, kontraposisi.",
+    formal: "Bukti $P$: Deretan pernyataan $S_1, S_2, \\dots, S_n$ dengan $S_1$ aksioma/definisi, $S_n = P$, dan setiap $S_i$ mengikuti dari sebelumnya via aturan inferensi.",
+    prerequisites: ['logika_matematika', 'aksioma'],
+    related: ['teorema', 'induksi_matematika', 'kontradiksi']
+  },
 
-  // ── ALJABAR & TRIGONOMETRI ──
-  'logaritma': { term: "Logaritma", category: "aljabar", intuition: "Logaritma adalah sebuah PERTANYAAN. Ia bertanya: 'Pangkat berapa?'", penjelasan: "$^2\\log 8$ secara harfiah bertanya, '2 harus dipangkatkan berapa agar hasilnya 8?'. Jawabannya adalah 3. Ini adalah alat untuk 'membuka' atau mencari pangkat dalam operasi eksponensial.", formal: "Jika $a^c = b$, maka $^a\\log b = c$. Dimana $a$ adalah basis, $b$ adalah numerus, dan $c$ adalah hasilnya (pangkat).", prerequisites: ['eksponen'], related: ['persamaan_log', 'skala_ph'] },
-  'eksponen': { term: "Eksponen (Pangkat)", category: "aljabar", intuition: "Eksponen adalah cara singkat menulis perkalian berulang.", penjelasan: "$3^4$ berarti $3 \\times 3 \\times 3 \\times 3$. Ini adalah 'gembok' yang 'dikunci' oleh logaritma.", formal: "Bentuk $a^n$ (dibaca 'a pangkat n') adalah operasi di mana $a$ (basis) dikalikan dengan dirinya sendiri sebanyak $n$ kali (eksponen).", prerequisites: [], related: ['logaritma', 'persamaan_eksponen'] },
-  'persamaan_kuadrat': { term: "Persamaan Kuadrat", category: "aljabar", intuition: "Persamaan yang grafiknya membentuk kurva parabola.", penjelasan: "Memiliki bentuk umum $ax^2 + bx + c = 0$. Nilai diskriminan ($D = b^2 - 4ac$) menentukan apakah akar-akarnya real, kembar, atau imajiner.", formal: "Rumus ABC: $x_{1,2} = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$", prerequisites: ['aljabar'], related: ['fungsi', 'diskriminan'] },
-  'matriks_determinan': { term: "Matriks & Determinan", category: "aljabar", intuition: "Tabel bilangan yang merepresentasikan transformasi linear.", penjelasan: "Matriks menyusun data dalam baris & kolom. Determinan adalah angka skalar yang memberi tahu 'faktor skala luas/volume' setelah transformasi, dan apakah matriks bisa dibalik (invertible).", formal: "Untuk matriks $2 \\times 2$: $\\det\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix} = ad - bc$", prerequisites: ['aljabar', 'vektor'], related: ['transformasi_geometri', 'sistem_persamaan'] },
-  'trigonometri': { term: "Trigonometri", category: "geometri", intuition: "Ilmu tentang hubungan sudut dan sisi segitiga.", penjelasan: "Sinus, Cosinus, Tangen, dll. Awalnya untuk segitiga siku-siku, lalu diperluas ke lingkaran satuan untuk memodelkan gelombang & gerak periodik.", formal: "$\\sin \\theta = \\frac{\\text{depan}}{\\text{miring}}$, $\\cos \\theta = \\frac{\\text{samping}}{\\text{miring}}$, $\\tan \\theta = \\frac{\\sin \\theta}{\\cos \\theta}$", prerequisites: ['pythagoras'], related: ['lingkaran_satuan', 'fungsi_periodik'] },
-  'permutasi_kombinasi': { term: "Permutasi & Kombinasi", category: "statistika", intuition: "Seni menghitung cara menyusun & memilih objek.", penjelasan: "Permutasi: urutan PENTING (misal: sandi PIN). Kombinasi: urutan TIDAK PENTING (misal: memilih tim).", formal: "$P(n,r) = \\frac{n!}{(n-r)!}$ | $C(n,r) = \\binom{n}{r} = \\frac{n!}{r!(n-r)!}$", prerequisites: ['faktorial'], related: ['peluang', 'kaidah_pencacahan'] },
-  'bilangan_kompleks': { term: "Bilangan Kompleks", category: "aljabar", intuition: "Angka yang punya bagian 'nyata' dan bagian 'khayal'.", penjelasan: "Memecahkan persamaan yang tidak punya solusi real (misal $x^2 + 1 = 0$). Diperkenalkan satuan imajiner $i = \\sqrt{-1}$.", formal: "$z = a + bi$, dengan $a,b \\in \\mathbb{R}$ dan $i^2 = -1$", prerequisites: ['persamaan_kuadrat'], related: ['identitas_euler', 'trigonometri'] },
-  'fungsi_invers': { term: "Fungsi Invers", category: "aljabar", intuition: "Mesin balikan yang mengembalikan output menjadi input semula.", penjelasan: "Jika $f(x)$ memetakan $x \\to y$, maka $f^{-1}(y)$ memetakan $y \\to x$. Syarat: fungsi harus satu-satu (injektif).", formal: "$f(f^{-1}(x)) = x$ dan $f^{-1}(f(x)) = x$. Grafik $f^{-1}$ adalah refleksi $f$ terhadap garis $y=x$.", prerequisites: ['fungsi'], related: ['logaritma', 'eksponen'] },
+  /* ─────────────────────────────────────────────────────────────
+   *  LOGIKA MATEMATIKA
+   * ─────────────────────────────────────────────────────────── */
+  'logika_matematika': {
+    term: "Logika Matematika",
+    category: "logika",
+    intuition: "Bahasa formal untuk berpikir benar: Benar atau Salah, tidak ada abu-abu.",
+    penjelasan: "Logika matematika mempelajari proposisi, operator (AND, OR, NOT, IMPLIES), dan aturan inferensi. Ini adalah dasar pembuktian dan pemrograman.",
+    formal: "Proposisi $p$: pernyataan bernilai $T$ (benar) atau $F$ (salah). Operator: $\\neg p$ (negasi), $p \\land q$ (konjungsi), $p \\lor q$ (disjungsi), $p \\Rightarrow q$ (implikasi).",
+    prerequisites: [],
+    related: ['himpunan', 'aksioma', 'kuantor']
+  },
+  'proposisi': {
+    term: "Proposisi",
+    category: "logika",
+    intuition: "Pernyataan yang jelas benar atau salah, tidak keduanya.",
+    penjelasan: "'2 + 2 = 4' adalah proposisi (benar). 'x > 3' bukan proposisi jika x tidak didefinisikan. Proposisi adalah unit dasar logika.",
+    formal: "Proposisi $p \\in \\{T, F\\}$. Tabel kebenaran mendefinisikan nilai $p$ untuk setiap interpretasi.",
+    prerequisites: ['logika_matematika'],
+    related: ['predikat', 'kuantor', 'tabel_kebenaran']
+  },
+  'implikasi': {
+    term: "Implikasi (Jika-Maka)",
+    category: "logika",
+    intuition: "'Jika P maka Q': P cukup untuk Q, tetapi Q bisa benar tanpa P.",
+    penjelasan: "Implikasi $p \\Rightarrow q$ salah hanya jika $p$ benar dan $q$ salah. Dalam matematika, ini adalah struktur utama teorema.",
+    formal: "$p \\Rightarrow q \\equiv \\neg p \\lor q$. Kontraposisi: $p \\Rightarrow q \\equiv \\neg q \\Rightarrow \\neg p$ (ekuivalen logis).",
+    prerequisites: ['logika_matematika', 'proposisi'],
+    related: ['konvers', 'invers', 'kontraposisi']
+  },
+  'konjungsi_disjungsi': {
+    term: "Konjungsi & Disjungsi",
+    category: "logika",
+    intuition: "AND dan OR: menggabungkan pernyataan dengan aturan jelas.",
+    penjelasan: "Konjungsi ($p \\land q$) benar hanya jika keduanya benar. Disjungsi ($p \\lor q$) benar jika minimal satu benar (inklusi).",
+    formal: "$p \\land q$: $T$ iff $p=T \\land q=T$. $p \\lor q$: $F$ iff $p=F \\land q=F$. Hukum De Morgan: $\\neg(p \\land q) \\equiv \\neg p \\lor \\neg q$.",
+    prerequisites: ['logika_matematika'],
+    related: ['negasi', 'implikasi', 'ekuivalensi']
+  },
+  'negasi': {
+    term: "Negasi (Ingkaran)",
+    category: "logika",
+    intuition: "Membalik nilai kebenaran: Benar jadi Salah, Salah jadi Benar.",
+    penjelasan: "Negasi $\\neg p$ adalah 'tidak p'. Penting dalam pembuktian kontradiksi dan kontraposisi.",
+    formal: "$\\neg(\\neg p) \\equiv p$ (double negation). $\\neg(p \\Rightarrow q) \\equiv p \\land \\neg q$.",
+    prerequisites: ['logika_matematika'],
+    related: ['kontradiksi', 'kontraposisi']
+  },
+  'kuantor': {
+    term: "Kuantor (Untuk Semua / Ada)",
+    category: "logika",
+    intuition: "'Untuk setiap' dan 'Terdapat': mengkuantifikasi variabel dalam pernyataan.",
+    penjelasan: "Kuantor universal ($\\forall$): 'semua'. Kuantor eksistensial ($\\exists$): 'ada setidaknya satu'. Urutan kuantor penting: $\\forall x \\exists y$ berbeda dengan $\\exists y \\forall x$.",
+    formal: "$\\forall x \\in S, P(x)$: $P$ benar untuk setiap $x$ di $S$. $\\exists x \\in S: P(x)$: ada $x$ di $S$ sehingga $P(x)$ benar.",
+    prerequisites: ['logika_matematika', 'himpunan'],
+    related: ['negasi', 'predikat']
+  },
 
-  // ── KALKULUS ──
-  'limit': { term: "Limit", category: "kalkulus", intuition: "Limit adalah tentang NILAI TUJUAN. Ia tidak bertanya 'ada di mana?', tapi 'menuju ke mana?'", penjelasan: "Bayangkan Anda berjalan mendekati sebuah titik di grafik. Limit adalah nilai Y yang Anda dekati, tidak peduli apakah titik itu sendiri berlubang atau tidak. Kuncinya adalah pendekatan dari kiri dan kanan harus bertemu.", formal: "Notasi $\\lim_{x \\to c} f(x) = L$ berarti nilai $f(x)$ dapat dibuat sedekat mungkin ke $L$ dengan membuat $x$ cukup dekat (tetapi tidak sama dengan) $c$.", prerequisites: ['fungsi'], related: ['turunan', 'kontinuitas'] },
-  'turunan': { term: "Turunan (Derivative)", category: "kalkulus", intuition: "Alat untuk mengukur KEMIRINGAN SESAAT atau laju perubahan instan.", penjelasan: "Jika Anda melihat grafik, turunan memberi tahu Anda seberapa curam grafik itu di TITIK MANAPUN. Ini dihitung dengan mengambil limit dari gradien antara dua titik yang dibuat sangat dekat.", formal: "Turunan dari $f(x)$ adalah $f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}$.", prerequisites: ['limit', 'fungsi', 'gradien'], related: ['integral', 'laju_perubahan', 'optimasi'] },
-  'integral': { term: "Integral", category: "kalkulus", intuition: "Alat untuk menghitung LUAS di bawah kurva.", penjelasan: "Jika turunan adalah tentang memecah sesuatu (kemiringan), integral adalah tentang menggabungkannya kembali (luas).", formal: "$\\int f(x) dx = F(x) + C$, dimana $F'(x) = f(x)$", prerequisites: ['turunan'], related: ['luas_area', 'volume_benda_putar', 'teorema_fundamental_kalkulus'] },
-  'aturan_rantai': { term: "Aturan Rantai (Chain Rule)", category: "kalkulus", intuition: "Cara menurunkan fungsi yang 'bersarang' di dalam fungsi lain.", penjelasan: "Seperti mengupas bawang lapis per lapis. Turunkan luarannya, kali dengan turunan dalamnya.", formal: "$\\frac{d}{dx} f(g(x)) = f'(g(x)) \\cdot g'(x)$", prerequisites: ['turunan', 'fungsi'], related: ['turunan', 'integral_substitusi'] },
-  'integral_parsial': { term: "Integral Parsial", category: "kalkulus", intuition: "Kebalikan dari aturan perkalian turunan. Memecah integral sulit jadi dua bagian.", penjelasan: "Gunakan saat integran adalah perkalian dua fungsi berbeda tipe (misal: polinomial × eksponensial). Pilih $u$ yang mudah diturunkan, $dv$ yang mudah diintegralkan.", formal: "$\\int u \\, dv = uv - \\int v \\, du$", prerequisites: ['integral', 'turunan'], related: ['integral', 'aturan_rantai'] },
-  'deret_taylor': { term: "Deret Taylor", category: "kalkulus", intuition: "Menyatakan fungsi rumit sebagai jumlah tak hingga suku polinomial.", penjelasan: "Memungkinkan kita mengaproksimasi fungsi transenden (seperti $\\sin x$, $e^x$) hanya dengan penjumlahan, perkalian, dan pangkat. Semakin banyak suku, semakin akurat.", formal: "$f(x) = \\sum_{n=0}^{\\infty} \\frac{f^{(n)}(a)}{n!} (x-a)^n$", prerequisites: ['turunan', 'deret'], related: ['kalkulus', 'aprokimasi'] },
-  'kontinuitas': { term: "Kontinuitas", category: "kalkulus", intuition: "Artinya grafik 'tersambung' dan tidak putus.", penjelasan: "Sebuah fungsi kontinu di suatu titik jika Anda bisa menggambar grafiknya melewati titik itu tanpa mengangkat pensil Anda. Secara teknis, nilai limitnya harus sama dengan nilai fungsinya.", formal: "Fungsi $f$ kontinu di $c$ jika $\\lim_{x \\to c} f(x) = f(c)$", prerequisites: ['limit'], related: ['limit', 'teorema_fundamental_kalkulus'] },
+  /* ─────────────────────────────────────────────────────────────
+   *  TEORI HIMPUNAN DASAR
+   * ─────────────────────────────────────────────────────────── */
+  'himpunan': {
+    term: "Himpunan",
+    category: "himpunan",
+    intuition: "Kumpulan objek yang didefinisikan dengan jelas.",
+    penjelasan: "Himpunan adalah konsep primitif dalam matematika. Contoh: $\\mathbb{N} = \\{1,2,3,\\dots\\}$, $\\emptyset$ (himpunan kosong). Operasi: gabungan, irisan, komplemen.",
+    formal: "Himpunan $S$: koleksi objek $x$ dengan sifat $P(x)$. Notasi: $x \\in S$ (x anggota S), $x \\notin S$ (bukan anggota).",
+    prerequisites: ['logika_matematika'],
+    related: ['anggota_himpunan', 'gabungan', 'irisan', 'komplemen']
+  },
+  'anggota_himpunan': {
+    term: "Anggota Himpunan",
+    category: "himpunan",
+    intuition: "Objek individu yang termasuk dalam suatu himpunan.",
+    penjelasan: "Jika $x$ adalah elemen dari himpunan $S$, ditulis $x \\in S$. Keanggotaan harus terdefinisi jelas untuk setiap objek.",
+    formal: "$x \\in S \\iff P(x)$ benar, dengan $P$ sifat pendefinisi $S$.",
+    prerequisites: ['himpunan'],
+    related: ['himpunan_kosong', 'himpunan_semesta']
+  },
+  'himpunan_kosong': {
+    term: "Himpunan Kosong",
+    category: "himpunan",
+    intuition: "Himpunan tanpa anggota sama sekali.",
+    penjelasan: "Dinotasikan $\\emptyset$ atau $\\{\\}$. Unik: hanya ada satu himpunan kosong. Setiap pernyataan 'semua anggota $\\emptyset$ memenuhi P' benar secara vakum.",
+    formal: "$\\emptyset = \\{x : x \\neq x\\}$. $\\forall S: \\emptyset \\subseteq S$.",
+    prerequisites: ['himpunan'],
+    related: ['himpunan_semesta', 'subset']
+  },
+  'himpunan_semesta': {
+    term: "Himpunan Semesta",
+    category: "himpunan",
+    intuition: "Himpunan yang memuat semua objek yang sedang dibahas.",
+    penjelasan: "Dinotasikan $U$ atau $S$. Konteks menentukan semesta: dalam aritmetika, $U = \\mathbb{R}$; dalam geometri bidang, $U$ adalah semua titik pada bidang.",
+    formal: "Untuk diskusi tertentu, $\\forall x: x \\in U$. Komplemen $A^c = \\{x \\in U : x \\notin A\\}$.",
+    prerequisites: ['himpunan'],
+    related: ['komplemen', 'himpunan_kosong']
+  },
+  'gabungan': {
+    term: "Gabungan Himpunan",
+    category: "himpunan",
+    intuition: "Menggabungkan semua anggota dari dua himpunan atau lebih.",
+    penjelasan: "Gabungan $A \\cup B$ berisi semua elemen yang ada di $A$ atau $B$ (atau keduanya). Sifat: komutatif, asosiatif, idempoten.",
+    formal: "$A \\cup B = \\{x : x \\in A \\lor x \\in B\\}$. Hukum De Morgan: $(A \\cup B)^c = A^c \\cap B^c$.",
+    prerequisites: ['himpunan', 'logika_matematika'],
+    related: ['irisan', 'selisih', 'komplemen']
+  },
+  'irisan': {
+    term: "Irisan Himpunan",
+    category: "himpunan",
+    intuition: "Hanya mengambil anggota yang sama dari dua himpunan.",
+    penjelasan: "Irisan $A \\cap B$ berisi elemen yang ada di $A$ dan $B$ sekaligus. Jika $A \\cap B = \\emptyset$, himpunan disebut saling lepas.",
+    formal: "$A \\cap B = \\{x : x \\in A \\land x \\in B\\}$. $A \\cap B = B \\cap A$ (komutatif).",
+    prerequisites: ['himpunan', 'logika_matematika'],
+    related: ['gabungan', 'selisih', 'subset']
+  },
+  'komplemen': {
+    term: "Komplemen Himpunan",
+    category: "himpunan",
+    intuition: "Semua yang bukan anggota himpunan tersebut (dalam semesta).",
+    penjelasan: "Komplemen $A^c$ berisi semua elemen di semesta $U$ yang tidak ada di $A$. Bergantung pada definisi semesta.",
+    formal: "$A^c = \\{x \\in U : x \\notin A\\}$. $(A^c)^c = A$. $A \\cup A^c = U$, $A \\cap A^c = \\emptyset$.",
+    prerequisites: ['himpunan', 'himpunan_semesta'],
+    related: ['selisih', 'gabungan', 'irisan']
+  },
+  'selisih_himpunan': {
+    term: "Selisih Himpunan",
+    category: "himpunan",
+    intuition: "Ambil anggota A yang tidak ada di B.",
+    penjelasan: "Selisih $A - B$ (atau $A \\setminus B$) berisi elemen di $A$ tetapi bukan di $B$. Tidak komutatif: $A - B \\neq B - A$ umumnya.",
+    formal: "$A \\setminus B = \\{x : x \\in A \\land x \\notin B\\} = A \\cap B^c$.",
+    prerequisites: ['himpunan', 'komplemen'],
+    related: ['irisan', 'gabungan', 'selisih_simetris']
+  },
+  'subset': {
+    term: "Himpunan Bagian (Subset)",
+    category: "himpunan",
+    intuition: "Semua anggota A juga anggota B → A adalah bagian dari B.",
+    penjelasan: "$A \\subseteq B$ berarti setiap elemen $A$ juga elemen $B$. Subset boleh sama dengan himpunan asal. Subset sejati ($\\subset$) berarti $A \\subseteq B$ dan $A \\neq B$.",
+    formal: "$A \\subseteq B \\iff \\forall x: x \\in A \\Rightarrow x \\in B$.",
+    prerequisites: ['himpunan', 'implikasi'],
+    related: ['himpunan_kosong', 'himpunan_semesta', 'ekuivalensi_himpunan']
+  },
 
-  // ── GEOMETRI & VEKTOR ──
-  'pythagoras': { term: "Teorema Pythagoras", category: "geometri", intuition: "Aturan khusus untuk menemukan panjang sisi miring dari segitiga siku-siku.", penjelasan: "Pada segitiga siku-siku, kuadrat dari sisi miring (sisi terpanjang) sama dengan jumlah dari kuadrat dua sisi lainnya. Ini adalah fondasi dari hampir semua perhitungan jarak dalam geometri.", formal: "Jika $a$ dan $b$ adalah sisi siku-siku dan $c$ adalah sisi miring, maka $a^2 + b^2 = c^2$.", prerequisites: [], related: ['jarak_titik', 'lingkaran_satuan', 'trigonometri'] },
-  'vektor': { term: "Vektor", category: "geometri", intuition: "Panah yang punya BESAR dan ARAH.", penjelasan: "Berbeda dengan skalar (hanya angka), vektor merepresentasikan perpindahan, gaya, atau kecepatan. Bisa dijumlahkan, dikurangi, dan dikalikan (dot/cross product).", formal: "$\\vec{v} = \\begin{pmatrix} v_x \\\\ v_y \\end{pmatrix}$. $|\\vec{v}| = \\sqrt{v_x^2 + v_y^2}$", prerequisites: ['pythagoras', 'aljabar'], related: ['matriks_determinan', 'transformasi_geometri'] },
-  'transformasi_geometri': { term: "Transformasi Geometri", category: "geometri", intuition: "Memindahkan, memutar, atau mengubah ukuran bentuk tanpa merusaknya.", penjelasan: "Meliputi translasi (geser), refleksi (cermin), rotasi (putar), dan dilatasi (perbesar/perkecil). Matriks sering digunakan untuk menghitungnya secara aljabar.", formal: "Rotasi $\\theta$: $\\begin{pmatrix} \\cos\\theta & -\\sin\\theta \\\\ \\sin\\theta & \\cos\\theta \\end{pmatrix} \\begin{pmatrix} x \\\\ y \\end{pmatrix}$", prerequisites: ['matriks_determinan', 'trigonometri'], related: ['fungsi', 'vektor'] },
-  'lingkaran_satuan': { term: "Lingkaran Satuan", category: "geometri", intuition: "Lingkaran berjari-jari 1 yang menjadi 'peta' trigonometri.", penjelasan: "Setiap titik $(x,y)$ pada lingkaran ini berkorespondensi dengan $(\\cos \\theta, \\sin \\theta)$. Memvisualisasikan mengapa trigonometri periodik dan bernilai negatif/positif di kuadran berbeda.", formal: "$x^2 + y^2 = 1$ | $\\cos^2 \\theta + \\sin^2 \\theta = 1$", prerequisites: ['pythagoras', 'trigonometri'], related: ['fungsi_periodik', 'bilangan_kompleks'] },
-  'gradien': { term: "Gradien (Kemiringan)", category: "geometri", intuition: "Ukuran kecuraman sebuah garis.", penjelasan: "Dihitung sebagai 'perubahan vertikal (rise) dibagi perubahan horizontal (run)'.", formal: "$m = \\frac{y_2 - y_1}{x_2 - x_1}$", prerequisites: [], related: ['turunan'] },
+  /* ─────────────────────────────────────────────────────────────
+   *  BILANGAN: Jenis & Sifat Dasar
+   * ─────────────────────────────────────────────────────────── */
+  'bilangan_asli': {
+    term: "Bilangan Asli",
+    category: "bilangan",
+    intuition: "Bilangan untuk menghitung: 1, 2, 3, ...",
+    penjelasan: "Bilangan asli ($\\mathbb{N}$) adalah fondasi aritmetika. Didefinisikan aksiomatik oleh Peano: ada 1, setiap bilangan punya penerus, tidak ada bilangan asli antara n dan n+1, dan prinsip induksi berlaku.",
+    formal: "$\\mathbb{N} = \\{1, 2, 3, \\dots\\}$ (beberapa definisi mulai dari 0). Aksioma Peano: (1) $1 \\in \\mathbb{N}$, (2) $n \\in \\mathbb{N} \\Rightarrow S(n) \\in \\mathbb{N}$, (3) induksi.",
+    prerequisites: ['aksioma_peano'],
+    related: ['bilangan_cacah', 'bilangan_bulat', 'induksi_matematika']
+  },
+  'bilangan_cacah': {
+    term: "Bilangan Cacah",
+    category: "bilangan",
+    intuition: "Bilangan asli ditambah nol: 0, 1, 2, 3, ...",
+    penjelasan: "Bilangan cacah ($\\mathbb{W}$) mencakup nol, yang penting untuk operasi pengurangan dan representasi 'tidak ada'.",
+    formal: "$\\mathbb{W} = \\mathbb{N} \\cup \\{0\\} = \\{0, 1, 2, 3, \\dots\\}$.",
+    prerequisites: ['bilangan_asli'],
+    related: ['bilangan_bulat', 'nol']
+  },
+  'bilangan_bulat': {
+    term: "Bilangan Bulat",
+    category: "bilangan",
+    intuition: "Bilangan positif, negatif, dan nol: ..., -2, -1, 0, 1, 2, ...",
+    penjelasan: "Bilangan bulat ($\\mathbb{Z}$) memungkinkan pengurangan tanpa batas. Diperluas dari bilangan asli dengan menambahkan invers penjumlahan.",
+    formal: "$\\mathbb{Z} = \\{\\dots, -2, -1, 0, 1, 2, \\dots\\}$. $\\forall a \\in \\mathbb{Z}, \\exists (-a): a + (-a) = 0$.",
+    prerequisites: ['bilangan_asli', 'operasi_penjumlahan'],
+    related: ['bilangan_rasional', 'nilai_mutlak', 'urutan_bilangan']
+  },
+  'bilangan_rasional': {
+    term: "Bilangan Rasional",
+    category: "bilangan",
+    intuition: "Bilangan yang bisa ditulis sebagai pecahan dua bilangan bulat.",
+    penjelasan: "Rasional ($\\mathbb{Q}$) mencakup semua pecahan dan desimal berulang. Antara dua rasional selalu ada rasional lain (padat).",
+    formal: "$\\mathbb{Q} = \\left\\{\\frac{p}{q} : p,q \\in \\mathbb{Z}, q \\neq 0\\right\\}$. $\\frac{a}{b} = \\frac{c}{d} \\iff ad = bc$.",
+    prerequisites: ['bilangan_bulat', 'pecahan'],
+    related: ['bilangan_irasional', 'bilangan_real', 'desimal_berulang']
+  },
+  'bilangan_irasional': {
+    term: "Bilangan Irasional",
+    category: "bilangan",
+    intuition: "Bilangan yang tidak bisa ditulis sebagai pecahan; desimalnya tak berulang dan tak berakhir.",
+    penjelasan: "Contoh: $\\sqrt{2}, \\pi, e$. Irasional mengisi 'celah' di garis bilangan yang tidak terisi rasional. Gabungan rasional dan irasional = real.",
+    formal: "$x \\in \\mathbb{R} \\setminus \\mathbb{Q} \\iff \\nexists p,q \\in \\mathbb{Z}: x = \\frac{p}{q}$.",
+    prerequisites: ['bilangan_rasional', 'bilangan_real'],
+    related: ['akar_kuadrat', 'pi', 'euler_number']
+  },
+  'bilangan_real': {
+    term: "Bilangan Real",
+    category: "bilangan",
+    intuition: "Semua bilangan pada garis bilangan kontinu: rasional + irasional.",
+    penjelasan: "Real ($\\mathbb{R}$) adalah sistem bilangan lengkap untuk kalkulus. Memiliki sifat urutan, operasi aljabar, dan kelengkapan (setiap himpunan terbatas punya supremum).",
+    formal: "$\\mathbb{R}$ adalah medan terurut lengkap: (1) operasi $+, \\times$ memenuhi aksioma medan, (2) relasi $<$ total dan kompatibel, (3) setiap himpunan tak kosong yang terbatas ke atas punya supremum di $\\mathbb{R}$.",
+    prerequisites: ['bilangan_rasional', 'bilangan_irasional'],
+    related: ['garis_bilangan', 'limit', 'kontinuitas']
+  },
+  'bilangan_kompleks': {
+    term: "Bilangan Kompleks",
+    category: "bilangan",
+    intuition: "Bilangan dengan bagian 'nyata' dan 'imajiner': $a + bi$, dengan $i^2 = -1$.",
+    penjelasan: "Kompleks ($\\mathbb{C}$) menyelesaikan persamaan seperti $x^2 + 1 = 0$. Digambarkan sebagai titik $(a,b)$ pada bidang kompleks. Setiap polinomial berderajat $n$ punya $n$ akar kompleks (Teorema Dasar Aljabar).",
+    formal: "$\\mathbb{C} = \\{a + bi : a,b \\in \\mathbb{R}, i^2 = -1\\}$. Operasi: $(a+bi)+(c+di)=(a+c)+(b+d)i$, $(a+bi)(c+di)=(ac-bd)+(ad+bc)i$.",
+    prerequisites: ['bilangan_real', 'persamaan_kuadrat'],
+    related: ['bidang_kompleks', 'modulus', 'bentuk_polar', 'teorema_dasar_aljabar']
+  },
+  'nilai_mutlak': {
+    term: "Nilai Mutlak",
+    category: "bilangan",
+    intuition: "Jarak suatu bilangan dari nol, tanpa memperhatikan arah (tanda).",
+    penjelasan: "Nilai mutlak $|x|$ selalu non-negatif. Berguna untuk mengukur jarak, kesalahan, dan ketaksamaan.",
+    formal: "$|x| = \\begin{cases} x & \\text{jika } x \\ge 0 \\\\ -x & \\text{jika } x < 0 \\end{cases}$. Sifat: $|xy| = |x||y|$, $|x+y| \\le |x| + |y|$ (ketaksamaan segitiga).",
+    prerequisites: ['bilangan_real', 'urutan_bilangan'],
+    related: ['jarak', 'ketaksamaan', 'limit']
+  },
+  'nol': {
+    term: "Nol (0)",
+    category: "bilangan",
+    intuition: "Bilangan netral untuk penjumlahan: $a + 0 = a$.",
+    penjelasan: "Nol mewakili 'tidak ada'. Penting sebagai identitas penjumlahan, pembatas positif-negatif, dan dalam sistem posisi desimal.",
+    formal: "$\\forall a \\in \\mathbb{R}: a + 0 = a$. $a \\cdot 0 = 0$. Pembagian dengan nol tidak terdefinisi.",
+    prerequisites: ['bilangan_bulat'],
+    related: ['identitas_penjumlahan', 'pembagian', 'sistem_desimal']
+  },
+  'satu': {
+    term: "Satu (1)",
+    category: "bilangan",
+    intuition: "Bilangan netral untuk perkalian: $a \\times 1 = a$.",
+    penjelasan: "Satu adalah identitas perkalian dan bilangan asli pertama. Fondasi untuk konsep pecahan ($1/n$) dan eksponen ($a^1 = a$).",
+    formal: "$\\forall a \\in \\mathbb{R}: a \\cdot 1 = a$. $1 \\neq 0$ (aksioma medan).",
+    prerequisites: ['bilangan_asli'],
+    related: ['identitas_perkalian', 'pecahan', 'eksponen']
+  },
 
-  // ── STATISTIKA & PELUANG ──
-  'mean_median_modus': { term: "Mean, Median, Modus", category: "statistika", intuition: "Tiga cara berbeda menjawab pertanyaan: 'Berapa nilai tipikal data ini?'", penjelasan: "Mean = rata-rata (sensitif pencilan). Median = nilai tengah (tahan pencilan). Modus = nilai paling sering muncul (cocok untuk data kategorikal).", formal: "Mean: $\\bar{x} = \\frac{\\sum x_i}{n}$ | Median: $x_{(n+1)/2}$ (data terurut) | Modus: argmax $P(x)$", prerequisites: ['data_tunggal'], related: ['variansi_standar_deviasi', 'distribusi_normal'] },
-  'variansi_standar_deviasi': { term: "Variansi & Standar Deviasi", category: "statistika", intuition: "Mengukur seberapa 'tersebar' atau 'konsisten' data Anda.", penjelasan: "Variansi menghitung rata-rata kuadrat selisih dari mean. Standar deviasi adalah akarnya, mengembalikan satuan ke bentuk asli data.", formal: "$\\sigma^2 = \\frac{\\sum (x_i - \\mu)^2}{N}$ | $\\sigma = \\sqrt{\\sigma^2}$", prerequisites: ['mean_median_modus'], related: ['distribusi_normal', 'peluang'] },
-  'distribusi_normal': { term: "Distribusi Normal", category: "statistika", intuition: "Kurva lonceng yang muncul di hampir semua fenomena alam.", penjelasan: "Banyak data (tinggi badan, nilai ujian, kesalahan pengukuran) mengelompok di tengah dan simetris ke kedua sisi. Didefinisikan oleh Mean ($\\mu$) dan SD ($\\sigma$).", formal: "$f(x) = \\frac{1}{\\sigma\\sqrt{2\\pi}} e^{-\\frac{(x-\\mu)^2}{2\\sigma^2}}$ | Aturan 68-95-99.7", prerequisites: ['variansi_standar_deviasi'], related: ['statistika_inferensial', 'teorema_limit_pusat'] },
-  'peluang_kondisional': { term: "Peluang Kondisional", category: "statistika", intuition: "Probabilitas suatu kejadian, DENGAN SYARAT kejadian lain sudah terjadi.", penjelasan: "Informasi baru mengubah ruang sampel. Misal: peluang hujan berubah drastis jika kita tahu langit sudah mendung hitam.", formal: "$P(A|B) = \\frac{P(A \\cap B)}{P(B)}$, dengan $P(B) > 0$", prerequisites: ['peluang'], related: ['teorema_bayes', 'kaidah_pencacahan'] },
+  /* ─────────────────────────────────────────────────────────────
+   *  OPERASI ARITMETIKA DASAR
+   * ─────────────────────────────────────────────────────────── */
+  'operasi_penjumlahan': {
+    term: "Penjumlahan",
+    category: "operasi",
+    intuition: "Menggabungkan dua bilangan menjadi satu total.",
+    penjelasan: "Penjumlahan ($+$) adalah operasi dasar aritmetika. Sifat: komutatif ($a+b=b+a$), asosiatif ($(a+b)+c=a+(b+c)$), memiliki identitas 0.",
+    formal: "Pada $\\mathbb{R}$: $+ : \\mathbb{R} \\times \\mathbb{R} \\to \\mathbb{R}$, dengan $a+0=a$, $a+(-a)=0$, $a+b=b+a$, $(a+b)+c=a+(b+c)$.",
+    prerequisites: ['bilangan_bulat'],
+    related: ['pengurangan', 'perkalian', 'sifat_komutatif']
+  },
+  'operasi_pengurangan': {
+    term: "Pengurangan",
+    category: "operasi",
+    intuition: "Mencari selisih: 'Berapa sisa jika B diambil dari A?'",
+    penjelasan: "Pengurangan adalah invers penjumlahan: $a - b = a + (-b)$. Tidak komutatif: $a-b \\neq b-a$ umumnya.",
+    formal: "$a - b = c \\iff a = b + c$. Sifat: $a - a = 0$, $a - 0 = a$.",
+    prerequisites: ['operasi_penjumlahan', 'bilangan_bulat'],
+    related: ['penjumlahan', 'nilai_mutlak', 'selisih']
+  },
+  'operasi_perkalian': {
+    term: "Perkalian",
+    category: "operasi",
+    intuition: "Penjumlahan berulang: $3 \\times 4 = 3+3+3+3$.",
+    penjelasan: "Perkalian ($\\times$ atau $\\cdot$) memperluas penjumlahan. Sifat: komutatif, asosiatif, distributif terhadap penjumlahan, identitas 1.",
+    formal: "$\\cdot : \\mathbb{R} \\times \\mathbb{R} \\to \\mathbb{R}$, dengan $a \\cdot 1 = a$, $a \\cdot 0 = 0$, $a(b+c) = ab + ac$ (distributif).",
+    prerequisites: ['operasi_penjumlahan'],
+    related: ['pembagian', 'perpangkatan', 'sifat_distributif']
+  },
+  'operasi_pembagian': {
+    term: "Pembagian",
+    category: "operasi",
+    intuition: "Invers perkalian: 'Berapa kali B muat dalam A?'",
+    penjelasan: "Pembagian $a \\div b = a/b$ adalah perkalian dengan invers: $a/b = a \\cdot b^{-1}$. Tidak terdefinisi jika $b=0$.",
+    formal: "$a / b = c \\iff a = b \\cdot c$, dengan $b \\neq 0$. $a/a = 1$ untuk $a \\neq 0$.",
+    prerequisites: ['operasi_perkalian', 'bilangan_rasional'],
+    related: ['perkalian', 'pecahan', 'invers_perkalian']
+  },
+  'perpangkatan': {
+    term: "Perpangkatan (Eksponen)",
+    category: "operasi",
+    intuition: "Perkalian berulang: $a^n = a \\times a \\times \\dots \\times a$ (n kali).",
+    penjelasan: "Eksponen memperluas perkalian. Definisi diperluas ke eksponen nol ($a^0=1$), negatif ($a^{-n}=1/a^n$), dan rasional ($a^{m/n} = \\sqrt[n]{a^m}$).",
+    formal: "$a^n = \\prod_{i=1}^n a$ untuk $n \\in \\mathbb{N}$. Sifat: $a^m \\cdot a^n = a^{m+n}$, $(a^m)^n = a^{mn}$, $(ab)^n = a^n b^n$.",
+    prerequisites: ['operasi_perkalian', 'bilangan_asli'],
+    related: ['akar', 'logaritma', 'eksponen_negatif']
+  },
+  'penarikan_akar': {
+    term: "Penarikan Akar (Radikal)",
+    category: "operasi",
+    intuition: "Mencari bilangan yang jika dipangkatkan menghasilkan bilangan tertentu.",
+    penjelasan: "Akar kuadrat $\\sqrt{a}$ adalah bilangan non-negatif $x$ sehingga $x^2 = a$. Akar pangkat-n: $\\sqrt[n]{a} = a^{1/n}$. Untuk $n$ genap, $a$ harus $\\ge 0$ dalam $\\mathbb{R}$.",
+    formal: "$\\sqrt[n]{a} = b \\iff b^n = a$, dengan $b \\ge 0$ jika $n$ genap dan $a \\in \\mathbb{R}$. Sifat: $\\sqrt[n]{ab} = \\sqrt[n]{a}\\sqrt[n]{b}$ untuk $a,b \\ge 0$.",
+    prerequisites: ['perpangkatan', 'bilangan_real'],
+    related: ['eksponen', 'bilangan_irasional', 'persamaan_radikal']
+  },
 
-  // ── LOGIKA & HIMPUNAN ──
-  'logika_matematika': { term: "Logika Matematika", category: "logika", intuition: "Tata bahasa berpikir yang ketat. Benar atau Salah, tidak ada abu-abu.", penjelasan: "Mempelajari proposisi, operator (AND, OR, NOT, IMPLIES), dan tabel kebenaran. Dasar dari pemrograman & pembuktian formal.", formal: "Implikasi: $p \\Rightarrow q$ ekuivalen dengan $\\neg q \\Rightarrow \\neg p$ (kontraposisi)", prerequisites: [], related: ['himpunan', 'induksi_matematika'] },
-  'himpunan': { term: "Himpunan", category: "logika", intuition: "Kumpulan objek yang didefinisikan dengan jelas.", penjelasan: "Bahasa dasar matematika. Operasi irisan ($\\cap$), gabungan ($\\cup$), dan komplemen memungkinkan kita memodelkan hubungan antar kelompok.", formal: "De Morgan: $(A \\cup B)^c = A^c \\cap B^c$ dan $(A \\cap B)^c = A^c \\cup B^c$", prerequisites: ['logika_matematika'], related: ['logika_proposisi', 'peluang'] },
-  'teorema_cantor': { term: "Teorema Cantor", category: "fundamental", intuition: "Tidak semua 'tak hingga' itu sama besar.", penjelasan: "Himpunan bilangan real lebih 'besar' (uncountable) daripada himpunan bilangan asli (countable). Ada tingkatan ketakterhinggaan.", formal: "$|\\mathbb{N}| < |\\mathbb{R}|$ | Bukus diagonal Cantor", prerequisites: ['himpunan'], related: ['logika_matematika', 'bilangan_real'] }
+  /* ─────────────────────────────────────────────────────────────
+   *  ALJABAR DASAR
+   * ─────────────────────────────────────────────────────────── */
+  'variabel': {
+    term: "Variabel",
+    category: "aljabar",
+    intuition: "Simbol (biasanya huruf) yang mewakili bilangan yang belum diketahui atau bisa berubah.",
+    penjelasan: "Variabel memungkinkan generalisasi. Contoh: dalam $y = 2x + 1$, $x$ adalah input bebas, $y$ tergantung pada $x$.",
+    formal: "Variabel $x$ adalah simbol yang mengambil nilai dari suatu domain $D$. Ekspresi $f(x)$ mendefinisikan fungsi dari $D$ ke kodomain.",
+    prerequisites: ['himpunan'],
+    related: ['konstanta', 'fungsi', 'persamaan']
+  },
+  'konstanta': {
+    term: "Konstanta",
+    category: "aljabar",
+    intuition: "Nilai tetap yang tidak berubah dalam suatu konteks.",
+    penjelasan: "Konstanta seperti $\\pi$, $e$, atau koefisien dalam persamaan. Berbeda dengan variabel yang bisa bervariasi.",
+    formal: "Konstanta $c \\in \\mathbb{R}$ (atau himpunan lain) dengan nilai tetap. Dalam $f(x) = ax + b$, $a,b$ konstanta, $x$ variabel.",
+    prerequisites: ['bilangan_real'],
+    related: ['variabel', 'koefisien', 'parameter']
+  },
+  'koefisien': {
+    term: "Koefisien",
+    category: "aljabar",
+    intuition: "Angka yang mengalikan variabel dalam suatu suku.",
+    penjelasan: "Dalam $3x^2$, koefisiennya adalah 3. Koefisien menentukan 'skala' pengaruh variabel.",
+    formal: "Dalam suku $a_n x^n$, $a_n$ adalah koefisien dari $x^n$. Polinomial: $P(x) = a_n x^n + \\dots + a_1 x + a_0$.",
+    prerequisites: ['variabel', 'operasi_perkalian'],
+    related: ['suku', 'polinomial', 'konstanta']
+  },
+  'suku_aljabar': {
+    term: "Suku (Term)",
+    category: "aljabar",
+    intuition: "Bagian dari ekspresi aljabar yang dipisahkan oleh + atau -.",
+    penjelasan: "Dalam $2x^2 - 3x + 5$, terdapat tiga suku: $2x^2$, $-3x$, dan $5$. Suku sejenis (pangkat variabel sama) bisa dijumlahkan.",
+    formal: "Suku adalah produk konstanta dan variabel berpangkat, atau konstanta saja. Ekspresi aljabar adalah jumlah terhingga suku.",
+    prerequisites: ['variabel', 'operasi_penjumlahan'],
+    related: ['koefisien', 'polinomial', 'penyederhanaan']
+  },
+  'persamaan': {
+    term: "Persamaan",
+    category: "aljabar",
+    intuition: "Pernyataan bahwa dua ekspresi memiliki nilai sama, ditandai dengan '='.",
+    penjelasan: "Persamaan bisa benar untuk semua nilai (identitas) atau hanya untuk nilai tertentu (persamaan bersyarat). Menyelesaikan persamaan berarti mencari nilai variabel yang membuatnya benar.",
+    formal: "Persamaan: $E_1 = E_2$, dengan $E_1, E_2$ ekspresi aljabar. Himpunan penyelesaian: $\\{x : E_1(x) = E_2(x)\\}$.",
+    prerequisites: ['variabel', 'operasi_aljabar'],
+    related: ['pertidaksamaan', 'identitas', 'penyelesaian_persamaan']
+  },
+  'pertidaksamaan': {
+    term: "Pertidaksamaan",
+    category: "aljabar",
+    intuition: "Pernyataan perbandingan: lebih besar (>), lebih kecil (<), atau tidak sama (≠).",
+    penjelasan: "Pertidaksamaan mendeskripsikan rentang nilai. Contoh: $x > 3$ berarti semua bilangan di kanan 3 pada garis bilangan.",
+    formal: "Pertidaksamaan: $E_1 < E_2$, $E_1 \\le E_2$, dll. Sifat: jika $a < b$ dan $c > 0$, maka $ac < bc$; jika $c < 0$, tanda berbalik: $ac > bc$.",
+    prerequisites: ['persamaan', 'urutan_bilangan'],
+    related: ['nilai_mutlak', 'interval', 'grafik_pertidaksamaan']
+  },
+  'fungsi': {
+    term: "Fungsi",
+    category: "aljabar",
+    intuition: "Aturan yang memasangkan setiap input dengan tepat satu output.",
+    penjelasan: "Fungsi seperti mesin: masukkan $x$, keluar $f(x)$. Domain = semua input yang diizinkan, kodomain = semua output yang mungkin, range = output yang benar-benar muncul.",
+    formal: "Fungsi $f: A \\to B$ adalah relasi di mana $\\forall x \\in A, \\exists! y \\in B: (x,y) \\in f$. Ditulis $y = f(x)$.",
+    prerequisites: ['himpunan', 'variabel'],
+    related: ['domain', 'grafik_fungsi', 'fungsi_invers']
+  },
+  'domain_fungsi': {
+    term: "Domain Fungsi",
+    category: "aljabar",
+    intuition: "Himpunan semua nilai input yang diizinkan untuk suatu fungsi.",
+    penjelasan: "Domain ditentukan oleh aturan fungsi dan konteks. Contoh: $f(x) = \\sqrt{x}$ memiliki domain $x \\ge 0$ dalam $\\mathbb{R}$.",
+    formal: "Domain $f = \\{x : f(x) \\text{ terdefinisi}\\}$. Untuk $f: A \\to B$, domain adalah $A$.",
+    prerequisites: ['fungsi', 'himpunan'],
+    related: ['kodomain', 'range', 'fungsi_invers']
+  },
+  'grafik_fungsi': {
+    term: "Grafik Fungsi",
+    category: "aljabar",
+    intuition: "Visualisasi fungsi sebagai kumpulan titik $(x, f(x))$ pada bidang koordinat.",
+    penjelasan: "Grafik membantu memahami perilaku fungsi: naik/turun, maksimum/minimum, simetri. Uji garis vertikal: setiap garis vertikal memotong grafik fungsi paling banyak satu kali.",
+    formal: "Grafik $f = \\{(x, f(x)) : x \\in \\text{domain}(f)\\} \\subseteq \\mathbb{R}^2$.",
+    prerequisites: ['fungsi', 'koordinat_cartesius'],
+    related: ['transformasi_grafik', 'fungsi_invers', 'limit']
+  },
+
+  /* ─────────────────────────────────────────────────────────────
+   *  GEOMETRI DASAR
+   * ─────────────────────────────────────────────────────────── */
+  'titik': {
+    term: "Titik",
+    category: "geometri",
+    intuition: "Objek geometri tanpa dimensi: hanya posisi, tidak ada panjang/luas.",
+    penjelasan: "Titik adalah konsep primitif dalam geometri. Dinotasikan dengan huruf kapital: $A, B, P$. Dua titik menentukan sebuah garis.",
+    formal: "Dalam geometri Euclides, titik adalah unsur tak terdefinisi yang memenuhi aksioma: melalui dua titik berbeda, ada tepat satu garis.",
+    prerequisites: [],
+    related: ['garis', 'bidang', 'koordinat']
+  },
+  'garis': {
+    term: "Garis",
+    category: "geometri",
+    intuition: "Kumpulan titik yang memanjang tak hingga ke dua arah, lurus, tanpa ketebalan.",
+    penjelasan: "Garis ditentukan oleh dua titik. Dalam koordinat Cartesius, garis memiliki persamaan linear $ax + by + c = 0$.",
+    formal: "Garis $\\ell$ melalui $P(x_1,y_1)$ dan $Q(x_2,y_2)$: $\\frac{y-y_1}{x-x_1} = \\frac{y_2-y_1}{x_2-x_1}$ (jika $x_1 \\neq x_2$). Gradien $m = \\frac{\\Delta y}{\\Delta x}$.",
+    prerequisites: ['titik', 'koordinat_cartesius'],
+    related: ['gradien', 'persamaan_garis', 'garis_sejajar']
+  },
+  'bidang': {
+    term: "Bidang",
+    category: "geometri",
+    intuition: "Permukaan datar yang memanjang tak hingga ke segala arah, tanpa ketebalan.",
+    penjelasan: "Bidang ditentukan oleh tiga titik tak segaris, atau garis dan titik di luar garis. Dalam ruang 3D, bidang memiliki persamaan $ax + by + cz = d$.",
+    formal: "Bidang melalui titik $P_0(x_0,y_0,z_0)$ dengan vektor normal $\\vec{n} = (a,b,c)$: $a(x-x_0) + b(y-y_0) + c(z-z_0) = 0$.",
+    prerequisites: ['titik', 'garis', 'vektor'],
+    related: ['ruang_3d', 'persamaan_bidang', 'jarak_titik_ke_bidang']
+  },
+  'sudut': {
+    term: "Sudut",
+    category: "geometri",
+    intuition: "Ukuran putaran antara dua sinar yang bersekutu titik pangkalnya.",
+    penjelasan: "Sudut diukur dalam derajat (°) atau radian. Sudut siku-siku = 90° = π/2 rad. Jumlah sudut dalam segitiga = 180°.",
+    formal: "Sudut $\\angle AOB$ dengan titik sudut $O$, kaki $OA$ dan $OB$. Ukuran $\\theta$ dalam radian: $\\theta = \\frac{\\text{panjang busur}}{\\text{jari-jari}}$ pada lingkaran satuan.",
+    prerequisites: ['titik', 'garis'],
+    related: ['trigonometri', 'lingkaran_satuan', 'sudut_istimewa']
+  },
+  'segitiga': {
+    term: "Segitiga",
+    category: "geometri",
+    intuition: "Bangun datar dengan tiga sisi dan tiga sudut.",
+    penjelasan: "Segitiga diklasifikasikan berdasarkan sisi (sama sisi, sama kaki, sembarang) dan sudut (lancip, siku-siku, tumpul). Luas = ½ × alas × tinggi.",
+    formal: "Segitiga $\\triangle ABC$ dengan sisi $a,b,c$ dan sudut $A,B,C$. Hukum Sinus: $\\frac{a}{\\sin A} = \\frac{b}{\\sin B} = \\frac{c}{\\sin C}$. Hukum Kosinus: $c^2 = a^2 + b^2 - 2ab\\cos C$.",
+    prerequisites: ['sudut', 'garis', 'pythagoras'],
+    related: ['trigonometri', 'luas_segitiga', 'segitiga_sebangun']
+  },
+  'lingkaran': {
+    term: "Lingkaran",
+    category: "geometri",
+    intuition: "Himpunan semua titik yang berjarak sama (jari-jari) dari satu titik tetap (pusat).",
+    penjelasan: "Lingkaran memiliki simetri putar tak hingga. Keliling = $2\\pi r$, luas = $\\pi r^2$. Persamaan: $(x-h)^2 + (y-k)^2 = r^2$ dengan pusat $(h,k)$.",
+    formal: "Lingkaran dengan pusat $C(h,k)$ dan jari-jari $r$: $\\{P(x,y) : |PC| = r\\} \\iff (x-h)^2 + (y-k)^2 = r^2$.",
+    prerequisites: ['jarak_titik', 'koordinat_cartesius'],
+    related: ['jari_jari', 'diameter', 'busur', 'tali_busur']
+  },
+  'pythagoras': {
+    term: "Teorema Pythagoras",
+    category: "geometri",
+    intuition: "Dalam segitiga siku-siku, kuadrat sisi miring = jumlah kuadrat sisi siku-siku.",
+    penjelasan: "Fondasi geometri dan trigonometri. Digunakan untuk menghitung jarak, membuktikan ketaksamaan, dan membangun bilangan irasional.",
+    formal: "Jika $\\triangle ABC$ siku-siku di $C$, maka $a^2 + b^2 = c^2$, dengan $c$ sisi miring. Konvers juga benar.",
+    prerequisites: ['segitiga', 'perpangkatan'],
+    related: ['jarak_titik', 'trigonometri', 'bilangan_irasional']
+  },
+
+  /* ─────────────────────────────────────────────────────────────
+   *  KALKULUS DASAR
+   * ─────────────────────────────────────────────────────────── */
+  'limit': {
+    term: "Limit",
+    category: "kalkulus",
+    intuition: "Nilai yang didekati fungsi saat input mendekati suatu titik, tanpa harus mencapainya.",
+    penjelasan: "Limit adalah fondasi kalkulus. Memungkinkan definisi turunan dan integral. Kunci: pendekatan dari kiri dan kanan harus sama.",
+    formal: "$\\lim_{x \\to c} f(x) = L \\iff \\forall \\epsilon > 0, \\exists \\delta > 0: 0 < |x-c| < \\delta \\Rightarrow |f(x)-L| < \\epsilon$.",
+    prerequisites: ['fungsi', 'ketaksamaan'],
+    related: ['kontinuitas', 'turunan', 'limit_takhingga']
+  },
+  'kontinuitas': {
+    term: "Kontinuitas",
+    category: "kalkulus",
+    intuition: "Fungsi yang grafiknya bisa digambar tanpa mengangkat pena: tidak ada lompatan atau lubang.",
+    penjelasan: "Fungsi kontinu di $c$ jika nilai fungsi di $c$ sama dengan limitnya saat $x \\to c$. Kontinuitas penting untuk teorema nilai antara dan kalkulus integral.",
+    formal: "$f$ kontinu di $c \\iff \\lim_{x \\to c} f(x) = f(c)$. $f$ kontinu pada interval jika kontinu di setiap titik interval tersebut.",
+    prerequisites: ['limit', 'fungsi'],
+    related: ['limit', 'teorema_nilai_antara', 'turunan']
+  },
+  'turunan': {
+    term: "Turunan (Diferensial)",
+    category: "kalkulus",
+    intuition: "Laju perubahan sesaat fungsi: kemiringan garis singgung grafik di suatu titik.",
+    penjelasan: "Turunan mengukur sensitivitas output terhadap perubahan kecil input. Aplikasi: kecepatan, optimasi, aproksimasi linear.",
+    formal: "$f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}$, jika limit ada. Notasi lain: $\\frac{df}{dx}$, $Df$.",
+    prerequisites: ['limit', 'fungsi', 'gradien'],
+    related: ['aturan_rantai', 'integral', 'optimasi', 'persamaan_diferensial']
+  },
+  'integral': {
+    term: "Integral",
+    category: "kalkulus",
+    intuition: "Akumulasi perubahan: luas di bawah kurva, total jarak dari kecepatan, dll.",
+    penjelasan: "Integral adalah invers turunan (Teorema Fundamental Kalkulus). Integral tentu menghitung nilai numerik; integral tak tentu menghasilkan keluarga fungsi (antiturunan).",
+    formal: "Integral tentu: $\\int_a^b f(x)dx = \\lim_{\\|P\\|\\to 0} \\sum f(x_i^*) \\Delta x_i$ (jumlah Riemann). Integral tak tentu: $\\int f(x)dx = F(x) + C$, dengan $F' = f$.",
+    prerequisites: ['turunan', 'limit', 'luas'],
+    related: ['teorema_fundamental_kalkulus', 'integral_parsial', 'substitusi']
+  },
+  'teorema_fundamental_kalkulus': {
+    term: "Teorema Fundamental Kalkulus",
+    category: "kalkulus",
+    intuition: "Jembatan ajaib: turunan dan integral adalah operasi yang saling membalik.",
+    penjelasan: "Bagian 1: Jika $F(x) = \\int_a^x f(t)dt$, maka $F'(x) = f(x)$. Bagian 2: $\\int_a^b f(x)dx = F(b) - F(a)$, dengan $F$ antiturunan $f$.",
+    formal: "Jika $f$ kontinu pada $[a,b]$ dan $F' = f$, maka $\\int_a^b f(x)dx = F(b) - F(a)$.",
+    prerequisites: ['turunan', 'integral', 'kontinuitas'],
+    related: ['kalkulus', 'antiturunan', 'luas_area']
+  }
 };
+
+
 
 const CONFIG = {
     API_URL: 'https://script.google.com/macros/s/AKfycbyP3jpWgs6ikQcA-9MsInRZYbLFQsshjxgo22twwXrzpACSPV9BREogrKUd-60crXV_mg/exec',
@@ -2136,31 +2658,42 @@ function renderKamusPage() {
     <h1 class="text-2xl font-bold text-cyan-400 mb-6 text-center">
       <i class="fa-solid fa-spell-check"></i> Kamus Matematika UMT
     </h1>
+    
+    <!-- Search & Filter -->
     <div class="flex flex-col md:flex-row gap-4 mb-6">
-      <input type="search" id="kamus-search" placeholder="🔍 Cari istilah... (misal: limit, pangkat, gradien, induksi)"
+      <input type="search" id="kamus-search" 
+        placeholder="🔍 Cari istilah... (misal: limit, himpunan, aksioma, turunan)"
         class="flex-1 rounded-xl py-3 px-4 text-sm transition-all border"
         style="background:var(--bg-main);border:1px solid var(--border-color);color:var(--text-primary);font-family:'Plus Jakarta Sans',sans-serif">
+      
       <select id="kamus-filter"
         class="rounded-xl py-3 px-4 text-sm border cursor-pointer"
-        style="background:var(--bg-main);border:1px solid var(--border-color);color:var(--text-primary);max-width:200px;font-family:'Plus Jakarta Sans',sans-serif">
-        <option value="all" selected>Semua Topik</option>
-        <option value="aljabar">Aljabar & Fungsi</option>
-        <option value="kalkulus">Kalkulus</option>
-        <option value="geometri">Geometri & Vektor</option>
-        <option value="statistika">Statistika & Peluang</option>
-        <option value="logika">Logika & Himpunan</option>
-        <option value="fundamental">Aksioma & Fundamental</option>
+        style="background:var(--bg-main);border:1px solid var(--border-color);color:var(--text-primary);max-width:220px;font-family:'Plus Jakarta Sans',sans-serif">
+        <option value="all" selected>📚 Semua Topik</option>
+        <option value="fundamental">⚙️ Fundamental</option>
+        <option value="logika">🧠 Logika</option>
+        <option value="himpunan">📦 Himpunan</option>
+        <option value="bilangan">🔢 Bilangan</option>
+        <option value="operasi">🔧 Operasi</option>
+        <option value="aljabar">✖️ Aljabar</option>
+        <option value="geometri">📐 Geometri</option>
+        <option value="kalkulus">∫ Kalkulus</option>
       </select>
     </div>
+    
+    <!-- Stats & Results -->
     <div class="flex justify-between items-center mb-4 px-1">
       <h2 class="text-lg font-semibold text-cyan-300"><i class="fas fa-list-ul"></i> Daftar Istilah</h2>
-      <span id="kamus-count" class="text-xs font-mono px-3 py-1 rounded-full" style="background:var(--accent-cyan-dim);color:var(--accent-cyan)">0 entri</span>
+      <span id="kamus-count" class="text-xs font-mono px-3 py-1 rounded-full" 
+        style="background:var(--accent-cyan-dim);color:var(--accent-cyan)">0 entri</span>
     </div>
+    
     <div id="kamus-results-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Hasil pencarian akan dirender di sini -->
     </div>
   </div>
   
-  <!-- MODAL (Tetap sama, hanya dipindah ke dalam panel jika perlu, tapi lebih aman di luar) -->
+  <!-- Modal Detail Istilah (sama seperti sebelumnya) -->
   <div id="kamus-term-modal" class="kamus-modal-overlay">
     <div class="kamus-modal-content">
       <button id="kamus-modal-close-btn" class="kamus-modal-close-btn" aria-label="Tutup">&times;</button>
@@ -2182,11 +2715,12 @@ function renderKamusPage() {
   initializeKamusPageLogic();
 }
 
+
 function initializeKamusPageLogic() {
   const searchInput = document.getElementById('kamus-search');
   const filterSelect = document.getElementById('kamus-filter');
   const resultsList = document.getElementById('kamus-results-list');
-  const countBadge = document.getElementById('kamus-count'); // Baru
+  const countBadge = document.getElementById('kamus-count');
   const modal = document.getElementById('kamus-term-modal');
   const modalTitle = document.getElementById('kamus-modal-title');
   const modalIntuition = document.getElementById('kamus-modal-intuition');
@@ -2223,7 +2757,6 @@ function initializeKamusPageLogic() {
         resultsList.appendChild(item);
       }
     }
-    // Update badge hitung
     if (countBadge) countBadge.textContent = `${matchCount} entri ditemukan`;
   }
 
@@ -2271,6 +2804,7 @@ function initializeKamusPageLogic() {
   
   renderTerms();
 }
+
 
 function getTotalItemCount() {
     const totalMateri = Object.values(allContentData.materi).flat().length;
