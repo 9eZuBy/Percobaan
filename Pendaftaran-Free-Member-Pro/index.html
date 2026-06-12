@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pendaftaran Paket Bundling</title>
+    <title>Daftar Gratis 7 Hari - Member PRO UMT</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="icon" type="image/png" href="../UMT-Logo.png">
@@ -23,6 +23,7 @@
             --text-secondary: #ccc;
             --border-color: #333;
             --error-color: #f44336;
+            --success-color: #10B981;
         }
         
         body {
@@ -44,7 +45,7 @@
             border-radius: 24px;
             padding: 50px 40px;
             width: 90%;
-            max-width: 500px;
+            max-width: 520px;
             box-shadow: 
                 0 20px 40px rgba(0, 0, 0, 0.4),
                 0 0 80px rgba(106, 13, 173, 0.1);
@@ -59,76 +60,267 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .registration-header { margin-bottom: 20px; } /* Diubah dari 40px */
+        .registration-header { margin-bottom: 20px; }
         .logo-container { display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
         .logo-image { width: 60px; height: 60px; border-radius: 12px; margin-right: 15px; box-shadow: 0 4px 15px rgba(106, 13, 173, 0.3); object-fit: cover; }
         .logo-text { font-size: 28px; font-weight: 700; color: var(--text-primary); text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); }
-        h2 { font-size: 24px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
+        h2 { font-size: 22px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
         .registration-subtitle { color: var(--text-secondary); font-size: 14px; margin-bottom: 1.5rem; }
-        .form-group { margin-bottom: 25px; position: relative; text-align: left; }
-        .form-label { display: block; color: var(--text-secondary); font-size: 14px; font-weight: 500; margin-bottom: 8px; }
-        input[type="text"], input[type="email"], input[type="tel"] { width: 100%; padding: 16px 20px; background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 12px; color: var(--text-primary); font-size: 16px; font-family: inherit; transition: all 0.3s ease; outline: none; box-sizing: border-box; }
-        input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus { border-color: var(--primary-purple); background: rgba(255, 255, 255, 0.08); box-shadow: 0 0 0 4px rgba(106, 13, 173, 0.1); transform: translateY(-2px); }
-        input[type="file"] { display: none; }
-        .file-upload-label { display: flex; align-items: center; justify-content: center; width: 100%; padding: 16px 20px; background: rgba(255, 255, 255, 0.05); border: 2px dashed rgba(255, 255, 255, 0.2); border-radius: 12px; color: var(--text-secondary); cursor: pointer; transition: all 0.3s ease; }
-        .file-upload-label:hover { border-color: var(--primary-purple); color: var(--text-primary); background: rgba(106, 13, 173, 0.1); }
-        .file-upload-label i { margin-right: 10px; }
-        #file-name-display { font-size: 12px; color: var(--text-secondary); margin-top: 8px; text-align: left; word-break: break-all; }
-        button[type="submit"] { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--primary-purple) 0%, var(--secondary-purple) 100%); border: none; border-radius: 12px; color: var(--text-primary); font-size: 16px; font-weight: 600; font-family: inherit; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden; margin-top: 10px; margin-bottom: 20px; }
-        button[type="submit"]:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(106, 13, 173, 0.4); }
-        #error-message { background: rgba(244, 67, 54, 0.1); border: 1px solid rgba(244, 67, 54, 0.3); color: var(--error-color); padding: 12px 16px; border-radius: 8px; font-size: 14px; min-height: 1.2em; margin-top: 1rem; display: none; animation: slideDown 0.3s ease-out; text-align: left; }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-        .success-message { display: none; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #10B981; padding: 1rem; border-radius: 12px; margin-top: 1rem; text-align: left; animation: slideIn 0.5s ease; }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .payment-info-box { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin-top: 10px; }
-        .payment-info-box p { color: var(--text-secondary); font-size: 14px; margin-bottom: 20px; line-height: 1.5; }
-        .payment-info-box strong { color: var(--text-primary); font-weight: 600; }
-        .payment-methods { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 15px; }
-        .payment-methods li { background: rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; }
-        .payment-brand { display: flex; align-items: center; gap: 12px; color: var(--text-primary); font-weight: 500; font-size: 14px; }
-        .payment-details { display: flex; align-items: center; gap: 10px; font-family: monospace; font-size: 15px; color: #fff; }
-        .copy-btn { background: var(--primary-purple); color: white; border: none; border-radius: 6px; padding: 5px 10px; font-size: 12px; cursor: pointer; transition: background 0.2s ease; font-family: 'Poppins', sans-serif; }
-        .copy-btn:hover { background: var(--secondary-purple); }
-        .copy-btn.copied { background-color: #10B981; }
 
-        /* -- [BARU] CSS UNTUK KOTAK PENAWARAN SPESIAL -- */
-        .special-offer-box {
+        /* --- KOTAK PROMO GRATIS --- */
+        .free-trial-box {
             text-align: center;
-            padding: 20px;
-            margin-bottom: 30px;
+            padding: 20px 22px;
+            margin-bottom: 28px;
             border-radius: 16px;
-            background: linear-gradient(135deg, #FFD700, #FBBF24); /* Gradasi Emas */
-            color: #2b1d00; /* Warna teks gelap agar kontras */
-            border: 2px solid #DAA520;
-            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.2);
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: #fff;
+            border: 2px solid #15803d;
+            box-shadow: 0 8px 20px rgba(34, 197, 94, 0.2);
             animation: fadeIn 1s ease-out 0.5s forwards;
             opacity: 0;
-            position: relative; /* Menambahkan ini untuk z-index */
-            z-index: 2; /* Memastikan di atas elemen lain jika tumpang tindih */
         }
-        .special-offer-box i {
-            font-size: 28px;
-            margin-bottom: 12px;
+        .free-trial-box i {
+            font-size: 26px;
+            margin-bottom: 10px;
             display: block;
         }
-        .special-offer-box h3 {
-            font-size: 18px;
+        .free-trial-box h3 {
+            font-size: 17px;
             font-weight: 700;
             margin-bottom: 8px;
         }
-        .special-offer-box p {
-            font-size: 14px;
+        .free-trial-box p {
+            font-size: 13px;
             line-height: 1.6;
             margin: 0;
-            color: #4a3300;
+            color: rgba(255,255,255,0.85);
         }
+        .free-trial-box strong { color: #fff; }
+
         @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
+            to { opacity: 1; }
         }
 
-        @media (max-width: 540px) { #registration-form-container { padding: 40px 25px; } }
+        /* --- BADGE GRATIS --- */
+        .free-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        /* --- SYARAT SECTION --- */
+        .syarat-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-top: 8px;
+            text-align: left;
+        }
+        .syarat-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .syarat-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .syarat-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        .syarat-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .syarat-icon.youtube  { background: rgba(255, 0, 0, 0.15); color: #ff4444; }
+        .syarat-icon.instagram { background: rgba(225, 48, 108, 0.15); color: #e1306c; }
+        .syarat-icon.tiktok   { background: rgba(255, 255, 255, 0.08); color: #fff; }
+        .syarat-text strong { color: var(--text-primary); display: block; font-size: 13px; }
+        .syarat-text span { font-size: 12px; color: #999; }
+
+        /* --- UPLOAD MULTI FILE --- */
+        .upload-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .upload-item label.file-upload-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 13px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        .upload-item label.file-upload-label:hover {
+            border-color: var(--primary-purple);
+            color: var(--text-primary);
+            background: rgba(106, 13, 173, 0.1);
+        }
+        .upload-item label.file-upload-label.has-file {
+            border-color: var(--success-color);
+            background: rgba(16, 185, 129, 0.08);
+            color: var(--success-color);
+        }
+        .upload-item .platform-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .platform-icon.yt  { background: rgba(255,0,0,0.12); color: #ff4444; }
+        .platform-icon.ig  { background: rgba(225,48,108,0.12); color: #e1306c; }
+        .platform-icon.tt  { background: rgba(255,255,255,0.08); color: #fff; }
+        .upload-item .file-label-text { flex: 1; }
+        .upload-item .file-label-text .label-main { font-weight: 500; color: inherit; }
+        .upload-item .file-label-text .label-sub { font-size: 11px; color: #888; display: block; }
+        .upload-item input[type="file"] { display: none; }
+        .file-name-small {
+            font-size: 11px;
+            color: var(--success-color);
+            margin-top: 4px;
+            padding-left: 4px;
+            display: none;
+            word-break: break-all;
+        }
+
+        /* --- FORM GROUPS --- */
+        .form-group { margin-bottom: 22px; position: relative; text-align: left; }
+        .form-label { display: block; color: var(--text-secondary); font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+        .section-label { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        input[type="text"], input[type="email"], input[type="tel"], textarea {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            outline: none;
+            box-sizing: border-box;
+            resize: none;
+        }
+        textarea { min-height: 80px; }
+        input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, textarea:focus {
+            border-color: var(--primary-purple);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(106, 13, 173, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* --- SUBMIT --- */
+        button[type="submit"] {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            border: none;
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            letter-spacing: 0.3px;
+        }
+        button[type="submit"]:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(34, 197, 94, 0.35);
+        }
+        button[type="submit"]:disabled { opacity: 0.7; cursor: not-allowed; }
+
+        /* --- MESSAGES --- */
+        #error-message {
+            background: rgba(244, 67, 54, 0.1);
+            border: 1px solid rgba(244, 67, 54, 0.3);
+            color: var(--error-color);
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            min-height: 1.2em;
+            margin-top: 1rem;
+            display: none;
+            animation: slideDown 0.3s ease-out;
+            text-align: left;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .success-message {
+            display: none;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--success-color);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            text-align: left;
+            animation: slideIn 0.5s ease;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- DIVIDER --- */
+        .section-divider {
+            border: none;
+            border-top: 1px solid var(--border-color);
+            margin: 4px 0 22px;
+        }
+
+        @media (max-width: 540px) {
+            #registration-form-container { padding: 36px 20px; }
+        }
     </style>
 </head>
 <body>
@@ -139,93 +331,168 @@
                     <img src="../UMT-Logo.png" alt="Logo" class="logo-image">
                     <span class="logo-text">UMTAcademy</span>
                 </div>
-                <h2>Pendaftaran Akses Bundling</h2>
-                <p class="registration-subtitle">Lengkapi data untuk mendapatkan akses ke 2 website eksklusif kami.</p>
-            </div>
-            
-            <div class="special-offer-box">
-                <i class="fas fa-star"></i>
-                <h3>Bonus Eksklusif Pendaftar Awal</h3>
-                <p>
-                    Khusus untuk <strong>5 pendaftar pertama</strong>, dapatkan bimbingan intensif dengan mentor melalui sesi Google Meet (2x pertemuan per minggu)!
-                </p>
+                <h2>Akses Gratis 7 Hari <span class="free-badge">GRATIS</span></h2>
+                <p class="registration-subtitle">Coba Member PRO UMT selama 7 hari tanpa biaya — penuhi syarat di bawah untuk mendaftar.</p>
             </div>
 
-            <div class="form-content">
-                <div class="form-group">
-                    <label for="fullName" class="form-label">Nama Lengkap</label>
-                    <input type="text" id="fullName" placeholder="Masukkan nama lengkap Anda" required>
-                </div>
-                <div class="form-group">
-                    <label for="whatsapp" class="form-label">Nomor WhatsApp</label>
-                    <input type="tel" id="whatsapp" placeholder="Contoh: 081234567890" required>
-                </div>
-                <div class="form-group">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" id="email" placeholder="Masukkan email Anda" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label" style="font-size: 16px; font-weight: 600; color: var(--text-primary);">
-                        <i class="fas fa-box-open"></i> Detail Paket
-                    </label>
-                    <div class="payment-info-box" style="text-align: left; padding: 15px;">
-                        <p style="margin-bottom: 10px;">Anda akan mendapatkan akses ke <strong>Website Pembelajaran Member PRO UMT</strong> dan <strong>Website Les UMT Online Bersama Mentor 1 on 1 Selama Sebulan</strong>.</p>
-                        <p style="font-size: 1.2rem; margin-bottom: 0;">Total Biaya: <strong>Rp 50.000</strong></p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-label" style="font-size: 16px; font-weight: 600; color: var(--text-primary);">
-                        <i class="fas fa-wallet"></i> Lakukan Pembayaran
-                    </label>
-                    <div class="payment-info-box">
-                        <p id="payment-instruction">Silakan lakukan pembayaran sebesar <strong>Rp 50.000</strong> ke salah satu rekening di bawah ini.</p>
-                        <ul class="payment-methods">
-                            <li>
-                                <div class="payment-brand"><span>Gopay / Dana / OVO / ShopeePay</span></div>
-                                <div class="payment-details">
-                                    <span>085961160545</span>
-                                    <button type="button" class="copy-btn" data-copy="085961160545">Salin</button>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="payment-brand"><span>Seabank</span></div>
-                                <div class="payment-details">
-                                    <span>901165420223</span>
-                                    <button type="button" class="copy-btn" data-copy="901165420223">Salin</button>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="paymentProof" class="form-label" style="font-size: 16px; font-weight: 600; color: var(--text-primary);">
-                       <i class="fas fa-receipt"></i> Upload Bukti Pembayaran
-                    </label>
-                    <label for="paymentProof" class="file-upload-label">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <span>Pilih File (Gambar/PDF)</span>
-                    </label>
-                    <input type="file" id="paymentProof" accept="image/*,.pdf" required>
-                    <div id="file-name-display"></div>
-                </div>
-                <div class="success-message" id="successMessage"></div>
-                <div id="error-message"></div>
-                <button type="submit">Daftar & Kirim Bukti</button>
+            <!-- KOTAK PROMO -->
+            <div class="free-trial-box">
+                <i class="fas fa-gift"></i>
+                <h3>Percobaan 7 Hari Gratis!</h3>
+                <p>Dapatkan akses penuh ke <strong>Website Member PRO UMT</strong> selama 7 hari, <strong>100% gratis</strong>, tanpa kartu kredit. Cukup ikuti syaratnya!</p>
             </div>
+
+            <!-- INFORMASI PRIBADI -->
+            <div class="form-group">
+                <div class="section-label"><i class="fas fa-user"></i> Informasi Diri</div>
+                <hr class="section-divider">
+            </div>
+
+            <div class="form-group">
+                <label for="fullName" class="form-label">Nama Lengkap</label>
+                <input type="text" id="fullName" placeholder="Masukkan nama lengkap Anda" required>
+            </div>
+            <div class="form-group">
+                <label for="whatsapp" class="form-label">Nomor WhatsApp</label>
+                <input type="tel" id="whatsapp" placeholder="Contoh: 081234567890" required>
+            </div>
+            <div class="form-group">
+                <label for="email" class="form-label">Email Aktif</label>
+                <input type="email" id="email" placeholder="Masukkan email Anda" required>
+            </div>
+
+            <!-- AKUN MEDIA SOSIAL -->
+            <div class="form-group">
+                <div class="section-label"><i class="fas fa-share-alt"></i> Akun Media Sosial</div>
+                <hr class="section-divider">
+            </div>
+
+            <div class="form-group">
+                <label for="youtubeHandle" class="form-label"><i class="fab fa-youtube" style="color:#ff4444;"></i>&nbsp; Username / Channel YouTube</label>
+                <input type="text" id="youtubeHandle" placeholder="Contoh: @namakanal atau nama channel" required>
+            </div>
+            <div class="form-group">
+                <label for="instagramHandle" class="form-label"><i class="fab fa-instagram" style="color:#e1306c;"></i>&nbsp; Username Instagram</label>
+                <input type="text" id="instagramHandle" placeholder="Contoh: @username_instagram" required>
+            </div>
+            <div class="form-group">
+                <label for="tiktokHandle" class="form-label"><i class="fab fa-tiktok" style="color:#fff;"></i>&nbsp; Username TikTok</label>
+                <input type="text" id="tiktokHandle" placeholder="Contoh: @username_tiktok" required>
+            </div>
+
+            <!-- SYARAT: SCREENSHOT -->
+            <div class="form-group">
+                <div class="section-label"><i class="fas fa-camera"></i> Screenshot Profil Akun</div>
+                <hr class="section-divider">
+
+                <!-- Penjelasan syarat -->
+                <div class="syarat-box" style="margin-bottom: 16px;">
+                    <div class="syarat-title"><i class="fas fa-info-circle" style="color: var(--secondary-purple);"></i> Mengapa harus screenshot?</div>
+                    <ul class="syarat-list">
+                        <li>
+                            <div class="syarat-icon youtube"><i class="fab fa-youtube"></i></div>
+                            <div class="syarat-text"><strong>YouTube</strong><span>Screenshot halaman profil channel Anda (tampak nama & subscriber).</span></div>
+                        </li>
+                        <li>
+                            <div class="syarat-icon instagram"><i class="fab fa-instagram"></i></div>
+                            <div class="syarat-text"><strong>Instagram</strong><span>Screenshot halaman profil Anda (tampak username & jumlah followers).</span></div>
+                        </li>
+                        <li>
+                            <div class="syarat-icon tiktok"><i class="fab fa-tiktok"></i></div>
+                            <div class="syarat-text"><strong>TikTok</strong><span>Screenshot halaman profil Anda (tampak username & jumlah followers).</span></div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Upload 3 file -->
+                <div class="upload-grid">
+                    <div class="upload-item">
+                        <label for="ssYoutube" class="file-upload-label" id="label-ssYoutube">
+                            <div class="platform-icon yt"><i class="fab fa-youtube"></i></div>
+                            <div class="file-label-text">
+                                <span class="label-main">Upload Screenshot YouTube</span>
+                                <span class="label-sub">Gambar / JPG / PNG / PDF</span>
+                            </div>
+                            <i class="fas fa-cloud-upload-alt" style="margin-left:auto; font-size:16px;"></i>
+                        </label>
+                        <input type="file" id="ssYoutube" accept="image/*,.pdf" required>
+                        <div class="file-name-small" id="name-ssYoutube"></div>
+                    </div>
+
+                    <div class="upload-item">
+                        <label for="ssInstagram" class="file-upload-label" id="label-ssInstagram">
+                            <div class="platform-icon ig"><i class="fab fa-instagram"></i></div>
+                            <div class="file-label-text">
+                                <span class="label-main">Upload Screenshot Instagram</span>
+                                <span class="label-sub">Gambar / JPG / PNG / PDF</span>
+                            </div>
+                            <i class="fas fa-cloud-upload-alt" style="margin-left:auto; font-size:16px;"></i>
+                        </label>
+                        <input type="file" id="ssInstagram" accept="image/*,.pdf" required>
+                        <div class="file-name-small" id="name-ssInstagram"></div>
+                    </div>
+
+                    <div class="upload-item">
+                        <label for="ssTiktok" class="file-upload-label" id="label-ssTiktok">
+                            <div class="platform-icon tt"><i class="fab fa-tiktok"></i></div>
+                            <div class="file-label-text">
+                                <span class="label-main">Upload Screenshot TikTok</span>
+                                <span class="label-sub">Gambar / JPG / PNG / PDF</span>
+                            </div>
+                            <i class="fas fa-cloud-upload-alt" style="margin-left:auto; font-size:16px;"></i>
+                        </label>
+                        <input type="file" id="ssTiktok" accept="image/*,.pdf" required>
+                        <div class="file-name-small" id="name-ssTiktok"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PESAN TAMBAHAN -->
+            <div class="form-group">
+                <label for="alasan" class="form-label">Alasan Ingin Bergabung <span style="color:#666; font-size:12px;">(Opsional)</span></label>
+                <textarea id="alasan" placeholder="Ceritakan secara singkat mengapa Anda tertarik dengan Member PRO UMT..."></textarea>
+            </div>
+
+            <div class="success-message" id="successMessage"></div>
+            <div id="error-message"></div>
+            <button type="submit"><i class="fas fa-paper-plane"></i>&nbsp; Kirim Pendaftaran Gratis</button>
         </form>
     </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const BOT_TOKEN = "8239110275:AAFN1waR1xOuZMcs8HB7dbzC0-uG6qMQ0qA"; // Isi dengan Token Bot Anda 
+    const BOT_TOKEN = "8239110275:AAFN1waR1xOuZMcs8HB7dbzC0-uG6qMQ0qA";
     const CHAT_ID = "6919363709";
-    const FIXED_PRICE = 50000;
+
     const registrationForm = document.getElementById('registration-form');
-    const fileInput = document.getElementById('paymentProof');
-    const fileNameDisplay = document.getElementById('file-name-display');
     const errorMessageContainer = document.getElementById('error-message');
     const successMessageContainer = document.getElementById('successMessage');
     const submitButton = registrationForm.querySelector('button[type="submit"]');
+
+    // File inputs & labels
+    const fileFields = [
+        { inputId: 'ssYoutube',   labelId: 'label-ssYoutube',   nameId: 'name-ssYoutube',   platform: 'YouTube' },
+        { inputId: 'ssInstagram', labelId: 'label-ssInstagram', nameId: 'name-ssInstagram', platform: 'Instagram' },
+        { inputId: 'ssTiktok',    labelId: 'label-ssTiktok',    nameId: 'name-ssTiktok',    platform: 'TikTok' },
+    ];
+
+    // Listen to file changes for visual feedback
+    fileFields.forEach(({ inputId, labelId, nameId }) => {
+        const input = document.getElementById(inputId);
+        const label = document.getElementById(labelId);
+        const nameEl = document.getElementById(nameId);
+        input.addEventListener('change', () => {
+            if (input.files.length > 0) {
+                label.classList.add('has-file');
+                nameEl.style.display = 'block';
+                nameEl.textContent = '✓ ' + input.files[0].name;
+            } else {
+                label.classList.remove('has-file');
+                nameEl.style.display = 'none';
+                nameEl.textContent = '';
+            }
+        });
+    });
 
     function showError(message) {
         errorMessageContainer.textContent = message;
@@ -237,32 +504,21 @@ document.addEventListener('DOMContentLoaded', () => {
         errorMessageContainer.style.display = 'none';
         errorMessageContainer.textContent = '';
     }
-    
-    async function sendToTelegram(data) {
-        const localTime = new Date().toLocaleString('id-ID', { timeZone: 'Asia/Makassar' });
-        
-        // [DIMODIFIKASI] Menambahkan info bonus ke pesan
-        const captionText = `📝 *Pendaftaran Paket Bundling Baru*\n\n` +
-            `🎁 *BONUS: Bimbingan Mentor Spesial (10 Pendaftar Pertama)*\n\n` +
-            `👤 *Nama Lengkap:* ${data.fullName}\n` +
-            `📱 *Nomor WhatsApp:* ${data.whatsapp}\n` +
-            `📧 *Email:* ${data.email}\n` +
-            `💰 *Total Pembayaran:* Rp ${FIXED_PRICE.toLocaleString('id-ID')}\n\n` +
-            `🕒 *Waktu Daftar:* ${localTime}`;
 
+    async function sendFileToTelegram(file, caption) {
         const formData = new FormData();
         formData.append('chat_id', CHAT_ID);
-        formData.append('document', data.paymentFile[0]); 
-        formData.append('caption', captionText);
-        formData.append('parse_mode', 'Markdown'); 
+        formData.append('document', file);
+        formData.append('caption', caption);
+        formData.append('parse_mode', 'Markdown');
 
         const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendDocument`, {
             method: 'POST',
             body: formData
         });
-
         if (!response.ok) {
-            throw new Error('Gagal mengirim data pendaftaran');
+            const errData = await response.json().catch(() => ({}));
+            throw new Error(errData.description || 'Gagal mengirim file ke Telegram');
         }
     }
 
@@ -271,65 +527,74 @@ document.addEventListener('DOMContentLoaded', () => {
         hideError();
         successMessageContainer.style.display = 'none';
 
-        if (fileInput.files.length === 0) {
-            showError('Anda harus mengupload bukti pembayaran.');
+        // Validasi file
+        const missingFiles = fileFields.filter(f => document.getElementById(f.inputId).files.length === 0);
+        if (missingFiles.length > 0) {
+            showError('Harap upload screenshot untuk: ' + missingFiles.map(f => f.platform).join(', '));
             return;
         }
 
-        const registrationData = {
-            fullName: document.getElementById('fullName').value.trim(),
-            whatsapp: document.getElementById('whatsapp').value.trim(),
-            email: document.getElementById('email').value.trim(),
-            paymentFile: fileInput.files
-        };
+        const fullName      = document.getElementById('fullName').value.trim();
+        const whatsapp      = document.getElementById('whatsapp').value.trim();
+        const email         = document.getElementById('email').value.trim();
+        const youtubeHandle = document.getElementById('youtubeHandle').value.trim();
+        const igHandle      = document.getElementById('instagramHandle').value.trim();
+        const ttHandle      = document.getElementById('tiktokHandle').value.trim();
+        const alasan        = document.getElementById('alasan').value.trim();
 
-        const originalButtonText = submitButton.innerHTML;
+        const localTime = new Date().toLocaleString('id-ID', { timeZone: 'Asia/Makassar' });
+
+        const baseCaption =
+            `🎉 *Pendaftaran Trial Gratis 7 Hari - Member PRO UMT*\n\n` +
+            `👤 *Nama Lengkap:* ${fullName}\n` +
+            `📱 *WhatsApp:* ${whatsapp}\n` +
+            `📧 *Email:* ${email}\n\n` +
+            `📺 *YouTube:* ${youtubeHandle}\n` +
+            `📸 *Instagram:* ${igHandle}\n` +
+            `🎵 *TikTok:* ${ttHandle}\n\n` +
+            (alasan ? `💬 *Alasan:* ${alasan}\n\n` : ``) +
+            `🕒 *Waktu Daftar:* ${localTime}`;
+
+        const originalButtonHTML = submitButton.innerHTML;
         submitButton.disabled = true;
         submitButton.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Mengirim...`;
 
         try {
-            await sendToTelegram(registrationData);
+            // Kirim ketiga file secara berurutan
+            const platforms = ['YouTube', 'Instagram', 'TikTok'];
+            for (let i = 0; i < fileFields.length; i++) {
+                const file = document.getElementById(fileFields[i].inputId).files[0];
+                const fileCaption = i === 0
+                    ? baseCaption + `\n\n📎 *Screenshot 1/3: ${platforms[i]}*`
+                    : `📎 *Screenshot ${i+1}/3: ${platforms[i]}* — (${fullName})`;
+                await sendFileToTelegram(file, fileCaption);
+            }
+
             successMessageContainer.innerHTML = `
                 <i class="fas fa-check-circle"></i> 🎉 <strong>Pendaftaran Berhasil!</strong><br><br>
-                Terima kasih, data Anda telah kami terima. Tim kami akan segera melakukan verifikasi (maksimal 1x24 jam).<br><br>
-                Anda akan menerima notifikasi melalui <strong>email</strong> atau <strong>WhatsApp</strong> setelah akses Anda diaktifkan.`;
+                Terima kasih <strong>${fullName}</strong>! Data & screenshot Anda telah kami terima.<br><br>
+                Tim kami akan memverifikasi akun media sosial Anda dan mengaktifkan akses gratis 7 hari dalam <strong>1×24 jam</strong>.<br><br>
+                Notifikasi akan dikirim ke <strong>WhatsApp</strong> atau <strong>email</strong> Anda. Ditunggu ya! 🚀`;
             successMessageContainer.style.display = 'block';
+            successMessageContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
             registrationForm.reset();
-            fileNameDisplay.textContent = '';
+            fileFields.forEach(({ labelId, nameId }) => {
+                document.getElementById(labelId).classList.remove('has-file');
+                const nameEl = document.getElementById(nameId);
+                nameEl.style.display = 'none';
+                nameEl.textContent = '';
+            });
         } catch (error) {
-            console.error("Error saat mengirim ke Telegram:", error);
+            console.error('Error saat mengirim ke Telegram:', error);
             showError('Terjadi kesalahan saat mengirim data. Periksa koneksi internet Anda dan coba lagi.');
         } finally {
             submitButton.disabled = false;
-            submitButton.innerHTML = originalButtonText;
+            submitButton.innerHTML = originalButtonHTML;
         }
     }
 
     registrationForm.addEventListener('submit', handleRegistrationSubmit);
-    fileInput.addEventListener('change', () => {
-        fileNameDisplay.textContent = fileInput.files.length > 0 ?
-            `File terpilih: ${fileInput.files[0].name}` : '';
-    });
-    
-    document.querySelectorAll('.copy-btn').forEach(button => {
-        button.addEventListener('click', () => {
-            const textToCopy = button.dataset.copy;
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                const originalText = button.textContent;
-                button.textContent = 'Tersalin!';
-                button.classList.add('copied');
-                setTimeout(() => {
-                    button.textContent = originalText;
-                    button.classList.remove('copied');
-                }, 2000);
-            }).catch(err => {
-                console.error('Gagal menyalin teks: ', err);
-                alert('Gagal menyalin. Silakan salin secara manual.');
-            });
-        });
-    });
 });
 </script>
-
 </body>
 </html>
