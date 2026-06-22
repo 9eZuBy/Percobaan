@@ -28,7 +28,7 @@ const allContentData = {
         {
             id: 'perpustakaan-004',
             title: 'Logika & Himpunan',
-            author: 'Tim UMT',
+            author: 'Dr. Syamsul Bahri, M.si',
             summary: 'Buku setebal enam bab ini menyajikan materi dasar secara sistematis menggunakan bahasa sederhana dan simbolik, yang meliputi dasar-dasar logika predikat dan argumen, teknik-teknik pembuktian matematika (langsung, kontrapositif, kontradiksi, induksi), teori himpunan dasar beserta aplikasi diagram Venn, hubungan logika dengan teori himpunan, serta konsep relasi, fungsi, dan kardinalitas himpunan.',
             filePath: 'Perpustakaan/Syamsul Bahri-Logika dan Himpunan.pdf',
             image: 'Logika dan himpunan.png'// Ganti dengan path PDF Anda
@@ -40,6 +40,14 @@ const allContentData = {
             summary: 'Panduan Belajar & Waktu UTBK 2026.pdf" adalah panduan strategi dari UMT yang menolak metode hafalan dan belajar berlebihan (grinding), lalu menggantinya dengan pendekatan belajar cerdas berbasis metakognisi. Ebook ini menyediakan cetak biru rencana belajar 6 bulan, teknik kognitif efisien (seperti dekonstruksi masalah dan error log), manajemen waktu berbasis energi, serta strategi mental hari-H untuk membantu siswa menghadapi UTBK 2026 dengan prinsip "Berpikir Jelas, Bertindak Tepat, dan Menang Tenang.', 
             filePath: 'Perpustakaan/Panduan Belajar & Waktu UTBK 2026.pdf',
             image: 'Panduan Belajar & Waktu UTBK 2026.png'// Ganti dengan path PDF Anda
+        },
+        {
+            id: 'perpustakaan-006',
+            title: 'Matematika Dasar',
+            author: 'Jusmawati',
+            summary: '"Matematika Dasar" adalah buku ajar yang ditulis oleh Jusmawati, S.Pd., M.Pd. dan ditujukan khusus bagi mahasiswa PGSD (Pendidikan Guru Sekolah Dasar) di STKIP Mega Rezky Makassar. Buku komprehensif ini menyajikan materi secara terperinci yang disertai dengan contoh soal dan pembahasan, mencakup pemahaman dasar mengenai sistem angka dan bilangan (Romawi serta Hindu-Arab), karakteristik dan operasi hitung bilangan cacah serta bilangan bulat, pengenalan konsep geometri dua dimensi (bangun datar), hingga konsep geometri tiga dimensi (dimensi tiga dan bangun ruang) seperti kubus, balok, prisma, limas, tabung, dan kerucut.',
+            filePath: 'Perpustakaan/Matematika Dasar (Jusmawati) (z-library.sk, 1lib.sk, z-lib.sk).pdf',
+            image: 'Matematika dasar.jpg'// Ganti dengan path PDF Anda
         }
     ],
 
