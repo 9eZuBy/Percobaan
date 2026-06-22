@@ -24,6 +24,22 @@ const allContentData = {
             summary: 'Ebook "Memahami Logika Matematika" ini dirancang untuk membangun pemahaman konseptual dan intuitif mengenai seni berpikir lurus tanpa sekadar menghafal tabel kebenaran. Materi diawali dengan fondasi dasar berpikir logis, meliputi perbedaan antara pernyataan (proposisi) dan kalimat terbuka, serta konsep fundamental negasi. Pembahasan berlanjut ke topik penggabungan fakta melalui pernyataan majemuk seperti konjungsi, disjungsi, implikasi, dan biimplikasi , dilanjutkan dengan ekuivalensi, hukum-hukum aljabar logika, serta bentuk konvers, invers, dan kontraposisi. Ebook ini ditutup dengan materi analisis kuantor logika (universal dan eksistensial) , serta puncak pembelajaran berupa teknik penarikan kesimpulan yang sah—seperti Modus Ponens, Modus Tollens, dan Silogisme—sekaligus cara mendeteksi kecacatan argumen atau sesat pikir (logical fallacy).',
             filePath: 'Perpustakaan/Logika Matematika (BY UMT).pdf',
             image: 'Logika Matematika 3d.png'// Ganti dengan path PDF Anda
+        },
+        {
+            id: 'perpustakaan-004',
+            title: 'Logika & Himpunan',
+            author: 'Tim UMT',
+            summary: 'Buku setebal enam bab ini menyajikan materi dasar secara sistematis menggunakan bahasa sederhana dan simbolik, yang meliputi dasar-dasar logika predikat dan argumen, teknik-teknik pembuktian matematika (langsung, kontrapositif, kontradiksi, induksi), teori himpunan dasar beserta aplikasi diagram Venn, hubungan logika dengan teori himpunan, serta konsep relasi, fungsi, dan kardinalitas himpunan.',
+            filePath: 'Perpustakaan/Syamsul Bahri-Logika dan Himpunan.pdf',
+            image: 'Logika dan himpunan.png'// Ganti dengan path PDF Anda
+        },
+        {
+            id: 'perpustakaan-005',
+            title: 'Panduan Belajar & Waktu UTBK 2026',
+            author: 'Tim UMT',
+            summary: 'Panduan Belajar & Waktu UTBK 2026.pdf" adalah panduan strategi dari UMT yang menolak metode hafalan dan belajar berlebihan (grinding), lalu menggantinya dengan pendekatan belajar cerdas berbasis metakognisi. Ebook ini menyediakan cetak biru rencana belajar 6 bulan, teknik kognitif efisien (seperti dekonstruksi masalah dan error log), manajemen waktu berbasis energi, serta strategi mental hari-H untuk membantu siswa menghadapi UTBK 2026 dengan prinsip "Berpikir Jelas, Bertindak Tepat, dan Menang Tenang.', 
+            filePath: 'Perpustakaan/Panduan Belajar & Waktu UTBK 2026.pdf',
+            image: 'Panduan Belajar & Waktu UTBK 2026.png'// Ganti dengan path PDF Anda
         }
     ],
 
