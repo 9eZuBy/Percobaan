@@ -56,6 +56,14 @@ const allContentData = {
             summary: 'Ebook ini adalah diktat pembinaan olimpiade matematika materi dasar bagi siswa SMA yang disusun oleh Eddy Hermanto, ST, untuk menjembatani kesenjangan pemahaman persoalan dasar olimpiade dan mempermudah persiapan menghadapi kompetisi tahap awal. Isi materi mencakup empat bidang utama yaitu Aljabar (pemfaktoran, barisan, fungsi, suku banyak), Teori Bilangan (keterbagian, FPB, KPK, kekongruenan), Geometri (trigonometri, bangun datar, lingkaran), dan Kombinatorik (pencacahan, peluang, prinsip lubang merpati), yang semuanya dilengkapi dengan contoh soal beserta kunci jawaban latihannya',
             filePath: 'Perpustakaan/Diktat Pembinaan Olimpiade Matematika Materi Dasar Versi 51.pdf',
             image: 'Diktat Pembinaan Olimpiade Matematika SMA:MA Part1.png'// Ganti dengan path PDF Anda
+        },
+        {
+            id: 'perpustakaan-008',
+            title: 'Soal Dan Pembahasan Lengkap PO Matematika SMA ALC',
+            author: 'ALC Indonesia',
+            summary: 'Ebook ini berisi soal dan pembahasan lengkap dari pelatihan online matematika yang diadakan atau dibuat oleh ALC Indonesia',
+            filePath: 'Perpustakaan/Soal dan Pembahasan Pelatihan Online Matematika SMA ALC.pdf',
+            image: 'ilovepdf_merged-1_page-0001.jpg'// Ganti dengan path PDF Anda
         }
     ],
 
