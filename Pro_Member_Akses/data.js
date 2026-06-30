@@ -48,6 +48,14 @@ const allContentData = {
             summary: '"Matematika Dasar" adalah buku ajar yang ditulis oleh Jusmawati, S.Pd., M.Pd. dan ditujukan khusus bagi mahasiswa PGSD (Pendidikan Guru Sekolah Dasar) di STKIP Mega Rezky Makassar. Buku komprehensif ini menyajikan materi secara terperinci yang disertai dengan contoh soal dan pembahasan, mencakup pemahaman dasar mengenai sistem angka dan bilangan (Romawi serta Hindu-Arab), karakteristik dan operasi hitung bilangan cacah serta bilangan bulat, pengenalan konsep geometri dua dimensi (bangun datar), hingga konsep geometri tiga dimensi (dimensi tiga dan bangun ruang) seperti kubus, balok, prisma, limas, tabung, dan kerucut.',
             filePath: 'Perpustakaan/Matematika Dasar (Jusmawati) (z-library.sk, 1lib.sk, z-lib.sk).pdf',
             image: 'Matematika dasar.jpg'// Ganti dengan path PDF Anda
+        },
+        {
+            id: 'perpustakaan-007',
+            title: 'Dikat Pembinaan Olimpiade Matematika SMA/MA - Part 1',
+            author: 'Eddy Hermanto, ST',
+            summary: 'Ebook ini adalah diktat pembinaan olimpiade matematika materi dasar bagi siswa SMA yang disusun oleh Eddy Hermanto, ST, untuk menjembatani kesenjangan pemahaman persoalan dasar olimpiade dan mempermudah persiapan menghadapi kompetisi tahap awal. Isi materi mencakup empat bidang utama yaitu Aljabar (pemfaktoran, barisan, fungsi, suku banyak), Teori Bilangan (keterbagian, FPB, KPK, kekongruenan), Geometri (trigonometri, bangun datar, lingkaran), dan Kombinatorik (pencacahan, peluang, prinsip lubang merpati), yang semuanya dilengkapi dengan contoh soal beserta kunci jawaban latihannya',
+            filePath: 'Perpustakaan/Diktat Pembinaan Olimpiade Matematika Materi Dasar Versi 51.pdf',
+            image: 'Diktat Pembinaan Olimpiade Matematika SMA:MA Part1.png'// Ganti dengan path PDF Anda
         }
     ],
 
