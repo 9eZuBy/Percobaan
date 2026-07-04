@@ -6,8 +6,8 @@ const allContentData = {
             author: 'Tim UMT',
             summary: 'Ebook "Pengantar Kalkulus" ini menyajikan fondasi esensial untuk memahami kalkulus secara konseptual. Materi mencakup pembahasan mendasar mulai dari sistem bilangan real , pertidaksamaan , dan nilai mutlak. Fokus utama buku ini adalah pada konsep fungsi , termasuk jenis-jenisnya , operasi , komposisi, dan invers. Topik diakhiri dengan ulasan lengkap mengenai fungsi trigonometri dan inversnya.',
             filePath: 'Perpustakaan/Pengantar Kalkulus.pdf',
-            category: 'konsep',
-            series: 'Seri Mengapa?',
+            category: 'umt_original',
+            series: 'Seri materi pembelajaran',
             image: 'Pengantar Kalkulus.png'// Ganti dengan path PDF Anda
             
         },
@@ -17,8 +17,8 @@ const allContentData = {
             author: 'Tim UMT',
             summary: 'Ebook "Memahami Pertidaksamaan Aljabar" ini dirancang untuk membangun pemahaman konseptual dan intuitif mengenai berbagai jenis pertidaksamaan. Materi diawali dengan fondasi dasar pertidaksamaan linear satu variabel dan sistem pertidaksamaan linear dua variabel. Pembahasan berlanjut ke topik-topik yang lebih kompleks untuk tingkat SMA, meliputi pertidaksamaan kuadrat , rasional (pecahan) , nilai mutlak , eksponensial, dan logaritma. Ebook ini ditutup dengan materi lanjutan yang mencakup pertidaksamaan polinomial orde tinggi , trigonometri , serta pengenalan teorema pertidaksamaan klasik seperti AM-GM dan Cauchy-Schwarz.',
             filePath: 'Perpustakaan/Pertidaksamaan Aljabar.pdf',
-            category: 'konsep',
-            series: 'Seri Mengapa?',
+            category: 'umt_original',
+            series: 'Seri materi pembelajaran',
             image: 'Pertidaksamaan Aljabar.jpg'// Ganti dengan path PDF Anda
         },
         {
@@ -27,8 +27,8 @@ const allContentData = {
             author: 'Tim UMT',
             summary: 'Ebook "Memahami Logika Matematika" ini dirancang untuk membangun pemahaman konseptual dan intuitif mengenai seni berpikir lurus tanpa sekadar menghafal tabel kebenaran. Materi diawali dengan fondasi dasar berpikir logis, meliputi perbedaan antara pernyataan (proposisi) dan kalimat terbuka, serta konsep fundamental negasi. Pembahasan berlanjut ke topik penggabungan fakta melalui pernyataan majemuk seperti konjungsi, disjungsi, implikasi, dan biimplikasi , dilanjutkan dengan ekuivalensi, hukum-hukum aljabar logika, serta bentuk konvers, invers, dan kontraposisi. Ebook ini ditutup dengan materi analisis kuantor logika (universal dan eksistensial) , serta puncak pembelajaran berupa teknik penarikan kesimpulan yang sah—seperti Modus Ponens, Modus Tollens, dan Silogisme—sekaligus cara mendeteksi kecacatan argumen atau sesat pikir (logical fallacy).',
             filePath: 'Perpustakaan/Logika Matematika (BY UMT).pdf',
-            category: 'konsep',
-            series: 'Seri Mengapa?',
+            category: 'umt_original',
+            series: 'Seri materi pembelajaran',
             image: 'Logika Matematika 3d.png'// Ganti dengan path PDF Anda
         },
         {
@@ -37,8 +37,8 @@ const allContentData = {
             author: 'Dr. Syamsul Bahri, M.si',
             summary: 'Buku setebal enam bab ini menyajikan materi dasar secara sistematis menggunakan bahasa sederhana dan simbolik, yang meliputi dasar-dasar logika predikat dan argumen, teknik-teknik pembuktian matematika (langsung, kontrapositif, kontradiksi, induksi), teori himpunan dasar beserta aplikasi diagram Venn, hubungan logika dengan teori himpunan, serta konsep relasi, fungsi, dan kardinalitas himpunan.',
             filePath: 'Perpustakaan/Syamsul Bahri-Logika dan Himpunan.pdf',
-            category: 'konsep',
-            series: 'Seri Mengapa?',
+            category: 'materi',
+            series: 'Seri materi pembelajaran',
             image: 'Logika dan himpunan.png'// Ganti dengan path PDF Anda
         },
         {
@@ -47,8 +47,8 @@ const allContentData = {
             author: 'Tim UMT',
             summary: 'Panduan Belajar & Waktu UTBK 2026.pdf" adalah panduan strategi dari UMT yang menolak metode hafalan dan belajar berlebihan (grinding), lalu menggantinya dengan pendekatan belajar cerdas berbasis metakognisi. Ebook ini menyediakan cetak biru rencana belajar 6 bulan, teknik kognitif efisien (seperti dekonstruksi masalah dan error log), manajemen waktu berbasis energi, serta strategi mental hari-H untuk membantu siswa menghadapi UTBK 2026 dengan prinsip "Berpikir Jelas, Bertindak Tepat, dan Menang Tenang.', 
             filePath: 'Perpustakaan/Panduan Belajar & Waktu UTBK 2026.pdf',
-            category: 'konsep',
-            series: 'Seri Mengapa?',
+            category: 'umt_original',
+            series: 'Seri strategi belajar',
             image: 'Panduan Belajar & Waktu UTBK 2026.png'// Ganti dengan path PDF Anda
         },
         {
@@ -57,8 +57,8 @@ const allContentData = {
             author: 'Jusmawati',
             summary: '"Matematika Dasar" adalah buku ajar yang ditulis oleh Jusmawati, S.Pd., M.Pd. dan ditujukan khusus bagi mahasiswa PGSD (Pendidikan Guru Sekolah Dasar) di STKIP Mega Rezky Makassar. Buku komprehensif ini menyajikan materi secara terperinci yang disertai dengan contoh soal dan pembahasan, mencakup pemahaman dasar mengenai sistem angka dan bilangan (Romawi serta Hindu-Arab), karakteristik dan operasi hitung bilangan cacah serta bilangan bulat, pengenalan konsep geometri dua dimensi (bangun datar), hingga konsep geometri tiga dimensi (dimensi tiga dan bangun ruang) seperti kubus, balok, prisma, limas, tabung, dan kerucut.',
             filePath: 'Perpustakaan/Matematika Dasar (Jusmawati) (z-library.sk, 1lib.sk, z-lib.sk).pdf',
-            category: 'konsep',
-            series: 'Seri Mengapa?',
+            category: 'materi',
+            series: 'Seri materi pembelajaran',
             image: 'Matematika dasar.jpg'// Ganti dengan path PDF Anda
         },
         {
@@ -67,8 +67,8 @@ const allContentData = {
             author: 'Eddy Hermanto, ST',
             summary: 'Ebook ini adalah diktat pembinaan olimpiade matematika materi dasar bagi siswa SMA yang disusun oleh Eddy Hermanto, ST, untuk menjembatani kesenjangan pemahaman persoalan dasar olimpiade dan mempermudah persiapan menghadapi kompetisi tahap awal. Isi materi mencakup empat bidang utama yaitu Aljabar (pemfaktoran, barisan, fungsi, suku banyak), Teori Bilangan (keterbagian, FPB, KPK, kekongruenan), Geometri (trigonometri, bangun datar, lingkaran), dan Kombinatorik (pencacahan, peluang, prinsip lubang merpati), yang semuanya dilengkapi dengan contoh soal beserta kunci jawaban latihannya',
             filePath: 'Perpustakaan/Diktat Pembinaan Olimpiade Matematika Materi Dasar Versi 51.pdf',
-            category: 'konsep',
-            series: 'Seri Mengapa?',
+            category: 'latihan',
+            series: 'Seri olimpiade',
             image: 'Diktat Pembinaan Olimpiade Matematika SMA:MA Part1.png'// Ganti dengan path PDF Anda
         },
         {
@@ -77,8 +77,8 @@ const allContentData = {
             author: 'ALC Indonesia',
             summary: 'Ebook ini berisi soal dan pembahasan lengkap dari pelatihan online matematika yang diadakan atau dibuat oleh ALC Indonesia',
             filePath: 'Perpustakaan/Soal dan Pembahasan Pelatihan Online Matematika SMA ALC.pdf',
-            category: 'konsep',
-            series: 'Seri Mengapa?',
+            category: 'latihan',
+            series: 'Seri olimpiade',
             image: 'ilovepdf_merged-1_page-0001.jpg'// Ganti dengan path PDF Anda
         }
     ],
