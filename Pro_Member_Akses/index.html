@@ -2595,8 +2595,26 @@ function renderUmtLabPage() {
     if (window.MathJax) { MathJax.typeset(); }
 }
 
+// ── KONFIGURASI KATEGORI PERPUSTAKAAN ──
+// Tambahkan field "category" (wajib, pakai salah satu key di bawah) dan
+// "series" (opsional, teks bebas misal "Seri Mengapa?", "Seri Rahasia Rumus")
+// pada setiap item di allContentData.perpustakaan (data.js)
+const LIBRARY_CATEGORIES = {
+    materi:       { label: 'Materi Pembelajaran',   icon: 'fa-solid fa-book',            color: 'var(--accent-cyan)' },
+    konsep:       { label: 'Konsep & Pemahaman',    icon: 'fa-solid fa-lightbulb',       color: 'var(--accent-purple)' },
+    wawasan:      { label: 'Wawasan Matematika',    icon: 'fa-solid fa-glasses',         color: 'var(--accent-amber)' },
+    latihan:      { label: 'Latihan & Evaluasi',    icon: 'fa-solid fa-list-check',      color: 'var(--accent-green)' },
+    referensi:    { label: 'Referensi',             icon: 'fa-solid fa-file-lines',      color: 'var(--accent-cyan2)' },
+    persiapan:    { label: 'Persiapan Ujian',       icon: 'fa-solid fa-graduation-cap',  color: 'var(--accent-red)' },
+    strategi:     { label: 'Strategi Belajar',      icon: 'fa-solid fa-chess',           color: 'var(--accent-purple)' },
+    umt_original: { label: 'UMT Original',          icon: 'fa-solid fa-star',            color: 'var(--accent-amber)' },
+    lainnya:      { label: 'Lainnya',                icon: 'fa-solid fa-ellipsis',        color: 'var(--text-secondary)' },
+};
+
 function renderPerpustakaanPage() {
-    const libraryHTML = allContentData.perpustakaan.map((item) => {
+    const items = allContentData.perpustakaan;
+
+    const createLibCard = (item) => {
         const heroBg = item.image
             ? `<img src="${item.image}" class="lib-card-hero-bg" alt="">`
             : `<div class="lib-card-hero-bg-placeholder"></div>`;
@@ -2607,6 +2625,8 @@ function renderPerpustakaanPage() {
                 <i class="fa-solid fa-book-open" style="color:rgba(255,255,255,0.5);font-size:22px"></i>
                </div>`;
 
+        const badgeLabel = item.series || 'E-Book';
+
         return `
         <div class="lib-card" onclick="window.location.href='viewer.html?id=${item.id}'">
             <div class="lib-card-hero">
@@ -2616,7 +2636,7 @@ function renderPerpustakaanPage() {
                 </div>
             </div>
             <div class="lib-card-body">
-                <span class="lib-card-badge">E-Book</span>
+                <span class="lib-card-badge">${badgeLabel}</span>
                 <p class="lib-card-title">${item.title}</p>
                 <p class="lib-card-author">
                     <i class="fa-solid fa-user-pen" style="font-size:10px"></i>
@@ -2630,6 +2650,55 @@ function renderPerpustakaanPage() {
             </div>
         </div>
         `;
+    };
+
+    // Kelompokkan item berdasarkan category (fallback: 'lainnya')
+    const grouped = items.reduce((acc, item) => {
+        const cat = LIBRARY_CATEGORIES[item.category] ? item.category : 'lainnya';
+        if (!acc[cat]) acc[cat] = [];
+        acc[cat].push(item);
+        return acc;
+    }, {});
+
+    // Urutkan sesuai urutan LIBRARY_CATEGORIES, hanya tampilkan kategori yang punya isi
+    const activeCategoryKeys = Object.keys(LIBRARY_CATEGORIES).filter(key => grouped[key] && grouped[key].length > 0);
+
+    const tabsHTML = ['Semua', ...activeCategoryKeys].map(key => {
+        const isAll = key === 'Semua';
+        const label = isAll ? 'Semua' : LIBRARY_CATEGORIES[key].label;
+        const count = isAll ? items.length : grouped[key].length;
+        return `
+            <button class="lib-tab flex-shrink-0 text-xs font-bold px-4 py-2 rounded-lg transition-all"
+                    data-cat="${isAll ? 'Semua' : key}"
+                    style="${isAll
+                        ? 'background:var(--accent-cyan-dim);color:var(--accent-cyan);border:1px solid rgba(34,211,238,0.3)'
+                        : 'background:transparent;color:var(--text-secondary);border:1px solid var(--border-color)'}"
+                    onclick="filterPerpustakaan('${isAll ? 'Semua' : key}', this)">
+                ${label}
+                <span class="ml-1 font-mono text-[10px] opacity-70">${count}</span>
+            </button>
+        `;
+    }).join('');
+
+    const sectionsHTML = activeCategoryKeys.map(key => {
+        const config = LIBRARY_CATEGORIES[key];
+        const catItems = grouped[key];
+        return `
+            <div class="lib-section" data-section="${key}">
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
+                         style="background:var(--bg-panel2);border:1px solid var(--border-color)">
+                        <i class="${config.icon} text-xs" style="color:${config.color}"></i>
+                    </div>
+                    <h3 class="font-bold text-sm" style="color:var(--text-primary)">${config.label}</h3>
+                    <span class="text-[10px] font-mono px-2 py-0.5 rounded-full"
+                          style="background:var(--accent-cyan-dim);color:var(--accent-cyan)">${catItems.length} buku</span>
+                </div>
+                <div class="lib-grid mb-8">
+                    ${catItems.map(createLibCard).join('')}
+                </div>
+            </div>
+        `;
     }).join('');
 
     appContent.innerHTML = `
@@ -2641,15 +2710,81 @@ function renderPerpustakaanPage() {
                 <div>
                     <h2 class="text-xl font-bold" style="color:var(--accent-cyan)">Perpustakaan Digital</h2>
                     <p class="text-xs mt-0.5" style="color:var(--text-secondary)">
-                        Koleksi buku digital dan referensi untuk pendalaman materi.
+                        ${items.length} buku tersedia — koleksi buku digital dan referensi untuk pendalaman materi.
                     </p>
                 </div>
             </div>
-            <div class="lib-grid">
-                ${libraryHTML.length > 0 ? libraryHTML : '<p style="color:var(--text-secondary);grid-column:1/-1">Belum ada buku di perpustakaan.</p>'}
+
+            <!-- Search -->
+            <div class="relative mb-5">
+                <input type="text"
+                       id="lib-search-input"
+                       class="w-full rounded-xl py-2.5 pl-10 pr-4 text-sm transition-all"
+                       style="background:var(--bg-main);border:1px solid var(--border-color);color:var(--text-primary);font-family:'Plus Jakarta Sans',sans-serif"
+                       placeholder="Cari judul, penulis, atau seri..."
+                       onfocus="this.style.borderColor='var(--accent-cyan)'"
+                       onblur="this.style.borderColor='var(--border-color)'">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-xs"
+                   style="color:var(--text-subtle)"></i>
+            </div>
+
+            <!-- Filter tabs -->
+            <div class="flex gap-2 flex-wrap mb-6" id="lib-filter-container">
+                ${tabsHTML}
+            </div>
+
+            <div style="height:1px;background:var(--border-color);margin-bottom:1.5rem"></div>
+
+            <div id="lib-sections-container">
+                ${items.length > 0 ? sectionsHTML : '<p style="color:var(--text-secondary)">Belum ada buku di perpustakaan.</p>'}
             </div>
         </div>
     `;
+
+    setupLibrarySearch();
+}
+
+function filterPerpustakaan(selectedCat, clickedBtn) {
+    document.querySelectorAll('.lib-tab').forEach(btn => {
+        const isActive = btn.dataset.cat === selectedCat;
+        btn.style.background  = isActive ? 'var(--accent-cyan-dim)' : 'transparent';
+        btn.style.color       = isActive ? 'var(--accent-cyan)'     : 'var(--text-secondary)';
+        btn.style.borderColor = isActive ? 'rgba(34,211,238,0.3)'   : 'var(--border-color)';
+    });
+
+    document.querySelectorAll('.lib-section').forEach(section => {
+        section.style.display =
+            selectedCat === 'Semua' || section.dataset.section === selectedCat
+                ? '' : 'none';
+    });
+}
+
+function setupLibrarySearch() {
+    const searchInput = document.getElementById('lib-search-input');
+    if (!searchInput) return;
+
+    searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase().trim();
+        const cards = document.querySelectorAll('#lib-sections-container .lib-card');
+
+        cards.forEach(card => {
+            const title = card.querySelector('.lib-card-title')?.textContent.toLowerCase() || '';
+            const author = card.querySelector('.lib-card-author')?.textContent.toLowerCase() || '';
+            const badge = card.querySelector('.lib-card-badge')?.textContent.toLowerCase() || '';
+            const match = term === '' || title.includes(term) || author.includes(term) || badge.includes(term);
+            card.style.display = match ? '' : 'none';
+        });
+
+        // Sembunyikan section yang semua kartunya hilang, dan reset tab ke "Semua" tampilan-wise
+        document.querySelectorAll('.lib-section').forEach(section => {
+            const visibleCards = section.querySelectorAll('.lib-card:not([style*="display: none"])');
+            if (term === '') {
+                // biarkan filter tab yang mengatur
+            } else {
+                section.style.display = visibleCards.length > 0 ? '' : 'none';
+            }
+        });
+    });
 }
 
 function renderKamusPage() {
