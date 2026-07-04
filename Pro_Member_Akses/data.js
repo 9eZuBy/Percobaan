@@ -6,7 +6,7 @@ const allContentData = {
             author: 'Tim UMT',
             summary: 'Ebook "Pengantar Kalkulus" ini menyajikan fondasi esensial untuk memahami kalkulus secara konseptual. Materi mencakup pembahasan mendasar mulai dari sistem bilangan real , pertidaksamaan , dan nilai mutlak. Fokus utama buku ini adalah pada konsep fungsi , termasuk jenis-jenisnya , operasi , komposisi, dan invers. Topik diakhiri dengan ulasan lengkap mengenai fungsi trigonometri dan inversnya.',
             filePath: 'Perpustakaan/Pengantar Kalkulus.pdf',
-            category: 'umt_original',
+            category: 'materi',
             series: 'Seri materi pembelajaran',
             image: 'Pengantar Kalkulus.png'// Ganti dengan path PDF Anda
             
@@ -17,7 +17,7 @@ const allContentData = {
             author: 'Tim UMT',
             summary: 'Ebook "Memahami Pertidaksamaan Aljabar" ini dirancang untuk membangun pemahaman konseptual dan intuitif mengenai berbagai jenis pertidaksamaan. Materi diawali dengan fondasi dasar pertidaksamaan linear satu variabel dan sistem pertidaksamaan linear dua variabel. Pembahasan berlanjut ke topik-topik yang lebih kompleks untuk tingkat SMA, meliputi pertidaksamaan kuadrat , rasional (pecahan) , nilai mutlak , eksponensial, dan logaritma. Ebook ini ditutup dengan materi lanjutan yang mencakup pertidaksamaan polinomial orde tinggi , trigonometri , serta pengenalan teorema pertidaksamaan klasik seperti AM-GM dan Cauchy-Schwarz.',
             filePath: 'Perpustakaan/Pertidaksamaan Aljabar.pdf',
-            category: 'umt_original',
+            category: 'materi',
             series: 'Seri materi pembelajaran',
             image: 'Pertidaksamaan Aljabar.jpg'// Ganti dengan path PDF Anda
         },
@@ -27,7 +27,7 @@ const allContentData = {
             author: 'Tim UMT',
             summary: 'Ebook "Memahami Logika Matematika" ini dirancang untuk membangun pemahaman konseptual dan intuitif mengenai seni berpikir lurus tanpa sekadar menghafal tabel kebenaran. Materi diawali dengan fondasi dasar berpikir logis, meliputi perbedaan antara pernyataan (proposisi) dan kalimat terbuka, serta konsep fundamental negasi. Pembahasan berlanjut ke topik penggabungan fakta melalui pernyataan majemuk seperti konjungsi, disjungsi, implikasi, dan biimplikasi , dilanjutkan dengan ekuivalensi, hukum-hukum aljabar logika, serta bentuk konvers, invers, dan kontraposisi. Ebook ini ditutup dengan materi analisis kuantor logika (universal dan eksistensial) , serta puncak pembelajaran berupa teknik penarikan kesimpulan yang sah—seperti Modus Ponens, Modus Tollens, dan Silogisme—sekaligus cara mendeteksi kecacatan argumen atau sesat pikir (logical fallacy).',
             filePath: 'Perpustakaan/Logika Matematika (BY UMT).pdf',
-            category: 'umt_original',
+            category: 'materi',
             series: 'Seri materi pembelajaran',
             image: 'Logika Matematika 3d.png'// Ganti dengan path PDF Anda
         },
@@ -47,7 +47,7 @@ const allContentData = {
             author: 'Tim UMT',
             summary: 'Panduan Belajar & Waktu UTBK 2026.pdf" adalah panduan strategi dari UMT yang menolak metode hafalan dan belajar berlebihan (grinding), lalu menggantinya dengan pendekatan belajar cerdas berbasis metakognisi. Ebook ini menyediakan cetak biru rencana belajar 6 bulan, teknik kognitif efisien (seperti dekonstruksi masalah dan error log), manajemen waktu berbasis energi, serta strategi mental hari-H untuk membantu siswa menghadapi UTBK 2026 dengan prinsip "Berpikir Jelas, Bertindak Tepat, dan Menang Tenang.', 
             filePath: 'Perpustakaan/Panduan Belajar & Waktu UTBK 2026.pdf',
-            category: 'umt_original',
+            category: 'strategi',
             series: 'Seri strategi belajar',
             image: 'Panduan Belajar & Waktu UTBK 2026.png'// Ganti dengan path PDF Anda
         },
