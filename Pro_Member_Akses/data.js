@@ -80,6 +80,16 @@ const allContentData = {
             category: 'latihan',
             series: 'Seri olimpiade',
             image: 'ilovepdf_merged-1_page-0001.jpg'// Ganti dengan path PDF Anda
+        },
+        {
+            id: 'perpustakaan-009',
+            title: 'Soal Dan Pembahasan Bentuk Pangkat, Akar dan Logaritma SMA',
+            author: 'Tim UMT',
+            summary: 'Ebook ini berisi soal dan pembahasan lengkap dari nateri terkati bentuk pangkat, akar dan logaritma.',
+            filePath: 'Perpustakaan/slide-01 (1).pdf',
+            category: 'latihan',
+            series: 'Seri latihan bentuk akar, pangkat dan logaritma',
+            image: 'slide-01.png'// Ganti dengan path PDF Anda
         }
     ],
 
