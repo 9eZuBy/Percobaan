@@ -85,10 +85,20 @@ const allContentData = {
             id: 'perpustakaan-009',
             title: 'Soal Dan Pembahasan Bentuk Pangkat, Akar dan Logaritma SMA',
             author: 'Tim UMT',
-            summary: 'Ebook ini berisi soal dan pembahasan lengkap dari nateri terkati bentuk pangkat, akar dan logaritma.',
+            summary: 'Ebook ini berisi soal dan pembahasan lengkap dari materi terkait bentuk pangkat, akar dan logaritma.',
             filePath: 'Perpustakaan/slide-01 (1).pdf',
             category: 'latihan',
             series: 'Seri latihan bentuk akar, pangkat dan logaritma',
+            image: 'slide-01.png'// Ganti dengan path PDF Anda
+        },
+        {
+            id: 'perpustakaan-010',
+            title: 'Mengapa bilangan genap dijumlahkan dengan bilangan ganjila hasilnya adalah bilangan ganjil? berikut penjelasannya!!!',
+            author: 'Tim UMT',
+            summary: 'Ebook ini berisi pembahasan mengenai pembuktian dari hasil penjumlahan bilangan genap dan bilangan ganjil hasilnya adalah bilangan ganjil.',
+            filePath: 'Perpustakaan/7.pdf',
+            category: 'wawasan',
+            series: 'Seri pembuktian',
             image: 'slide-01.png'// Ganti dengan path PDF Anda
         }
     ],
