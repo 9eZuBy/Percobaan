@@ -433,6 +433,39 @@ input:focus { border-color: var(--accent-cyan) !important; outline: none; }
         .lib-card-author { font-size: 11px; color: var(--text-secondary); margin: 0 0 8px; display: flex; align-items: center; gap: 5px; }
         .lib-card-summary { font-size: 11px; color: var(--text-secondary); line-height: 1.55; margin: 0 0 10px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
         .lib-card-footer { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; color: var(--accent-cyan); border-top: 1px solid var(--border-color); padding-top: 10px; }
+
+@media (max-width: 767px) {
+    .lib-row-wrapper { position: relative; }
+    .lib-section:not(.expanded) .lib-grid {
+        display: flex;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        gap: 12px;
+        padding-bottom: 4px;
+        padding-right: 32px;
+        scrollbar-width: none;
+    }
+    .lib-section:not(.expanded) .lib-grid::-webkit-scrollbar { display: none; }
+    .lib-section:not(.expanded) .lib-card {
+        flex: 0 0 150px;
+        scroll-snap-align: start;
+    }
+    .lib-section:not(.expanded) .lib-card-hero { height: 100px; }
+    .lib-section:not(.expanded) .lib-card-cover,
+    .lib-section:not(.expanded) .lib-card-cover-placeholder { width: 50px; height: 68px; }
+    .lib-section:not(.expanded) .lib-card-summary { display: none; }
+    .lib-section:not(.expanded) .lib-row-wrapper::after {
+        content: '';
+        position: absolute;
+        top: 0; right: 0; bottom: 4px;
+        width: 28px;
+        background: linear-gradient(to right, transparent, var(--bg-panel) 85%);
+        pointer-events: none;
+    }
+    .lib-toggle-btn .toggle-chevron { transition: transform 0.2s ease; }
+}
 /* ── MOBILE BOTTOM NAV (new) ── */
 @media (max-width: 767px) {
   #sidebar-nav { display: flex !important; overflow: visible !important; height: 100% !important; }
@@ -2687,15 +2720,22 @@ function renderPerpustakaanPage() {
             <div class="lib-section" data-section="${key}">
                 <div class="flex items-center gap-2 mb-4">
                     <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
-                         style="background:var(--bg-panel2);border:1px solid var(--border-color)">
+                        style="background:var(--bg-panel2);border:1px solid var(--border-color)">
                         <i class="${config.icon} text-xs" style="color:${config.color}"></i>
                     </div>
                     <h3 class="font-bold text-sm" style="color:var(--text-primary)">${config.label}</h3>
                     <span class="text-[10px] font-mono px-2 py-0.5 rounded-full"
-                          style="background:var(--accent-cyan-dim);color:var(--accent-cyan)">${catItems.length} buku</span>
+                        style="background:var(--accent-cyan-dim);color:var(--accent-cyan)">${catItems.length} buku</span>
+                    <button class="lib-toggle-btn text-[10px] font-bold px-2.5 py-1 rounded-lg ml-auto flex items-center gap-1 md:hidden"
+                            style="background:var(--bg-panel2);color:var(--accent-cyan);border:1px solid var(--border-color)"
+                            onclick="toggleLibrarySection(this)">
+                        <span>Lihat Semua</span> <i class="fa-solid fa-chevron-right text-[9px] toggle-chevron"></i>
+                    </button>
                 </div>
-                <div class="lib-grid mb-8">
-                    ${catItems.map(createLibCard).join('')}
+                <div class="lib-row-wrapper mb-8">
+                    <div class="lib-grid">
+                        ${catItems.map(createLibCard).join('')}
+                    </div>
                 </div>
             </div>
         `;
@@ -2744,6 +2784,8 @@ function renderPerpustakaanPage() {
     setupLibrarySearch();
 }
 
+
+
 function filterPerpustakaan(selectedCat, clickedBtn) {
     document.querySelectorAll('.lib-tab').forEach(btn => {
         const isActive = btn.dataset.cat === selectedCat;
@@ -2757,6 +2799,13 @@ function filterPerpustakaan(selectedCat, clickedBtn) {
             selectedCat === 'Semua' || section.dataset.section === selectedCat
                 ? '' : 'none';
     });
+}
+
+function toggleLibrarySection(btn) {
+    const section = btn.closest('.lib-section');
+    const isExpanded = section.classList.toggle('expanded');
+    btn.querySelector('span').textContent = isExpanded ? 'Ringkas' : 'Lihat Semua';
+    btn.querySelector('.toggle-chevron').style.transform = isExpanded ? 'rotate(90deg)' : 'rotate(0deg)';
 }
 
 function setupLibrarySearch() {
