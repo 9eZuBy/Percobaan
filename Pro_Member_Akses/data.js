@@ -89,7 +89,7 @@ const allContentData = {
             filePath: 'Perpustakaan/slide-01 (1).pdf',
             category: 'latihan',
             series: 'Seri latihan bentuk akar, pangkat dan logaritma',
-            image: 'slide-01.png'// Ganti dengan path PDF Anda
+            image: 'slide-01 (1).png'// Ganti dengan path PDF Anda
         },
         {
             id: 'perpustakaan-010',
