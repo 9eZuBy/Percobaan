@@ -434,6 +434,7 @@ input:focus { border-color: var(--accent-cyan) !important; outline: none; }
         .lib-card-summary { font-size: 11px; color: var(--text-secondary); line-height: 1.55; margin: 0 0 10px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
         .lib-card-footer { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; color: var(--accent-cyan); border-top: 1px solid var(--border-color); padding-top: 10px; }
 
+
 @media (max-width: 767px) {
     .lib-row-wrapper { position: relative; }
     .lib-section:not(.expanded) .lib-grid {
@@ -442,30 +443,69 @@ input:focus { border-color: var(--accent-cyan) !important; outline: none; }
         overflow-y: hidden;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
-        gap: 12px;
+        gap: 10px;
         padding-bottom: 4px;
-        padding-right: 32px;
+        padding-right: 20px;
         scrollbar-width: none;
     }
     .lib-section:not(.expanded) .lib-grid::-webkit-scrollbar { display: none; }
     .lib-section:not(.expanded) .lib-card {
-        flex: 0 0 150px;
+        flex: 0 0 128px;
         scroll-snap-align: start;
     }
-    .lib-section:not(.expanded) .lib-card-hero { height: 100px; }
+    .lib-section:not(.expanded) .lib-card-hero { height: 90px; }
     .lib-section:not(.expanded) .lib-card-cover,
-    .lib-section:not(.expanded) .lib-card-cover-placeholder { width: 50px; height: 68px; }
+    .lib-section:not(.expanded) .lib-card-cover-placeholder { width: 44px; height: 60px; }
     .lib-section:not(.expanded) .lib-card-summary { display: none; }
     .lib-section:not(.expanded) .lib-row-wrapper::after {
         content: '';
         position: absolute;
-        top: 0; right: 0; bottom: 4px;
-        width: 28px;
-        background: linear-gradient(to right, transparent, var(--bg-panel) 85%);
+        top: 0; right: 0; bottom: 15px;
+        width: 36px;
+        background: linear-gradient(to right, transparent, var(--bg-panel) 80%);
         pointer-events: none;
     }
-    .lib-toggle-btn .toggle-chevron { transition: transform 0.2s ease; }
 }
+
+/* Progress bar indikator scroll (hanya mobile, hanya kalau overflow) */
+.lib-scroll-progress {
+    display: none;
+    height: 3px;
+    background: var(--border-color);
+    border-radius: 2px;
+    margin-top: 8px;
+    overflow: hidden;
+    position: relative;
+}
+.lib-scroll-progress.visible { display: block; }
+.lib-scroll-progress-thumb {
+    position: absolute;
+    top: 0; left: 0; height: 100%;
+    background: linear-gradient(90deg, var(--accent-cyan2), var(--accent-cyan));
+    border-radius: 2px;
+    width: 30%;
+}
+
+/* Hint swipe pertama kali */
+.lib-swipe-hint {
+    position: absolute;
+    top: 40%; right: 8px;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: rgba(8,12,20,0.7);
+    backdrop-filter: blur(2px);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent-cyan);
+    font-size: 11px;
+    pointer-events: none;
+    z-index: 2;
+    animation: swipeHintPulse 1.4s ease-in-out infinite;
+}
+@keyframes swipeHintPulse {
+    0%, 100% { transform: translateX(0); opacity: 0.9; }
+    50% { transform: translateX(4px); opacity: 0.4; }
+}
+
 /* ── MOBILE BOTTOM NAV (new) ── */
 @media (max-width: 767px) {
   #sidebar-nav { display: flex !important; overflow: visible !important; height: 100% !important; }
@@ -2713,34 +2753,40 @@ function renderPerpustakaanPage() {
         `;
     }).join('');
 
-    const sectionsHTML = activeCategoryKeys.map(key => {
+    const sectionsHTML = activeCategoryKeys.map((key, idx) => {
         const config = LIBRARY_CATEGORIES[key];
         const catItems = grouped[key];
         return `
             <div class="lib-section" data-section="${key}">
-                <div class="flex items-center gap-2 mb-4">
-                    <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
-                        style="background:var(--bg-panel2);border:1px solid var(--border-color)">
-                        <i class="${config.icon} text-xs" style="color:${config.color}"></i>
+                <div class="flex items-center justify-between gap-2 mb-3">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                        <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                            style="background:var(--bg-panel2);border:1px solid var(--border-color)">
+                            <i class="${config.icon} text-xs" style="color:${config.color}"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <h3 class="font-bold text-sm leading-tight truncate" style="color:var(--text-primary)">${config.label}</h3>
+                            <span class="text-[11px]" style="color:var(--text-secondary)">${catItems.length} buku tersedia</span>
+                        </div>
                     </div>
-                    <h3 class="font-bold text-sm" style="color:var(--text-primary)">${config.label}</h3>
-                    <span class="text-[10px] font-mono px-2 py-0.5 rounded-full"
-                        style="background:var(--accent-cyan-dim);color:var(--accent-cyan)">${catItems.length} buku</span>
-                    <button class="lib-toggle-btn text-[10px] font-bold px-2.5 py-1 rounded-lg ml-auto flex items-center gap-1 md:hidden"
+                    <button class="lib-toggle-btn text-[11px] font-bold px-2.5 py-1.5 rounded-lg flex items-center gap-1 flex-shrink-0 md:hidden"
                             style="background:var(--bg-panel2);color:var(--accent-cyan);border:1px solid var(--border-color)"
                             onclick="toggleLibrarySection(this)">
-                        <span>Lihat Semua</span> <i class="fa-solid fa-chevron-right text-[9px] toggle-chevron"></i>
+                        <span>Semua</span> <i class="fa-solid fa-chevron-right text-[9px] toggle-chevron"></i>
                     </button>
                 </div>
                 <div class="lib-row-wrapper mb-8">
-                    <div class="lib-grid">
+                    <div class="lib-grid" data-lib-scroll="${key}">
                         ${catItems.map(createLibCard).join('')}
+                    </div>
+                    ${idx === 0 ? `<div class="lib-swipe-hint md:hidden" data-swipe-hint><i class="fa-solid fa-chevron-right"></i></div>` : ''}
+                    <div class="lib-scroll-progress md:hidden" data-lib-progress="${key}">
+                        <div class="lib-scroll-progress-thumb"></div>
                     </div>
                 </div>
             </div>
         `;
     }).join('');
-
     appContent.innerHTML = `
         <div class="panel">
             <div class="flex items-center gap-3 mb-6">
@@ -2782,6 +2828,7 @@ function renderPerpustakaanPage() {
     `;
 
     setupLibrarySearch();
+
 }
 
 
@@ -2833,6 +2880,45 @@ function setupLibrarySearch() {
                 section.style.display = visibleCards.length > 0 ? '' : 'none';
             }
         });
+    });
+}
+
+function setupLibraryScrollIndicators() {
+    document.querySelectorAll('[data-lib-scroll]').forEach(grid => {
+        const key = grid.dataset.libScroll;
+        const progressBar = document.querySelector(`[data-lib-progress="${key}"]`);
+        const thumb = progressBar?.querySelector('.lib-scroll-progress-thumb');
+        if (!progressBar || !thumb) return;
+
+        const updateProgress = () => {
+            const overflow = grid.scrollWidth - grid.clientWidth;
+            if (overflow <= 4) {
+                progressBar.classList.remove('visible');
+                return;
+            }
+            progressBar.classList.add('visible');
+            const visibleRatio = grid.clientWidth / grid.scrollWidth;
+            const scrollRatio = grid.scrollLeft / overflow;
+            thumb.style.width = `${visibleRatio * 100}%`;
+            thumb.style.transform = `translateX(${scrollRatio * (100 / visibleRatio - 100)}%)`;
+        };
+
+        grid.addEventListener('scroll', updateProgress);
+        window.addEventListener('resize', updateProgress);
+        updateProgress();
+
+        // Sembunyikan swipe hint setelah user scroll pertama kali
+        const hint = grid.parentElement.querySelector('[data-swipe-hint]');
+        if (hint) {
+            const dismissHint = () => {
+                hint.style.opacity = '0';
+                setTimeout(() => hint.remove(), 300);
+                grid.removeEventListener('scroll', dismissHint);
+            };
+            grid.addEventListener('scroll', dismissHint, { once: true });
+            // Auto-hilang setelah 4 detik walau belum discroll
+            setTimeout(() => { if (document.body.contains(hint)) dismissHint(); }, 4000);
+        }
     });
 }
 
