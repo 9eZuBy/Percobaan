@@ -160,6 +160,70 @@
             width: 100%;
             height: 100%;
         }
+
+        /* ══════════════════════════════════════════════════════
+           TOMBOL "TANYA MENTOR" — hanya tampil untuk file yang
+           ditandai mentorEnabled: true di data.js
+           ══════════════════════════════════════════════════════ */
+        .mentor-wrapper {
+            display: none; /* di-set 'flex' via JS kalau item ini boleh tanya mentor */
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+        }
+        .mentor-button {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            background: #25D366;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 0.95rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            font-family: sans-serif;
+            cursor: pointer;
+            white-space: nowrap;
+            line-height: 1;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .mentor-button:hover { background: #1fb959; transform: translateY(-1px); }
+        .mentor-button:active { transform: translateY(0); }
+        .mentor-button i { font-size: 1.05rem; }
+        @media (max-width: 768px) {
+            .mentor-button .mentor-btn-label { display: none; }
+            .mentor-button { padding: 0.5rem 0.65rem; }
+        }
+        .mentor-callout {
+            position: absolute;
+            top: 130%;
+            right: 0;
+            background: #1f2937;
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-family: sans-serif;
+            max-width: 220px;
+            white-space: normal;
+            line-height: 1.4;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            opacity: 0;
+            transform: translateY(-6px);
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 1000;
+        }
+        .mentor-callout.show { opacity: 1; transform: translateY(0); }
+        .mentor-callout::after {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            right: 16px;
+            border: 6px solid transparent;
+            border-bottom-color: #1f2937;
+        }
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -196,6 +260,17 @@
                 <button id="zoom-in" class="toolbar-button" title="Perbesar">
                     <i class="fa-solid fa-search-plus"></i>
                 </button>
+
+                <div class="mentor-wrapper" id="mentor-wrapper">
+                    <div style="width: 1px; height: 20px; background: var(--border-color); margin: 0 5px;"></div>
+                    <button id="mentor-btn" class="mentor-button" title="Masih bingung dengan materi ini? Tanya mentor langsung lewat WhatsApp">
+                        <i class="fa-brands fa-whatsapp"></i>
+                        <span class="mentor-btn-label">Tanya Mentor</span>
+                    </button>
+                    <div class="mentor-callout" id="mentor-callout">
+                        👋 Bingung dengan materi ini? Klik di sini untuk tanya langsung ke mentor lewat WhatsApp.
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -255,6 +330,16 @@
     const htmlScaleBox    = document.getElementById('html-scale-box');
     const htmlWrapper     = document.getElementById('html-viewer-wrapper');
     const htmlFrame       = document.getElementById('html-frame');
+
+    // Elemen tombol "Tanya Mentor"
+    const mentorWrapper   = document.getElementById('mentor-wrapper');
+    const mentorBtn       = document.getElementById('mentor-btn');
+    const mentorCallout   = document.getElementById('mentor-callout');
+
+    // Nomor WhatsApp default kalau item di data.js tidak mengisi
+    // field 'mentorWhatsapp' sendiri. GANTI dengan nomor mentor kamu,
+    // format internasional tanpa '+' atau '0' di depan (contoh: 6281234567890).
+    const MENTOR_WHATSAPP_NUMBER = '6285961160545';
 
     pdfjsLib.GlobalWorkerOptions.workerSrc = './pdfjs/build/pdf.worker.mjs';
 
@@ -861,6 +946,45 @@
         return /\.html?(\?.*)?$/i.test(item.filePath || '');
     }
 
+    // ─── Tombol "Tanya Mentor" ──────────────────────────────────
+    // Tampil HANYA kalau item ini di data.js ditandai:
+    //   mentorEnabled: true
+    // Opsional per-item (kalau tidak diisi, pakai default di atas):
+    //   mentorWhatsapp: "62812xxxxxxxx"   -> nomor WA khusus untuk item ini
+    //   mentorMessage:  "teks custom..."  -> isi chat WA custom
+    function setupMentorButton(contentItem) {
+        const isEnabled = !!(contentItem && contentItem.mentorEnabled === true);
+
+        if (!isEnabled) {
+            mentorWrapper.style.display = 'none';
+            return;
+        }
+
+        mentorWrapper.style.display = 'flex';
+
+        const rawNumber = contentItem.mentorWhatsapp || MENTOR_WHATSAPP_NUMBER;
+        const waNumber  = String(rawNumber).replace(/[^0-9]/g, '');
+
+        const defaultMessage =
+            `Halo Mentor, saya ingin bertanya tentang materi "${contentItem.title}". ` +
+            `Boleh dibantu jelaskan lebih lanjut?`;
+        const message = contentItem.mentorMessage || defaultMessage;
+
+        const waLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+
+        mentorBtn.onclick = () => {
+            mentorCallout.classList.remove('show');
+            window.open(waLink, '_blank', 'noopener');
+        };
+
+        // Tampilkan balon info sekali per sesi biar user sadar tombol ini ada
+        if (!sessionStorage.getItem('mentorCalloutShown')) {
+            setTimeout(() => mentorCallout.classList.add('show'), 800);
+            setTimeout(() => mentorCallout.classList.remove('show'), 6000);
+            sessionStorage.setItem('mentorCalloutShown', 'true');
+        }
+    }
+
     // ─── INIT ─────────────────────────────────────────────────
     document.addEventListener('DOMContentLoaded', async () => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -881,6 +1005,8 @@
 
         titleShortEl.textContent = contentItem.title;
         titleFullEl.textContent  = contentItem.title;
+
+        setupMentorButton(contentItem);
 
         if (isHtmlFile(contentItem)) {
             // ─── Mode HTML ───
