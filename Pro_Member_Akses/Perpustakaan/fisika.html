@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Gerak Parabola</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #111;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    padding: 40px 20px;
+  }
+  .slide {
+    width: 1080px;
+    height: 1350px;
+    background: #0A0A0A;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px;
+    border: 1px solid #222;
+    flex-shrink: 0;
+  }
+  .slide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+  .slide::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #22D3EE, #67E8F9, #22D3EE);
+  }
+  .brand {
+    position: absolute;
+    bottom: 50px; left: 80px; right: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .brand-name { font-size: 22px; font-weight: 600; color: #22D3EE; letter-spacing: 0.1em; text-transform: uppercase; }
+  .slide-num  { font-size: 20px; color: #333; font-weight: 600; }
+
+  .katex { color: #FFFFFF !important; }
+  .katex-display { color: #FFFFFF !important; margin: 0 !important; }
+  .math-block .katex { font-size: 1.5em !important; }
+  .concept-box .katex { font-size: 1.05em !important; }
+  .step-text .katex { font-size: 1.05em !important; }
+  .insight .katex { font-size: 1.05em !important; }
+  .key-box .katex { font-size: 1.15em !important; }
+  .deriv-box .katex { font-size: 1.2em !important; }
+
+  #cover-formula .katex { font-size: 7rem !important; color: #FFFFFF !important; }
+  #cover-formula .katex-display { margin: 0 !important; }
+
+  .slide-label {
+    font-size: 20px; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: #22D3EE; margin-bottom: 22px;
+  }
+  .slide-heading {
+    font-size: 60px; font-weight: 900; color: #FFF;
+    line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 36px;
+  }
+  .concept-box {
+    background: #141414; border: 1px solid #2A2A2A;
+    border-left: 4px solid #22D3EE; border-radius: 12px;
+    padding: 28px 36px; margin-bottom: 20px; font-size: 27px;
+  }
+  .concept-box p { color: #CCC; line-height: 1.75; }
+  .concept-box strong { color: #FFF; }
+  .math-block {
+    background: #111; border: 1px solid #2A2A2A;
+    border-radius: 16px; padding: 28px 36px;
+    text-align: center; margin-bottom: 20px; font-size: 30px;
+  }
+  .math-block .math-desc { font-size: 20px; color: #666; margin-top: 12px; line-height: 1.6; }
+  .key-box {
+    background: #0A1A1D; border: 2px solid #22D3EE;
+    border-radius: 16px; padding: 28px 36px;
+    text-align: center; margin-bottom: 20px; font-size: 27px;
+  }
+  .key-box p { color: #EEE; line-height: 1.65; }
+  .key-box strong { color: #22D3EE; }
+  .step-list { display: flex; flex-direction: column; gap: 20px; margin-bottom: 20px; }
+  .step-item { display: flex; align-items: flex-start; gap: 22px; }
+  .step-num {
+    width: 48px; height: 48px; min-width: 48px;
+    background: #22D3EE; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 900; color: #0A0A0A; flex-shrink: 0;
+  }
+  .step-text { font-size: 26px; color: #CCC; line-height: 1.65; }
+  .step-text strong { color: #FFF; }
+  .insight {
+    background: #141414; border-radius: 12px; border: 1px solid #2A2A2A;
+    padding: 24px 30px; font-size: 25px; color: #AAA;
+    line-height: 1.65; margin-bottom: 18px;
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .insight strong { color: #FFF; }
+  .insight .tag {
+    display: inline-block; background: #22D3EE; color: #0A0A0A;
+    font-size: 14px; font-weight: 900; text-transform: uppercase;
+    letter-spacing: 0.1em; padding: 5px 12px; border-radius: 4px;
+    white-space: nowrap; margin-top: 4px; flex-shrink: 0;
+  }
+  .insight .tag.orange { background: #67E8F9; }
+  .deriv-box {
+    background: #0D0D0D; border: 1px solid #222;
+    border-radius: 12px; padding: 22px 32px;
+    margin-bottom: 16px; font-size: 26px;
+  }
+  .deriv-box .deriv-label {
+    font-size: 17px; font-weight: 700; color: #22D3EE;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .deriv-box .deriv-math { text-align: center; margin: 8px 0; }
+  .deriv-box .deriv-note { font-size: 19px; color: #555; margin-top: 8px; }
+  .summary-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 36px; }
+  .summary-pill {
+    background: #0A1A1D; border: 1px solid #22D3EE;
+    color: #22D3EE; font-size: 20px; font-weight: 600;
+    padding: 10px 22px; border-radius: 40px;
+  }
+  .closing-sub {
+    font-size: 27px; color: #555; line-height: 1.65;
+    max-width: 860px; margin-bottom: 32px;
+  }
+  .anim-box {
+    background: #111; border: 1px solid #2A2A2A;
+    border-radius: 16px; padding: 20px 24px; margin-bottom: 20px;
+  }
+  .anim-readout {
+    display: flex; justify-content: center; gap: 40px;
+    margin-top: 14px; font-size: 22px; color: #AAA;
+  }
+  .anim-readout span.val { color: #22D3EE; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: COVER -->
+<div class="slide" style="justify-content:center; align-items:center; text-align:center;">
+  <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; z-index:0;">
+    <div style="font-size:420px; font-weight:900; color:#131313; line-height:1; user-select:none; font-family:Georgia,serif;">⌒</div>
+  </div>
+  <div style="position:relative; z-index:1; display:flex; flex-direction:column; align-items:center;">
+    <div style="display:inline-block; background:#22D3EE; color:#0A0A0A; font-size:26px; font-weight:900; letter-spacing:0.18em; text-transform:uppercase; padding:12px 32px; border-radius:4px; margin-bottom:60px;">
+      Konsep Fisika
+    </div>
+    <div style="font-size:42px; font-weight:600; color:#888; margin-bottom:36px;">
+      Kenapa bola yang dilempar selalu membentuk lengkungan?
+    </div>
+    <div style="font-size:100px; font-weight:900; color:#FFF; line-height:1.05; letter-spacing:-4px; margin-bottom:44px;">
+      Gerak<br><span style="color:#22D3EE;">Parabola</span>
+    </div>
+    <div style="width:100px; height:4px; background:#22D3EE; border-radius:2px; margin-bottom:44px;"></div>
+    <div style="font-size:34px; color:#666; font-weight:400; line-height:1.65; max-width:860px;">
+      Dua gerakan sederhana, digabung jadi satu — dan hasilnya adalah lintasan lengkung yang kita lihat setiap hari.
+    </div>
+  </div>
+  <div class="brand">
+    <div class="brand-name">UMT Academy</div>
+    <div class="slide-num">01 / 07</div>
+  </div>
+</div>
+
+<!-- SLIDE 2: KONSEP DASAR -->
+<div class="slide">
+  <div style="position:relative; z-index:1;">
+    <div class="slide-label">Ide Dasarnya</div>
+    <div class="slide-heading">Dua Gerakan<br>yang Terjadi<br>Bersamaan</div>
+    <div class="concept-box">
+      <p>Saat bola dilempar miring, sebenarnya ada <strong>dua gerak terpisah</strong> yang terjadi di waktu yang sama:</p>
+    </div>
+    <div class="insight">
+      <div class="tag">Sumbu X</div>
+      <div><strong>Gerak lurus beraturan (GLB).</strong> Kecepatan mendatar tidak berubah — bola terus maju dengan kecepatan yang sama, tidak dipercepat atau diperlambat.</div>
+    </div>
+    <div class="insight">
+      <div class="tag orange">Sumbu Y</div>
+      <div><strong>Gerak lurus berubah beraturan (GLBB).</strong> Gravitasi terus menarik bola ke bawah, jadi kecepatan vertikalnya terus berubah.</div>
+    </div>
+    <div class="key-box">
+      <p>Gabungan gerak lurus (X) dan gerak dipercepat (Y) inilah yang menghasilkan <strong>lintasan lengkung</strong> — bukan garis lurus.</p>
+    </div>
+  </div>
+  <div class="brand">
+    <div class="brand-name">UMT Academy</div>
+    <div class="slide-num">02 / 07</div>
+  </div>
+</div>
+
+<!-- SLIDE 3: RUMUS POSISI -->
+<div class="slide">
+  <div style="position:relative; z-index:1;">
+    <div class="slide-label">Bangun Rumusnya</div>
+    <div class="slide-heading">Posisi Bola<br>di Waktu ke-t</div>
+    <div class="concept-box">
+      <p>Kecepatan awal \(v_0\) dengan sudut \(\theta\), maka kecepatan awal terbagi ke dua sumbu:</p>
+    </div>
+    <div class="deriv-box">
+      <div class="deriv-label">Komponen Kecepatan Awal</div>
+      <div class="deriv-math">\(v_{0x} = v_0 \cos\theta\)</div>
+      <div class="deriv-math">\(v_{0y} = v_0 \sin\theta\)</div>
+      <div class="deriv-note">Sudut lempar dipecah jadi arah datar dan tegak</div>
+    </div>
+    <div class="deriv-box">
+      <div class="deriv-label">Posisi Mendatar x(t)</div>
+      <div class="deriv-math">\(x(t) = v_{0x} \, t\)</div>
+      <div class="deriv-note">Tidak ada percepatan di sumbu X, jadi tetap linear</div>
+    </div>
+    <div class="deriv-box">
+      <div class="deriv-label">Posisi Tegak y(t)</div>
+      <div class="deriv-math">\(y(t) = v_{0y}\, t - \tfrac{1}{2} g t^2\)</div>
+      <div class="deriv-note">Gravitasi \(g\) menarik bola turun seiring waktu</div>
+    </div>
+  </div>
+  <div class="brand">
+    <div class="brand-name">UMT Academy</div>
+    <div class="slide-num">03 / 07</div>
+  </div>
+</div>
+
+<!-- SLIDE 4: ANIMASI LINTASAN (BERGERAK) -->
+<div class="slide">
+  <div style="position:relative; z-index:1;">
+    <div class="slide-label">Lihat Langsung</div>
+    <div class="slide-heading">Bola yang<br>Bergerak Nyata<br>di Lintasannya</div>
+    <div class="concept-box">
+      <p>Titik di bawah bergerak otomatis mengikuti persamaan \(x(t)\) dan \(y(t)\) di atas — perhatikan bagaimana lengkungannya terbentuk seiring waktu berjalan.</p>
+    </div>
+    <div class="anim-box">
+      <svg id="traj-svg" viewBox="0 0 920 480" style="width:100%; height:auto; display:block;">
+        <line x1="40" y1="440" x2="900" y2="440" stroke="#333" stroke-width="2"/>
+        <line x1="40" y1="440" x2="40" y2="40" stroke="#333" stroke-width="2"/>
+        <path id="traj-path" fill="none" stroke="#2A2A2A" stroke-width="3"/>
+        <circle id="traj-dot" r="12" fill="#22D3EE"/>
+        <line id="traj-vline" x1="40" y1="440" x2="40" y2="440" stroke="#67E8F9" stroke-width="1.5" stroke-dasharray="4,4"/>
+      </svg>
+      <div class="anim-readout">
+        <span>x = <span class="val" id="traj-x">0.0</span> m</span>
+        <span>y = <span class="val" id="traj-y">0.0</span> m</span>
+        <span>t = <span class="val" id="traj-t">0.0</span> s</span>
+      </div>
+    </div>
+    <div class="key-box">
+      <p>Semakin lama waktunya, semakin jauh dan semakin tinggi — sampai gravitasi menariknya kembali turun. <strong>Itulah bentuk parabola.</strong></p>
+    </div>
+  </div>
+  <div class="brand">
+    <div class="brand-name">UMT Academy</div>
+    <div class="slide-num">04 / 07</div>
+  </div>
+</div>
+
+<!-- SLIDE 5: TINGGI & JARAK MAKSIMUM -->
+<div class="slide">
+  <div style="position:relative; z-index:1;">
+    <div class="slide-label">Titik Penting</div>
+    <div class="slide-heading">Titik Tertinggi<br>dan Terjauh</div>
+    <div class="step-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>Titik tertinggi</strong> terjadi saat kecepatan vertikal jadi nol: \(t_{naik} = \dfrac{v_0 \sin\theta}{g}\)</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>Tinggi maksimum:</strong> \(y_{max} = \dfrac{(v_0 \sin\theta)^2}{2g}\)</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>Jarak terjauh</strong> (jangkauan) terjadi saat bola kembali ke tanah: \(x_{max} = \dfrac{v_0^2 \sin 2\theta}{g}\)</div>
+      </div>
+    </div>
+    <div class="key-box">
+      <p>Jangkauan terjauh dicapai saat sudut lempar \(\theta = 45°\) — inilah kenapa atlet lempar cakram atau peluru mengincar sudut ini.</p>
+    </div>
+  </div>
+  <div class="brand">
+    <div class="brand-name">UMT Academy</div>
+    <div class="slide-num">05 / 07</div>
+  </div>
+</div>
+
+<!-- SLIDE 6: CONTOH NUMERIK -->
+<div class="slide">
+  <div style="position:relative; z-index:1;">
+    <div class="slide-label">Contoh Nyata</div>
+    <div class="slide-heading">Bola Dilempar<br>dengan Sudut 45°</div>
+    <div class="concept-box">
+      <p>Diketahui: \(v_0 = 20\text{ m/s}\), \(\theta = 45°\), \(g = 10\text{ m/s}^2\)</p>
+    </div>
+    <div class="deriv-box">
+      <div class="deriv-label">Tinggi Maksimum</div>
+      <div class="deriv-math">\(y_{max} = \dfrac{(20 \sin 45°)^2}{2(10)} = \textbf{10 m}\)</div>
+    </div>
+    <div class="deriv-box">
+      <div class="deriv-label">Jarak Terjauh</div>
+      <div class="deriv-math">\(x_{max} = \dfrac{20^2 \sin 90°}{10} = \textbf{40 m}\)</div>
+    </div>
+    <div class="insight">
+      <div class="tag">Insight</div>
+      <div>Dengan kecepatan lempar yang sama, mengganti sudut ke 30° atau 60° akan menghasilkan <strong>jangkauan yang sama persis</strong> — karena \(\sin 2\theta\) simetris di sekitar 45°.</div>
+    </div>
+  </div>
+  <div class="brand">
+    <div class="brand-name">UMT Academy</div>
+    <div class="slide-num">06 / 07</div>
+  </div>
+</div>
+
+<!-- SLIDE 7: PENUTUP -->
+<div class="slide" style="justify-content:center; align-items:center; text-align:center;">
+  <div style="position:relative; z-index:1; display:flex; flex-direction:column; align-items:center;">
+    <div class="slide-label" style="text-align:center;">Ingat Ini</div>
+    <div class="math-block" style="margin-bottom:32px; font-size:30px; width:100%;">
+      <div>\(x(t) = v_0\cos\theta \; t \qquad y(t) = v_0\sin\theta \; t - \tfrac{1}{2}gt^2\)</div>
+      <div class="math-desc" style="margin-top:16px;">Gerak mendatar tetap + gerak jatuh dipercepat = lintasan parabola</div>
+    </div>
+    <div class="closing-sub">
+      Parabola bukan bentuk yang misterius — ia lahir dari dua gerak sederhana yang berjalan bersamaan.
+    </div>
+    <div class="summary-row" style="justify-content:center;">
+      <div class="summary-pill">GLB di sumbu X</div>
+      <div class="summary-pill">GLBB di sumbu Y</div>
+      <div class="summary-pill">Sudut 45° = terjauh</div>
+    </div>
+    <div style="font-size:24px; color:#333;">Simpan postingan ini · Bagikan ke teman yang penasaran</div>
+  </div>
+  <div class="brand">
+    <div class="brand-name">UMT Academy</div>
+    <div class="slide-num">07 / 07</div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true}
+      ],
+      throwOnError: false
+    });
+
+    // Animasi lintasan parabola
+    const v0 = 20, theta = Math.PI / 4, g = 10;
+    const v0x = v0 * Math.cos(theta), v0y = v0 * Math.sin(theta);
+    const tTotal = 2 * v0y / g;
+    const xMax = v0x * tTotal, yMax = (v0y * v0y) / (2 * g);
+
+    const originX = 40, originY = 440;
+    const scaleX = (900 - originX) / xMax;
+    const scaleY = (originY - 40) / yMax;
+
+    function toSvg(x, y) {
+      return { px: originX + x * scaleX, py: originY - y * scaleY };
+    }
+
+    const pathEl = document.getElementById('traj-path');
+    let d = "";
+    for (let i = 0; i <= 100; i++) {
+      const t = (i / 100) * tTotal;
+      const x = v0x * t;
+      const y = v0y * t - 0.5 * g * t * t;
+      const p = toSvg(x, y);
+      d += (i === 0 ? "M " : "L ") + p.px + " " + p.py;
+    }
+    pathEl.setAttribute("d", d);
+
+    const dot = document.getElementById('traj-dot');
+    const vline = document.getElementById('traj-vline');
+    const xOut = document.getElementById('traj-x');
+    const yOut = document.getElementById('traj-y');
+    const tOut = document.getElementById('traj-t');
+
+    let start = null;
+    function animate(ts) {
+      if (!start) start = ts;
+      const elapsed = ((ts - start) / 1000) % (tTotal + 0.6);
+      const t = Math.min(elapsed, tTotal);
+      const x = v0x * t;
+      const y = Math.max(0, v0y * t - 0.5 * g * t * t);
+      const p = toSvg(x, y);
+      dot.setAttribute("cx", p.px);
+      dot.setAttribute("cy", p.py);
+      vline.setAttribute("x1", p.px);
+      vline.setAttribute("y1", originY);
+      vline.setAttribute("x2", p.px);
+      vline.setAttribute("y2", p.py);
+      xOut.textContent = x.toFixed(1);
+      yOut.textContent = y.toFixed(1);
+      tOut.textContent = t.toFixed(1);
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+  });
+</script>
+</body>
+</html>
