@@ -108,7 +108,7 @@ const allContentData = {
             summary: 'E-book ini membahas secara mendalam mengenai konsep bunga majemuk, yaitu sebuah sistem di mana bunga akan ikut berbunga. Materi di dalamnya menjelaskan secara logis bagaimana nilai uang Anda dapat bertumbuh secara eksponensial layaknya bola salju karena perhitungannya selalu didasarkan pada modal akhir di periode sebelumnya. Konsep pertumbuhan ini kemudian dikontraskan dengan bunga tunggal yang pertumbuhannya hanya berjalan konstan atau linear. Secara garis besar, dokumen ini menyimpulkan bahwa semakin lama waktu investasi dan semakin besar modal awalnya, maka perbedaan keuntungan yang dihasilkan antara bunga majemuk dibandingkan dengan bunga tunggal akan menjadi semakin dramatis',
             filePath: 'Perpustakaan/bunga-majemuk.html',
             category: 'wawasan',
-            series: 'Seri pembuktian',
+            series: 'Seri pemahaman materi',
             image: 'bunga-majemuk.png'// Ganti dengan path PDF Anda
         }
     ],
