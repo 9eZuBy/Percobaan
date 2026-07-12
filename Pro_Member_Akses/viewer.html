@@ -205,7 +205,7 @@
             <!-- Mode HTML: "kertas" berisi iframe -->
             <div id="html-scale-box" class="html-scale-box">
                 <div id="html-viewer-wrapper" class="html-viewer-wrapper">
-                    <iframe id="html-frame" class="html-frame" title="Konten Materi"
+                    <iframe id="html-frame" class="html-frame" title="Konten Materi" scrolling="no"
                             sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"></iframe>
                 </div>
             </div>
@@ -278,13 +278,14 @@
     const PAGE_GAP       = 16;
 
     // ─── State (HTML) ───────────────────────────────────────────
-    const HTML_BASE_WIDTH = 960;      // lebar "kertas" logis (px, sebelum zoom)
+    let htmlNaturalWidth  = 960;       // lebar asli konten, diukur setelah iframe load
     let htmlNaturalHeight = 1200;      // tinggi konten asli, diukur setelah iframe load
     let currentHtmlScale  = 1;
     let htmlAutoFitScale  = 1;
     let isPinchingHtml    = false;
     let initialHtmlPinchDistance = 0;
     let initialHtmlScale  = 1;
+    let htmlResizeObserver = null;
 
     // ─── Pinch state (PDF) ──────────────────────────────────────
     let isPinching           = false;
@@ -630,34 +631,68 @@
        ════════════════════════════════════════════════════════ */
 
     const calculateHtmlAutoFit = () => {
-        return Math.min(1, (viewerEl.clientWidth - 32) / HTML_BASE_WIDTH);
+        return Math.min(1, (viewerEl.clientWidth - 32) / htmlNaturalWidth);
     };
 
     // Susun ulang ukuran "kertas" & posisi iframe sesuai currentHtmlScale
     const layoutHtmlViewer = () => {
-        htmlWrapper.style.width     = HTML_BASE_WIDTH + 'px';
+        htmlWrapper.style.width     = htmlNaturalWidth + 'px';
         htmlWrapper.style.height    = htmlNaturalHeight + 'px';
         htmlWrapper.style.transform = `scale(${currentHtmlScale})`;
 
-        htmlFrame.style.width  = HTML_BASE_WIDTH + 'px';
+        htmlFrame.style.width  = htmlNaturalWidth + 'px';
         htmlFrame.style.height = htmlNaturalHeight + 'px';
 
-        htmlScaleBox.style.width  = (HTML_BASE_WIDTH * currentHtmlScale) + 'px';
+        htmlScaleBox.style.width  = (htmlNaturalWidth * currentHtmlScale) + 'px';
         htmlScaleBox.style.height = (htmlNaturalHeight * currentHtmlScale) + 'px';
     };
 
-    // Ukur tinggi konten asli di dalam iframe (butuh same-origin)
-    const measureHtmlContentHeight = () => {
+    // Ukur ukuran asli konten di dalam iframe (butuh same-origin).
+    // scrollWidth/scrollHeight tetap melaporkan ukuran konten yang
+    // sebenarnya walau iframe-nya sendiri lebih sempit — jadi aman
+    // dipanggil kapan saja, termasuk sebelum ukuran final di-apply.
+    const measureHtmlNaturalSize = () => {
         try {
-            const doc = htmlFrame.contentWindow.document;
+            const doc  = htmlFrame.contentWindow.document;
+            const body = doc.body;
+            const html = doc.documentElement;
+
+            // Matikan scrollbar bawaan di dalam dokumen konten supaya
+            // tidak ada "scroll ganda" — kita yang atur ukuran & scroll-nya
+            // dari luar (di level .pdf-viewer), sama seperti mode PDF.
+            if (html) html.style.overflow = 'hidden';
+            if (body) body.style.overflow = 'hidden';
+
+            const w = Math.max(
+                body ? body.scrollWidth : 0,
+                html ? html.scrollWidth : 0,
+                320
+            );
             const h = Math.max(
-                doc.body ? doc.body.scrollHeight : 0,
-                doc.documentElement ? doc.documentElement.scrollHeight : 0,
+                body ? body.scrollHeight : 0,
+                html ? html.scrollHeight : 0,
                 600
             );
+
+            const changed = (w !== htmlNaturalWidth) || (h !== htmlNaturalHeight);
+            htmlNaturalWidth  = w;
             htmlNaturalHeight = h;
+
+            if (changed) {
+                const wasAutoFit = Math.abs(currentHtmlScale - htmlAutoFitScale) < 0.01;
+                htmlAutoFitScale = calculateHtmlAutoFit();
+                if (wasAutoFit) currentHtmlScale = htmlAutoFitScale;
+            }
+
+            // Pantau perubahan ukuran lanjutan (mis. font/KaTeX yang baru
+            // selesai render setelah load pertama) supaya layout tetap pas.
+            if (!htmlResizeObserver && body && 'ResizeObserver' in window) {
+                htmlResizeObserver = new ResizeObserver(() => measureHtmlNaturalSize());
+                htmlResizeObserver.observe(body);
+            }
         } catch (e) {
             // Fallback kalau tidak bisa akses contentDocument (cross-origin dsb)
+            htmlNaturalWidth  = Math.max(htmlNaturalWidth, 960);
             htmlNaturalHeight = Math.max(htmlNaturalHeight, 1400);
         }
         layoutHtmlViewer();
@@ -666,20 +701,30 @@
     const initHtmlViewer = (filePath) => {
         viewerMode = 'html';
 
+        if (htmlResizeObserver) {
+            htmlResizeObserver.disconnect();
+            htmlResizeObserver = null;
+        }
+
         pagesContainer.style.display = 'none';
         htmlScaleBox.style.display   = 'block';
 
         statusMessageEl.style.display = 'block';
         statusMessageEl.textContent   = 'Memuat konten...';
 
-        htmlAutoFitScale = calculateHtmlAutoFit();
-        currentHtmlScale = htmlAutoFitScale;
+        // Reset ke tebakan awal supaya tidak "kedip" ukuran konten sebelumnya
+        htmlNaturalWidth  = 960;
+        htmlNaturalHeight = 1200;
+        htmlAutoFitScale  = calculateHtmlAutoFit();
+        currentHtmlScale  = htmlAutoFitScale;
 
         htmlFrame.onload = () => {
-            // Beri jeda supaya gambar/MathJax/skrip di dalam sempat
-            // merender sebelum tinggi diukur (diukur dua kali untuk jaga-jaga).
-            setTimeout(measureHtmlContentHeight, 150);
-            setTimeout(measureHtmlContentHeight, 900);
+            // Ukur langsung, lalu ukur ulang beberapa kali dengan jeda supaya
+            // gambar/font/KaTeX yang baru selesai render tetap terhitung.
+            measureHtmlNaturalSize();
+            setTimeout(measureHtmlNaturalSize, 150);
+            setTimeout(measureHtmlNaturalSize, 600);
+            setTimeout(measureHtmlNaturalSize, 1500);
             statusMessageEl.style.display = 'none';
         };
 
