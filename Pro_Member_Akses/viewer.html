@@ -134,6 +134,32 @@
             z-index: 999;
         }
         #zoom-indicator.visible { opacity: 1; }
+
+        /* ══════════════════════════════════════════════════════
+           MODE HTML — dibungkus supaya terasa seperti "lembar PDF"
+           ══════════════════════════════════════════════════════ */
+        .html-scale-box {
+            position: relative;
+            margin: 24px auto 60px;
+            display: none; /* diaktifkan via JS saat mode html */
+        }
+        .html-viewer-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #ffffff;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.55);
+            border-radius: 6px;
+            overflow: hidden;
+            transform-origin: top left;
+        }
+        .html-frame {
+            display: block;
+            border: none;
+            background: #ffffff;
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -175,7 +201,16 @@
 
         <div id="pdf-viewer" class="pdf-viewer">
             <div id="pages-container"></div>
-            <div id="status-message" class="status-message">Memuat PDF...</div>
+
+            <!-- Mode HTML: "kertas" berisi iframe -->
+            <div id="html-scale-box" class="html-scale-box">
+                <div id="html-viewer-wrapper" class="html-viewer-wrapper">
+                    <iframe id="html-frame" class="html-frame" title="Konten Materi"
+                            sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"></iframe>
+                </div>
+            </div>
+
+            <div id="status-message" class="status-message">Memuat...</div>
         </div>
     </div>
 
@@ -216,9 +251,17 @@
     const pagesContainer  = document.getElementById('pages-container');
     const zoomIndicator   = document.getElementById('zoom-indicator');
 
+    // Elemen mode HTML
+    const htmlScaleBox    = document.getElementById('html-scale-box');
+    const htmlWrapper     = document.getElementById('html-viewer-wrapper');
+    const htmlFrame       = document.getElementById('html-frame');
+
     pdfjsLib.GlobalWorkerOptions.workerSrc = './pdfjs/build/pdf.worker.mjs';
 
-    // ─── State ────────────────────────────────────────────────
+    // ─── Mode aktif: 'pdf' atau 'html' ─────────────────────────
+    let viewerMode = 'pdf';
+
+    // ─── State (PDF) ────────────────────────────────────────────
     let pdfDoc       = null;
     let currentScale = 1.0;
     let autoFitScale = 1.0;
@@ -234,17 +277,19 @@
     const renderingPages = new Set();
     const PAGE_GAP       = 16;
 
-    // ─── Pinch state ──────────────────────────────────────────
+    // ─── State (HTML) ───────────────────────────────────────────
+    const HTML_BASE_WIDTH = 960;      // lebar "kertas" logis (px, sebelum zoom)
+    let htmlNaturalHeight = 1200;      // tinggi konten asli, diukur setelah iframe load
+    let currentHtmlScale  = 1;
+    let htmlAutoFitScale  = 1;
+    let isPinchingHtml    = false;
+    let initialHtmlPinchDistance = 0;
+    let initialHtmlScale  = 1;
+
+    // ─── Pinch state (PDF) ──────────────────────────────────────
     let isPinching           = false;
     let initialPinchDistance = 0;
     let initialScale         = 1;
-
-    /*
-     * pinchOriginInContent:
-     * Titik tengah kedua jari dalam koordinat KONTEN (bukan viewport).
-     * Ini yang dipakai untuk memastikan titik di bawah jari
-     * tidak bergeser saat zoom.
-     */
     let pinchOriginInContent = { x: 0, y: 0 };
 
     // ─── Timers ───────────────────────────────────────────────
@@ -282,6 +327,10 @@
         clearTimeout(zoomIndicatorTimer);
         zoomIndicatorTimer = setTimeout(() => zoomIndicator.classList.remove('visible'), 1500);
     }
+
+    /* ════════════════════════════════════════════════════════
+       ══════════════════  MODE PDF (tidak diubah)  ═════════════
+       ════════════════════════════════════════════════════════ */
 
     // ─── Auto fit ─────────────────────────────────────────────
     const calculateAutoFitScale = async () => {
@@ -419,7 +468,7 @@
     };
 
     // ─────────────────────────────────────────────────────────
-    //  initViewer — build layout + observer
+    //  initViewer — build layout + observer (mode PDF)
     // ─────────────────────────────────────────────────────────
     const initViewer = async () => {
         statusMessageEl.style.display = 'block';
@@ -434,32 +483,18 @@
     };
 
     // ─────────────────────────────────────────────────────────
-    //  scrollToContentPoint
-    //  Setelah rebuild layout, scroll ke titik konten yang sama
-    //  sehingga area yang dilihat tidak bergeser.
-    //
-    //  contentPoint: { x, y } koordinat dalam konten SEBELUM zoom
-    //  viewportPoint: { x, y } posisi di layar (relatif viewerEl)
-    //                 yang harus tetap menampilkan contentPoint
-    //  oldScale: skala sebelum zoom
-    //  newScale: skala setelah zoom
+    //  scrollToContentPoint (mode PDF)
     // ─────────────────────────────────────────────────────────
     const scrollToContentPoint = (contentPoint, viewportPoint, oldScale, newScale) => {
-        // Konversi koordinat konten dari skala lama ke skala baru
         const scaleFactor = newScale / oldScale;
-
-        // Posisi konten (dalam px layout baru) yang harus ada di viewportPoint
         const newContentX = contentPoint.x * scaleFactor;
         const newContentY = contentPoint.y * scaleFactor;
-
-        // scrollLeft/Top = posisi konten - posisi layar
         viewerEl.scrollLeft = newContentX - viewportPoint.x;
         viewerEl.scrollTop  = newContentY - viewportPoint.y;
     };
 
     // ─────────────────────────────────────────────────────────
-    //  onZoom — tombol +/-
-    //  Pusat zoom = tengah viewport
+    //  onZoom — tombol +/- (mode PDF)
     // ─────────────────────────────────────────────────────────
     const onZoom = async (newScale) => {
         if (!pdfDoc) return;
@@ -467,21 +502,15 @@
 
         const oldScale = currentScale;
 
-        // Titik tengah viewport
         const vpCenterX = viewerEl.clientWidth  / 2;
         const vpCenterY = viewerEl.clientHeight / 2;
 
-        // Koordinat titik tersebut dalam konten (skala lama)
-        const contentX = (viewerEl.scrollLeft + vpCenterX) / oldScale * oldScale;
-        const contentY = (viewerEl.scrollTop  + vpCenterY) / oldScale * oldScale;
-        // Sederhananya: koordinat konten = scroll + posisi di viewport
         const cX = viewerEl.scrollLeft + vpCenterX;
         const cY = viewerEl.scrollTop  + vpCenterY;
 
         currentScale = newScale;
         await initViewer();
 
-        // Scroll sehingga titik yang sama tetap di tengah viewport
         scrollToContentPoint(
             { x: cX, y: cY },
             { x: vpCenterX, y: vpCenterY },
@@ -491,19 +520,10 @@
     };
 
     // ─────────────────────────────────────────────────────────
-    //  PINCH ZOOM
-    //
-    //  Fase 1 (touchmove):
-    //    - Hitung titik tengah kedua jari dalam koordinat konten
-    //    - Set transform-origin ke titik tersebut
-    //    - Hanya CSS scale → GPU, zero lag
-    //    - Titik di bawah jari TIDAK bergeser
-    //
-    //  Fase 2 (touchend):
-    //    - Rebuild layout dengan skala baru
-    //    - Scroll ke titik yang sama
+    //  PINCH ZOOM (mode PDF)
     // ─────────────────────────────────────────────────────────
     viewerEl.addEventListener('touchstart', (e) => {
+        if (viewerMode !== 'pdf') return;
         if (e.touches.length === 2) {
             isPinching = true;
             initialPinchDistance = Math.hypot(
@@ -513,32 +533,28 @@
             initialScale = currentScale;
             pagesContainer.style.transition = 'none';
 
-            // Titik tengah kedua jari dalam koordinat LAYAR (relatif viewerEl)
             const viewerRect = viewerEl.getBoundingClientRect();
             const midScreenX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - viewerRect.left;
             const midScreenY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - viewerRect.top;
 
-            // Konversi ke koordinat KONTEN (termasuk scroll offset)
             pinchOriginInContent = {
                 x: viewerEl.scrollLeft + midScreenX,
                 y: viewerEl.scrollTop  + midScreenY
             };
 
-            // Set transform-origin ke titik tengah jari dalam koordinat container
-            // transform-origin dalam CSS = relatif terhadap elemen itu sendiri
             const containerRect = pagesContainer.getBoundingClientRect();
             const originX = pinchOriginInContent.x - (containerRect.left - viewerEl.getBoundingClientRect().left + viewerEl.scrollLeft);
             const originY = pinchOriginInContent.y - (containerRect.top  - viewerEl.getBoundingClientRect().top  + viewerEl.scrollTop);
 
             pagesContainer.style.transformOrigin = `${originX}px ${originY}px`;
 
-            // Matikan scroll saat pinch
             viewerEl.style.overflow    = 'hidden';
             viewerEl.style.touchAction = 'none';
         }
     }, { passive: true });
 
     viewerEl.addEventListener('touchmove', (e) => {
+        if (viewerMode !== 'pdf') return;
         if (!isPinching || e.touches.length < 2) return;
         e.preventDefault();
 
@@ -552,13 +568,13 @@
         const maxRatio = 3.0 / initialScale;
         const clamped  = Math.max(minRatio, Math.min(maxRatio, rawRatio));
 
-        // CSS scale dari titik tengah jari → konten tidak bergeser
         pagesContainer.style.transform = `scale(${clamped})`;
         showZoomIndicator(initialScale * clamped);
 
     }, { passive: false });
 
     viewerEl.addEventListener('touchend', (e) => {
+        if (viewerMode !== 'pdf') return;
         if (!isPinching) return;
         if (e.touches.length >= 2) return;
 
@@ -571,15 +587,9 @@
         let   newScale = Math.max(autoFitScale * 0.5, Math.min(3.0, initialScale * cssScale));
         currentScale   = newScale;
 
-        // Transisi ringan lalu reset
         pagesContainer.style.transition = 'transform 0.1s ease-out';
         pagesContainer.style.transform  = 'scale(1)';
 
-        // Titik layar tempat jari berada (tengah dua jari terakhir)
-        // Kita pakai pinchOriginInContent yang sudah disimpan
-        const viewerRect  = viewerEl.getBoundingClientRect();
-
-        // Posisi layar dari titik konten (sebelum rebuild)
         const vpPointX = pinchOriginInContent.x - viewerEl.scrollLeft;
         const vpPointY = pinchOriginInContent.y - viewerEl.scrollTop;
 
@@ -590,7 +600,6 @@
             viewerEl.style.overflow    = 'auto';
             viewerEl.style.touchAction = 'pan-x pan-y';
 
-            // Scroll sehingga titik yang dilihat tetap di posisi layar yang sama
             scrollToContentPoint(
                 pinchOriginInContent,
                 { x: vpPointX, y: vpPointY },
@@ -602,6 +611,7 @@
     }, { passive: true });
 
     viewerEl.addEventListener('touchcancel', () => {
+        if (viewerMode !== 'pdf') return;
         if (isPinching) {
             isPinching = false;
             pagesContainer.style.transform = 'scale(1)';
@@ -612,15 +622,170 @@
         }
     }, { passive: true });
 
-    // ─── Resize ───────────────────────────────────────────────
+    /* ════════════════════════════════════════════════════════
+       ═══════════════  MODE HTML (baru)  ═══════════════════════
+       Konten HTML dibungkus di dalam "kertas" putih dengan
+       shadow, lalu discroll & di-zoom di dalam viewport gelap
+       yang sama seperti mode PDF — sehingga terasa konsisten.
+       ════════════════════════════════════════════════════════ */
+
+    const calculateHtmlAutoFit = () => {
+        return Math.min(1, (viewerEl.clientWidth - 32) / HTML_BASE_WIDTH);
+    };
+
+    // Susun ulang ukuran "kertas" & posisi iframe sesuai currentHtmlScale
+    const layoutHtmlViewer = () => {
+        htmlWrapper.style.width     = HTML_BASE_WIDTH + 'px';
+        htmlWrapper.style.height    = htmlNaturalHeight + 'px';
+        htmlWrapper.style.transform = `scale(${currentHtmlScale})`;
+
+        htmlFrame.style.width  = HTML_BASE_WIDTH + 'px';
+        htmlFrame.style.height = htmlNaturalHeight + 'px';
+
+        htmlScaleBox.style.width  = (HTML_BASE_WIDTH * currentHtmlScale) + 'px';
+        htmlScaleBox.style.height = (htmlNaturalHeight * currentHtmlScale) + 'px';
+    };
+
+    // Ukur tinggi konten asli di dalam iframe (butuh same-origin)
+    const measureHtmlContentHeight = () => {
+        try {
+            const doc = htmlFrame.contentWindow.document;
+            const h = Math.max(
+                doc.body ? doc.body.scrollHeight : 0,
+                doc.documentElement ? doc.documentElement.scrollHeight : 0,
+                600
+            );
+            htmlNaturalHeight = h;
+        } catch (e) {
+            // Fallback kalau tidak bisa akses contentDocument (cross-origin dsb)
+            htmlNaturalHeight = Math.max(htmlNaturalHeight, 1400);
+        }
+        layoutHtmlViewer();
+    };
+
+    const initHtmlViewer = (filePath) => {
+        viewerMode = 'html';
+
+        pagesContainer.style.display = 'none';
+        htmlScaleBox.style.display   = 'block';
+
+        statusMessageEl.style.display = 'block';
+        statusMessageEl.textContent   = 'Memuat konten...';
+
+        htmlAutoFitScale = calculateHtmlAutoFit();
+        currentHtmlScale = htmlAutoFitScale;
+
+        htmlFrame.onload = () => {
+            // Beri jeda supaya gambar/MathJax/skrip di dalam sempat
+            // merender sebelum tinggi diukur (diukur dua kali untuk jaga-jaga).
+            setTimeout(measureHtmlContentHeight, 150);
+            setTimeout(measureHtmlContentHeight, 900);
+            statusMessageEl.style.display = 'none';
+        };
+
+        htmlFrame.src = filePath;
+        layoutHtmlViewer();
+        showZoomIndicator(currentHtmlScale);
+    };
+
+    // ─── Zoom tombol (mode HTML) ────────────────────────────────
+    const onHtmlZoom = (newScale) => {
+        newScale = Math.max(htmlAutoFitScale * 0.5, Math.min(2.5, newScale));
+
+        const scrollableBefore = viewerEl.scrollHeight - viewerEl.clientHeight;
+        const scrollRatio = scrollableBefore > 0 ? (viewerEl.scrollTop / scrollableBefore) : 0;
+
+        currentHtmlScale = newScale;
+        layoutHtmlViewer();
+
+        const scrollableAfter = viewerEl.scrollHeight - viewerEl.clientHeight;
+        viewerEl.scrollTop = scrollRatio * Math.max(scrollableAfter, 0);
+
+        showZoomIndicator(currentHtmlScale);
+    };
+
+    // ─── Pinch zoom (mode HTML) — versi ringan, tanpa virtualisasi ─
+    viewerEl.addEventListener('touchstart', (e) => {
+        if (viewerMode !== 'html') return;
+        if (e.touches.length === 2) {
+            isPinchingHtml = true;
+            initialHtmlPinchDistance = Math.hypot(
+                e.touches[0].pageX - e.touches[1].pageX,
+                e.touches[0].pageY - e.touches[1].pageY
+            );
+            initialHtmlScale = currentHtmlScale;
+            htmlWrapper.style.transition = 'none';
+            viewerEl.style.overflow    = 'hidden';
+            viewerEl.style.touchAction = 'none';
+        }
+    }, { passive: true });
+
+    viewerEl.addEventListener('touchmove', (e) => {
+        if (viewerMode !== 'html') return;
+        if (!isPinchingHtml || e.touches.length < 2) return;
+        e.preventDefault();
+
+        const dist = Math.hypot(
+            e.touches[0].pageX - e.touches[1].pageX,
+            e.touches[0].pageY - e.touches[1].pageY
+        );
+
+        const rawRatio = dist / initialHtmlPinchDistance;
+        const minScale = htmlAutoFitScale * 0.5;
+        const maxScale = 2.5;
+        const previewScale = Math.max(minScale, Math.min(maxScale, initialHtmlScale * rawRatio));
+
+        htmlWrapper.style.transform = `scale(${previewScale})`;
+        showZoomIndicator(previewScale);
+
+    }, { passive: false });
+
+    viewerEl.addEventListener('touchend', (e) => {
+        if (viewerMode !== 'html') return;
+        if (!isPinchingHtml) return;
+        if (e.touches.length >= 2) return;
+
+        isPinchingHtml = false;
+        htmlWrapper.style.transition = '';
+
+        const matrix   = new DOMMatrix(window.getComputedStyle(htmlWrapper).transform);
+        const cssScale = matrix.a || currentHtmlScale;
+
+        clearTimeout(renderDebounceTimer);
+        renderDebounceTimer = setTimeout(() => {
+            onHtmlZoom(cssScale);
+            viewerEl.style.overflow    = 'auto';
+            viewerEl.style.touchAction = 'pan-x pan-y';
+        }, 100);
+
+    }, { passive: true });
+
+    viewerEl.addEventListener('touchcancel', () => {
+        if (viewerMode !== 'html') return;
+        if (isPinchingHtml) {
+            isPinchingHtml = false;
+            layoutHtmlViewer();
+            viewerEl.style.overflow    = 'auto';
+            viewerEl.style.touchAction = 'pan-x pan-y';
+        }
+    }, { passive: true });
+
+    // ─── Resize (menangani kedua mode) ─────────────────────────
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(async () => {
-            if (!pdfDoc) return;
-            const oldFit = autoFitScale;
-            autoFitScale = await calculateAutoFitScale();
-            if (Math.abs(currentScale - oldFit) < 0.1) currentScale = autoFitScale;
-            await initViewer();
+            if (viewerMode === 'pdf') {
+                if (!pdfDoc) return;
+                const oldFit = autoFitScale;
+                autoFitScale = await calculateAutoFitScale();
+                if (Math.abs(currentScale - oldFit) < 0.1) currentScale = autoFitScale;
+                await initViewer();
+            } else if (viewerMode === 'html') {
+                const oldFit = htmlAutoFitScale;
+                htmlAutoFitScale = calculateHtmlAutoFit();
+                if (Math.abs(currentHtmlScale - oldFit) < 0.1) currentHtmlScale = htmlAutoFitScale;
+                layoutHtmlViewer();
+            }
         }, 300);
     });
 
@@ -644,6 +809,13 @@
         return null;
     }
 
+    // Deteksi apakah file yang dituju adalah HTML (bukan PDF)
+    function isHtmlFile(item) {
+        if (item.fileType === 'html') return true;
+        if (item.fileType === 'pdf')  return false;
+        return /\.html?(\?.*)?$/i.test(item.filePath || '');
+    }
+
     // ─── INIT ─────────────────────────────────────────────────
     document.addEventListener('DOMContentLoaded', async () => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -665,14 +837,25 @@
         titleShortEl.textContent = contentItem.title;
         titleFullEl.textContent  = contentItem.title;
 
-        try {
-            pdfDoc       = await pdfjsLib.getDocument(contentItem.filePath).promise;
-            autoFitScale = await calculateAutoFitScale();
-            currentScale = autoFitScale;
-            await initViewer();
-        } catch (err) {
-            console.error('Error:', err);
-            statusMessageEl.textContent = 'Gagal memuat PDF.';
+        if (isHtmlFile(contentItem)) {
+            // ─── Mode HTML ───
+            try {
+                initHtmlViewer(contentItem.filePath);
+            } catch (err) {
+                console.error('Error:', err);
+                statusMessageEl.textContent = 'Gagal memuat konten.';
+            }
+        } else {
+            // ─── Mode PDF (tidak berubah) ───
+            try {
+                pdfDoc       = await pdfjsLib.getDocument(contentItem.filePath).promise;
+                autoFitScale = await calculateAutoFitScale();
+                currentScale = autoFitScale;
+                await initViewer();
+            } catch (err) {
+                console.error('Error:', err);
+                statusMessageEl.textContent = 'Gagal memuat PDF.';
+            }
         }
 
         const prevBtn = document.getElementById('prev-materi');
@@ -692,8 +875,14 @@
             nextBtn.disabled = true;
         }
 
-        document.getElementById('zoom-in').addEventListener('click',  () => onZoom(currentScale + 0.25));
-        document.getElementById('zoom-out').addEventListener('click', () => onZoom(currentScale - 0.25));
+        document.getElementById('zoom-in').addEventListener('click', () => {
+            if (viewerMode === 'html') onHtmlZoom(currentHtmlScale + 0.15);
+            else                       onZoom(currentScale + 0.25);
+        });
+        document.getElementById('zoom-out').addEventListener('click', () => {
+            if (viewerMode === 'html') onHtmlZoom(currentHtmlScale - 0.15);
+            else                       onZoom(currentScale - 0.25);
+        });
     });
 </script>
 </body>
