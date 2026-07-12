@@ -113,6 +113,17 @@ const allContentData = {
             series: 'Seri pembuktian',
             mentorEnabled: true,
             image: 'bunga-majemuk.png'// Ganti dengan path PDF Anda
+        },
+        {
+            id: 'perpustakaan-012',
+            title: 'Kenapa 1 bukan bilangan prima?',
+            author: 'Tim UMT',
+            summary: 'E-book ini berfokus pada penjelasan struktural mengapa angka 1 diklasifikasikan sebagai kelas tersendiri yaitu "Unit" dan bukan bilangan prima ; hal ini ditetapkan karena bilangan prima harus memiliki tepat dua faktor pembagi agar faktorisasi prima pada Teorema Dasar Aritmetika tetap unik dan stabil.',
+            filePath: 'Perpustakaan/16.pdf',
+            category: 'wawasan',
+            series: 'Seri pembuktian',
+            mentorEnabled: true,
+            image: '16.png'// Ganti dengan path PDF Anda
         }
     ],
 
