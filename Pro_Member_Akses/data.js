@@ -100,6 +100,16 @@ const allContentData = {
             category: 'wawasan',
             series: 'Seri pembuktian',
             image: 'slide-01.png'// Ganti dengan path PDF Anda
+        },
+        {
+            id: 'perpustakaan-011',
+            title: '',
+            author: 'Tim UMT',
+            summary: '',
+            filePath: 'Perpustakaan/fisika.html',
+            category: 'wawasan',
+            series: 'Seri pembuktian',
+            image: 'fisika_01.png'// Ganti dengan path PDF Anda
         }
     ],
 
