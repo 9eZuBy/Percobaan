@@ -88,6 +88,7 @@ const allContentData = {
             summary: 'Ebook ini berisi soal dan pembahasan lengkap dari materi terkait bentuk pangkat, akar dan logaritma.',
             filePath: 'Perpustakaan/slide-01 (1).pdf',
             category: 'latihan',
+            mentorEnabled: true,
             series: 'Seri bentuk akar, pangkat dan logaritma',
             image: 'slide-01 (1).png'// Ganti dengan path PDF Anda
         },
@@ -99,6 +100,7 @@ const allContentData = {
             filePath: 'Perpustakaan/7.pdf',
             category: 'wawasan',
             series: 'Seri pembuktian',
+            mentorEnabled: true,
             image: 'slide-01.png'// Ganti dengan path PDF Anda
         },
         {
@@ -108,7 +110,8 @@ const allContentData = {
             summary: 'E-book ini membahas secara mendalam mengenai konsep bunga majemuk, yaitu sebuah sistem di mana bunga akan ikut berbunga. Materi di dalamnya menjelaskan secara logis bagaimana nilai uang Anda dapat bertumbuh secara eksponensial layaknya bola salju karena perhitungannya selalu didasarkan pada modal akhir di periode sebelumnya. Konsep pertumbuhan ini kemudian dikontraskan dengan bunga tunggal yang pertumbuhannya hanya berjalan konstan atau linear. Secara garis besar, dokumen ini menyimpulkan bahwa semakin lama waktu investasi dan semakin besar modal awalnya, maka perbedaan keuntungan yang dihasilkan antara bunga majemuk dibandingkan dengan bunga tunggal akan menjadi semakin dramatis',
             filePath: 'Perpustakaan/bunga-majemuk.pdf',
             category: 'wawasan',
-            series: 'Seri pemahaman materi',
+            series: 'Seri pembuktian',
+            mentorEnabled: true,
             image: 'bunga-majemuk.png'// Ganti dengan path PDF Anda
         }
     ],
