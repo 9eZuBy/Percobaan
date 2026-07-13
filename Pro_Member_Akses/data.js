@@ -128,7 +128,7 @@ const allContentData = {
         {
             id: 'perpustakaan-013',
             title: 'Bank Soal Matematika SMA',
-            author: 'Heri Istiyanto, S.Si.',
+            author: '',
             summary: 'E-book ini berisi materi dan sekaligus soal soal latihan untuk materi lengkap SMA',
             filePath: 'Perpustakaan/Bank Soal Matematika SMA (Heri Istiyanto, S.Si.).pdf',
             category: 'latihan',
