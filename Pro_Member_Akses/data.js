@@ -124,17 +124,17 @@ const allContentData = {
             series: 'Seri pembuktian',
             mentorEnabled: true,
             image: '16.png'// Ganti dengan path PDF Anda
-        },
-        {
-            id: 'perpustakaan-013',
-            title: 'Bank Soal Matematika SMA',
-            author: '',
-            summary: 'E-book ini berisi materi dan sekaligus soal soal latihan untuk materi lengkap SMA',
-            filePath: 'Perpustakaan/Bank Soal Matematika SMA (Heri Istiyanto, S.Si.).pdf',
-            category: 'latihan',
-            series: 'Seri bank soal sma',
-            image: 'Bank Soal Matematika SMA (Heri Istiyanto, S.Si.).jpg'// Ganti dengan path PDF Anda
         }
+        // {
+        //     id: 'perpustakaan-013',
+        //     title: 'Bank Soal Matematika SMA',
+        //     author: '',
+        //     summary: 'E-book ini berisi materi dan sekaligus soal soal latihan untuk materi lengkap SMA',
+        //     filePath: 'Perpustakaan/Bank Soal Matematika SMA (Heri Istiyanto, S.Si.).pdf',
+        //     category: 'latihan',
+        //     series: 'Seri bank soal sma',
+        //     image: 'Bank Soal Matematika SMA (Heri Istiyanto, S.Si.).jpg'// Ganti dengan path PDF Anda
+        // }
     ],
 
     umtLab: [
