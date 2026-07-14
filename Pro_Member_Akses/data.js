@@ -124,6 +124,16 @@ const allContentData = {
             series: 'Seri pembuktian',
             mentorEnabled: true,
             image: '16.png'// Ganti dengan path PDF Anda
+        },
+        {
+            id: 'perpustakaan-013',
+            title: 'Matematika Diskrit',
+            author: '',
+            summary: 'Ebook Matematika Diskrit dan Aplikasinya Pada Ilmu Komputer ini secara komprehensif membahas konsep-konsep dasar matematika yang menjadi landasan utama dalam bidang pemrograman dan ilmu komputer. Materi yang dicakup dalam buku ini cukup luas, meliputi prinsip dasar logika, metode pembuktian, teori himpunan, kombinatorika, teori graf, relasi, fungsi, analisis algoritma, hingga struktur aljabar. Secara umum, dokumen ini dirancang untuk memberikan pemahaman teoretis sekaligus menunjukkan aplikasi praktis dari setiap topiknya, sehingga pembaca dapat memanfaatkannya sebagai kerangka berpikir untuk memecahkan masalah komputasi serta merancang algoritma secara logis dan terstruktur.',
+            filePath: 'Perpustakaan/matematika diskrit asli (2).pdf',
+            category: 'materi',
+            series: 'Seri Matematika Diskrit',
+            image: 'cover_matematika_diskrit.png'// Ganti dengan path PDF Anda
         }
         // {
         //     id: 'perpustakaan-013',
