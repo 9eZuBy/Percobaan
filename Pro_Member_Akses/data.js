@@ -134,6 +134,36 @@ const allContentData = {
             category: 'materi',
             series: 'Seri Matematika Diskrit',
             image: 'cover_matematika_diskrit.png'// Ganti dengan path PDF Anda
+        },
+        {
+            id: 'perpustakaan-014',
+            title: 'Trigonometri',
+            author: '',
+            summary: 'Ebook Trigonometri ini merupakan buku ajar akademis yang secara komprehensif membahas berbagai konsep dasar hingga lanjutan dari ilmu ukur sudut dan segitiga. Dokumen ini dirancang secara terstruktur dan sistematis, diawali dengan sejarah perkembangannya, kemudian dilanjutkan dengan penjabaran mengenai perbandingan sudut, berbagai ragam rumus identitas, serta metode penyelesaian persamaan maupun pertidaksamaan. Selain itu, buku ini juga mengupas tuntas materi kalkulus tingkat lanjut yang mencakup sifat-sifat grafik fungsi, konsep dasar limit, laju perubahan sesaat pada turunan, hingga teknik penerapan integral secara spesifik. Secara keseluruhan, materi di dalam buku ini disajikan dengan pendekatan teoretis yang deskriptif dan aplikatif, serta dilengkapi dengan berbagai panduan, evaluasi latihan, hingga pemanfaatan perangkat lunak komputasi untuk membantu mahasiswa dalam menguasai seluruh pembahasannya secara utuh.',
+            filePath: 'Perpustakaan/Ebook Trigonometri.pdf',
+            category: 'materi',
+            series: 'Seri Trigonometri',
+            image: 'Ebook Trigonometri Asli-1_page-0001.jpg'// Ganti dengan path PDF Anda
+        },
+        {
+            id: 'perpustakaan-015',
+            title: 'Teori grup (Struktur Aljabar)',
+            author: '',
+            summary: 'Ebook Teori Grup atau Struktur Aljabar Satu ini merupakan buku ajar akademis yang dirancang khusus untuk mahasiswa pendidikan matematika guna melatih kemampuan berpikir abstrak dan tingkat tinggi. Dokumen ini secara komprehensif dan terstruktur membahas berbagai konsep dasar hingga lanjutan dalam struktur aljabar, mulai dari pengenalan operasi biner, konsep dasar semigrup dan monoid, berbagai bentuk grup dan subgrup, hingga materi mengenai koset dan homomorfisme grup. Secara keseluruhan, materi dalam buku ini disajikan dengan pendekatan teoretis yang sistematis, serta dilengkapi dengan berbagai latihan soal dan tes formatif pada setiap akhir babnya sebagai alat ukur untuk mengevaluasi dan memperdalam pemahaman pembaca terhadap ilmu aljabar.',
+            filePath: 'Perpustakaan/Teori grup (struktur aljabar 1).pdf',
+            category: 'materi',
+            series: 'Seri Struktur aljabar',
+            image: 'Teori grup (struktur aljabar 1) asli-1_page-0001.jpg'// Ganti dengan path PDF Anda
+        },
+        {
+            id: 'perpustakaan-016',
+            title: 'Dasar Dasar Aljabar Linear',
+            author: '',
+            summary: 'Ebook Dasar-Dasar Aljabar Linier ini merupakan panduan akademis yang membahas secara komprehensif konsep-konsep utama aljabar linear sebagai fondasi pembelajaran ilmu komputer dan informatika. Buku ini merangkum materi secara terstruktur yang mencakup topik-topik pokok, dimulai dari teknik penyelesaian sistem persamaan linear, pengenalan operasi dasar matriks, hingga penerapan berbagai metode untuk menghitung nilai determinan. Selain itu, dokumen ini juga mengeksplorasi sifat dan pengoperasian vektor pada ruang dimensi dua maupun dimensi tiga, serta diakhiri dengan analisis mengenai struktur ruang vektor umum yang mencakup konsep basis, dimensi, dan pemeringkatan. Secara keseluruhan, materi dalam buku ini dirancang secara sistematis dan deskriptif dengan menyertakan contoh-contoh kontekstual untuk memudahkan pembaca dalam memahami teori aljabar sekaligus menerapkannya pada pemecahan masalah praktis.',
+            filePath: 'Perpustakaan/Dasar-Dasar Aljabar Linier.pdf',
+            category: 'materi',
+            series: 'Seri Aljabar Linear',
+            image: 'Dasar-Dasar Aljabar Linier asli-1_page-0001.jpg'// Ganti dengan path PDF Anda
         }
         // {
         //     id: 'perpustakaan-013',
