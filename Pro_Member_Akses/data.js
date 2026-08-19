@@ -2,7 +2,7 @@ const allContentData = {
     perpustakaan: [
         {
             id: 'perpustakaan-001',
-            title: 'Pengantar Kalkulus',
+            title: 'Pengantar Kalkulus - UMT Series',
             author: 'Tim UMT',
             summary: 'Ebook "Pengantar Kalkulus" ini menyajikan fondasi esensial untuk memahami kalkulus secara konseptual. Materi mencakup pembahasan mendasar mulai dari sistem bilangan real , pertidaksamaan , dan nilai mutlak. Fokus utama buku ini adalah pada konsep fungsi , termasuk jenis-jenisnya , operasi , komposisi, dan invers. Topik diakhiri dengan ulasan lengkap mengenai fungsi trigonometri dan inversnya.',
             filePath: 'Perpustakaan/Pengantar Kalkulus.pdf',
@@ -13,7 +13,7 @@ const allContentData = {
         },
         {
             id: 'perpustakaan-002',
-            title: 'Memahami Pertidaksamaan Aljabar',
+            title: 'Memahami Pertidaksamaan Aljabar - UMT Series',
             author: 'Tim UMT',
             summary: 'Ebook "Memahami Pertidaksamaan Aljabar" ini dirancang untuk membangun pemahaman konseptual dan intuitif mengenai berbagai jenis pertidaksamaan. Materi diawali dengan fondasi dasar pertidaksamaan linear satu variabel dan sistem pertidaksamaan linear dua variabel. Pembahasan berlanjut ke topik-topik yang lebih kompleks untuk tingkat SMA, meliputi pertidaksamaan kuadrat , rasional (pecahan) , nilai mutlak , eksponensial, dan logaritma. Ebook ini ditutup dengan materi lanjutan yang mencakup pertidaksamaan polinomial orde tinggi , trigonometri , serta pengenalan teorema pertidaksamaan klasik seperti AM-GM dan Cauchy-Schwarz.',
             filePath: 'Perpustakaan/Pertidaksamaan Aljabar.pdf',
@@ -23,7 +23,7 @@ const allContentData = {
         },
         {
             id: 'perpustakaan-003',
-            title: 'Memahami Logika Matematika',
+            title: 'Memahami Logika Matematika - UMT Series',
             author: 'Tim UMT',
             summary: 'Ebook "Memahami Logika Matematika" ini dirancang untuk membangun pemahaman konseptual dan intuitif mengenai seni berpikir lurus tanpa sekadar menghafal tabel kebenaran. Materi diawali dengan fondasi dasar berpikir logis, meliputi perbedaan antara pernyataan (proposisi) dan kalimat terbuka, serta konsep fundamental negasi. Pembahasan berlanjut ke topik penggabungan fakta melalui pernyataan majemuk seperti konjungsi, disjungsi, implikasi, dan biimplikasi , dilanjutkan dengan ekuivalensi, hukum-hukum aljabar logika, serta bentuk konvers, invers, dan kontraposisi. Ebook ini ditutup dengan materi analisis kuantor logika (universal dan eksistensial) , serta puncak pembelajaran berupa teknik penarikan kesimpulan yang sah—seperti Modus Ponens, Modus Tollens, dan Silogisme—sekaligus cara mendeteksi kecacatan argumen atau sesat pikir (logical fallacy).',
             filePath: 'Perpustakaan/Logika Matematika (BY UMT).pdf',
@@ -164,6 +164,16 @@ const allContentData = {
             category: 'materi',
             series: 'Seri Aljabar Linear',
             image: 'Dasar-Dasar Aljabar Linier asli-1_page-0001.jpg'// Ganti dengan path PDF Anda
+        },
+        {
+            id: 'perpustakaan-017',
+            title: 'Aljabar Elementer - UMT Series',
+            author: 'Tim UMT',
+            summary: 'Buku Aljabar Elementer ini menyajikan pembelajaran matematika yang komprehensif dan terstruktur melalui delapan bab utama, mulai dari konsep eksponen dan bentuk akar, operasi logaritma, teknik manipulasi aljabar serta pemfaktoran lanjutan, persamaan linear dan nilai mutlak, sistem persamaan linear beserta persamaan Diophantine, persamaan kuadrat dan karakteristik akarnya, ragam pertidaksamaan beserta pemodelan optimasi, hingga konsep barisan dan deret. Seluruh materi dirancang dengan pendekatan penalaran konseptual yang menekankan pembuktian logis, pemahaman mendalam atas setiap aturan, serta pemecahan masalah analitis, sehingga menuntun pembaca untuk membangun kerangka berpikir matematis yang kritis dan terstruktur tanpa bergantung pada hafalan rumus semata.',
+            filePath: 'Perpustakaan/Aljabar Elementer UMT.pdf',
+            category: 'materi',
+            series: 'Seri Aljabar',
+            image: 'aljabar elementer.png'// Ganti dengan path PDF Anda
         }
         // {
         //     id: 'perpustakaan-013',
